@@ -6,6 +6,10 @@ terraform {
         source = "hashicorp/azurerm"
         version = "3.43.0"
       }
+      azapi = {
+        source  = "azure/azapi"
+        version = "1.3.0"
+      }
     }
 
     backend "azurerm" {
@@ -24,6 +28,7 @@ provider "azurerm" {
   skip_provider_registration = false
   storage_use_azuread = true
   use_oidc = true
+  
   features {
     key_vault {
       recover_soft_deleted_key_vaults = true
@@ -38,6 +43,14 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = true
     }
   }
+}
+
+provider "azapi" {
+  default_location = var.location
+  default_tags = var.tags
+  disable_correlation_request_id = false
+  environment = "public"
+  skip_provider_registration = false
 }
 
 resource "azurerm_resource_group" "governance_rg" {
