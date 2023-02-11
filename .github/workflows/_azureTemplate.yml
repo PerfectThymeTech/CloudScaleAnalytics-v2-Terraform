@@ -1,0 +1,63 @@
+name: Infra Deployment Template
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        default: "dev"
+        description: "Specifies the environment of the deployment."
+    secrets:
+      TENANT_ID:
+        required: true
+        description: "Specifies the tenant id of the deployment."
+      CLIENT_ID:
+        required: true
+        description: "Specifies the client id."
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+        description: "Specifies the client id."
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deployment:
+    name: Sample Azure Template - ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    # if: github.event_name == 'push' || github.event_name == 'release'
+    environment: ${{ inputs.environment }}
+
+    steps:
+      # Check Out Repository
+      - name: Check Out Repository
+        id: checkout_repository
+        uses: actions/checkout@v3
+
+      # Login to Azure
+      - name: Azure Login
+        id: azure_login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # Hello Azure
+      - name: Hello Azure
+        id: hello_azue
+        run: |
+          echo "Hello Azure!"
+          az account show
+
+      # Log out from Azure
+      - name: Log out from Azure
+        id: azure_logout
+        uses: azure/cli@v1
+        with:
+          azcliversion: "agentazcliversion"
+          inlineScript: |
+            az logout
