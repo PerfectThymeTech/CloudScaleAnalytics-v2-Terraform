@@ -17,7 +17,7 @@ terraform {
       resource_group_name = "terraform"
       storage_account_name = "terraformptt001"
       container_name = "tfstate"
-      key = "terraform.tfstate"
+      key = "terraform.data-management-zone.tfstate"
       use_oidc = true
     }
 }
