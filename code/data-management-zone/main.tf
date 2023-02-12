@@ -17,7 +17,7 @@ terraform {
       resource_group_name = "terraform"
       storage_account_name = "terraformptt001"
       container_name = "tfstate"
-      key = "dev.terraform.tfstate"
+      key = "terraform.tfstate"
       use_oidc = true
     }
 }
@@ -28,7 +28,7 @@ provider "azurerm" {
   skip_provider_registration = false
   storage_use_azuread = true
   use_oidc = true
-  
+
   features {
     key_vault {
       recover_soft_deleted_key_vaults = true
@@ -51,6 +51,7 @@ provider "azapi" {
   disable_correlation_request_id = false
   environment = "public"
   skip_provider_registration = false
+  use_oidc = true
 }
 
 resource "azurerm_resource_group" "governance_rg" {
