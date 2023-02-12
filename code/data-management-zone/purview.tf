@@ -10,39 +10,39 @@ resource "azurerm_purview_account" "purview" {
   public_network_enabled = false
 }
 
-resource "azapi_resource" "purviewKafkaConfigurationNotification" {
-  type = "Microsoft.Purview/accounts/kafkaConfigurations@2021-12-01"
-  name = "notification"
-  parent_id = azurerm_purview_account.purview.id
+# resource "azapi_resource" "purview_kafka_configuration_notification" {
+#   type = "Microsoft.Purview/accounts/kafkaConfigurations@2021-12-01"
+#   name = "notification"
+#   parent_id = azurerm_purview_account.purview.id
 
-  body = jsonencode({
-    properties = {
-      credentials: {
-        type: "SystemAssigned"
-      }
-      eventHubResourceId = 
-      eventHubType = "Notification"
-      eventStreamingState = "Enabled"
-      eventStreamingType = "Azure"
-    }
-  })
-}
+#   body = jsonencode({
+#     properties = {
+#       credentials: {
+#         type: "SystemAssigned"
+#       }
+#       eventHubResourceId = azurerm_eventhub.eventhub_notification.id
+#       eventHubType = "Notification"
+#       eventStreamingState = "Enabled"
+#       eventStreamingType = "Azure"
+#     }
+#   })
+# }
 
-resource "azapi_resource" "purviewKafkaConfigurationHook" {
-  type = "Microsoft.Purview/accounts/kafkaConfigurations@2021-12-01"
-  name = "notification"
-  parent_id = azurerm_purview_account.purview.id
+# resource "azapi_resource" "purview_kafka_configuration_hook" {
+#   type = "Microsoft.Purview/accounts/kafkaConfigurations@2021-12-01"
+#   name = "notification"
+#   parent_id = azurerm_purview_account.purview.id
 
-  body = jsonencode({
-    properties = {
-      credentials: {
-        type: "SystemAssigned"
-      }
-      eventHubResourceId = 
-      eventHubType = "Hook"
-      eventStreamingState = "Enabled"
-      eventStreamingType = "Azure"
-      consumerGroup = "$Default"
-    }
-  })
-}
+#   body = jsonencode({
+#     properties = {
+#       credentials: {
+#         type: "SystemAssigned"
+#       }
+#       eventHubResourceId = azurerm_eventhub.eventhub_hook.id
+#       eventHubType = "Hook"
+#       eventStreamingState = "Enabled"
+#       eventStreamingType = "Azure"
+#       consumerGroup = "$Default"
+#     }
+#   })
+# }
