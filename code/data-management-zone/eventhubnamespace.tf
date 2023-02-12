@@ -1,33 +1,33 @@
 resource "azurerm_eventhub_namespace" "eventhub_namespace" {
-  name = "${local.prefix}-evhns001"
-  location = var.location
+  name                = "${local.prefix}-evhns001"
+  location            = var.location
   resource_group_name = azurerm_resource_group.governance_rg.name
-  tags = var.tags
+  tags                = var.tags
   identity {
     type = "SystemAssigned"
   }
 
-  auto_inflate_enabled = true
-  capacity = local.eventhub_namespace.min_throughput
-  maximum_throughput_units = local.eventhub_namespace.max_throughput
+  auto_inflate_enabled         = true
+  capacity                     = local.eventhub_namespace.min_throughput
+  maximum_throughput_units     = local.eventhub_namespace.max_throughput
   local_authentication_enabled = false
-  minimum_tls_version = "1.2"
+  minimum_tls_version          = "1.2"
   network_rulesets = [
     {
-      default_action = "Deny"
-      ip_rule = []
-      public_network_access_enabled = true
+      default_action                 = "Deny"
+      ip_rule                        = []
+      public_network_access_enabled  = true
       trusted_service_access_enabled = true
-      virtual_network_rule = []
+      virtual_network_rule           = []
     }
   ]
   public_network_access_enabled = true
-  sku = "Standard"
+  sku                           = "Standard"
 }
 
 resource "azurerm_eventhub" "eventhub_notification" {
-  name = local.eventhub_namespace.eventhub_notification.name
-  namespace_name = azurerm_eventhub_namespace.eventhub_namespace.name
+  name                = local.eventhub_namespace.eventhub_notification.name
+  namespace_name      = azurerm_eventhub_namespace.eventhub_namespace.name
   resource_group_name = azurerm_eventhub_namespace.eventhub_namespace.resource_group_name
 
   # capture_description {  # Enable this to capture data in a storage account.
@@ -44,12 +44,12 @@ resource "azurerm_eventhub" "eventhub_notification" {
   #   skip_empty_archives = true
   # }
   message_retention = local.eventhub_namespace.eventhub_notification.message_retention
-  partition_count = local.eventhub_namespace.eventhub_notification.partition_count
+  partition_count   = local.eventhub_namespace.eventhub_notification.partition_count
 }
 
 resource "azurerm_eventhub" "eventhub_hook" {
-  name = local.eventhub_namespace.eventhub_hook.name
-  namespace_name = azurerm_eventhub_namespace.eventhub_namespace.name
+  name                = local.eventhub_namespace.eventhub_hook.name
+  namespace_name      = azurerm_eventhub_namespace.eventhub_namespace.name
   resource_group_name = azurerm_eventhub_namespace.eventhub_namespace.resource_group_name
 
   # capture_description {  # Enable this to capture data in a storage account.
@@ -66,21 +66,21 @@ resource "azurerm_eventhub" "eventhub_hook" {
   #   skip_empty_archives = true
   # }
   message_retention = local.eventhub_namespace.eventhub_hook.message_retention
-  partition_count = local.eventhub_namespace.eventhub_hook.partition_count
+  partition_count   = local.eventhub_namespace.eventhub_hook.partition_count
 }
 
 resource "azurerm_private_endpoint" "eventhub_namespace_private_endpoint" {
-  name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-pe"
-  location = var.location
+  name                = "${azurerm_eventhub_namespace.eventhub_namespace.name}-pe"
+  location            = var.location
   resource_group_name = azurerm_eventhub_namespace.eventhub_namespace.resource_group_name
-  tags = var.tags
+  tags                = var.tags
 
   custom_network_interface_name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-nic"
   private_service_connection {
-    name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-pe"
-    is_manual_connection = false
+    name                           = "${azurerm_eventhub_namespace.eventhub_namespace.name}-pe"
+    is_manual_connection           = false
     private_connection_resource_id = azurerm_eventhub_namespace.eventhub_namespace.id
-    request_message = "Private Endpoint for Event Hub Namespace ${azurerm_eventhub_namespace.eventhub_namespace.name}"
+    request_message                = "Private Endpoint for Event Hub Namespace ${azurerm_eventhub_namespace.eventhub_namespace.name}"
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
