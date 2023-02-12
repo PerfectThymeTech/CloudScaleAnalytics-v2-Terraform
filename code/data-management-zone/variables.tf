@@ -40,7 +40,7 @@ variable "nsg_id" {
   description = "Specifies the resource ID of the default network security group for the Data Management Zone"
   type = string
   validation {
-    condition = length(split("/", var.vnet_id)) == 9
+    condition = length(split("/", var.nsg_id)) == 9
     error_message = "Please specify a valid resource ID."
   }
 }
@@ -49,7 +49,7 @@ variable "route_table_id" {
   description = "Specifies the resource ID of the default route table for the Data Management Zone"
   type = string
   validation {
-    condition = length(split("/", var.vnet_id)) == 9
+    condition = length(split("/", var.route_table_id)) == 9
     error_message = "Please specify a valid resource ID."
   }
 }

@@ -30,19 +30,19 @@ resource "azurerm_eventhub" "eventhub_notification" {
   namespace_name = azurerm_eventhub_namespace.eventhub_namespace.name
   resource_group_name = azurerm_eventhub_namespace.eventhub_namespace.resource_group_name
 
-  capture_description {
-    enabled = false
-    destination {
-      name = "default"
-      archive_name_format = ""
-      blob_container_name = ""
-      storage_account_id = ""
-    }
-    encoding = "Avro"
-    interval_in_seconds = 900
-    size_limit_in_bytes = 10485760
-    skip_empty_archives = true
-  }
+  # capture_description {  # Enable this to capture data in a storage account.
+  #   enabled = false
+  #   destination {
+  #     name = "EventHubArchive.AzureBlockBlob"
+  #     archive_name_format = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
+  #     blob_container_name = ""
+  #     storage_account_id = ""
+  #   }
+  #   encoding = "Avro"
+  #   interval_in_seconds = 900
+  #   size_limit_in_bytes = 10485760
+  #   skip_empty_archives = true
+  # }
   message_retention = local.eventhub_namespace.eventhub_notification.message_retention
   partition_count = local.eventhub_namespace.eventhub_notification.partition_count
 }
@@ -52,19 +52,19 @@ resource "azurerm_eventhub" "eventhub_hook" {
   namespace_name = azurerm_eventhub_namespace.eventhub_namespace.name
   resource_group_name = azurerm_eventhub_namespace.eventhub_namespace.resource_group_name
 
-  capture_description {
-    enabled = false
-    destination {
-      name = "default"
-      archive_name_format = ""
-      blob_container_name = ""
-      storage_account_id = ""
-    }
-    encoding = "Avro"
-    interval_in_seconds = 900
-    size_limit_in_bytes = 10485760
-    skip_empty_archives = true
-  }
+  # capture_description {  # Enable this to capture data in a storage account.
+  #   enabled = false
+  #   destination {
+  #     name = "EventHubArchive.AzureBlockBlob"
+  #     archive_name_format = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
+  #     blob_container_name = ""
+  #     storage_account_id = ""
+  #   }
+  #   encoding = "Avro"
+  #   interval_in_seconds = 900
+  #   size_limit_in_bytes = 10485760
+  #   skip_empty_archives = true
+  # }
   message_retention = local.eventhub_namespace.eventhub_hook.message_retention
   partition_count = local.eventhub_namespace.eventhub_hook.partition_count
 }
@@ -77,13 +77,14 @@ resource "azurerm_private_endpoint" "eventhub_namespace_private_endpoint" {
 
   custom_network_interface_name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-nic"
   private_service_connection {
-    name = azurerm_private_endpoint.eventhub_namespace_private_endpoint.name
+    name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-pe"
     is_manual_connection = false
     private_connection_resource_id = azurerm_eventhub_namespace.eventhub_namespace.id
+    request_message = "Private Endpoint for Event Hub Namespace ${azurerm_eventhub_namespace.eventhub_namespace.name}"
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_eventhub_namespace == "" ? 0 : 1
+    for_each = var.private_dns_zone_id_eventhub_namespace == "" ? [] : [1]
     content {
       name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-arecord"
       private_dns_zone_ids = [
