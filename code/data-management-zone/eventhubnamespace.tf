@@ -25,22 +25,6 @@ resource "azurerm_eventhub_namespace" "eventhub_namespace" {
   sku                           = "Standard"
 }
 
-# resource "azapi_update_resource" "eventhub_namespace_network_rulesets" {  # Bug due to provider change: https://github.com/hashicorp/terraform-provider-azurerm/issues/18616
-#   type      = "Microsoft.EventHub/namespaces/networkRuleSets@2021-06-01-preview"
-#   name      = "default"
-#   parent_id = azurerm_eventhub_namespace.eventhub_namespace.id
-
-#   body = jsonencode({
-#     properties = {
-#       defaultAction : "Deny"
-#       ipRules : []
-#       virtualNetworkRules : []
-#       publicNetworkAccess : "Enabled"
-#       trustedServiceAccessEnabled : true
-#     }
-#   })
-# }
-
 resource "azurerm_eventhub" "eventhub_notification" {
   name                = local.eventhub_namespace.eventhub_notification.name
   namespace_name      = azurerm_eventhub_namespace.eventhub_namespace.name
@@ -100,11 +84,11 @@ resource "azurerm_private_endpoint" "eventhub_namespace_private_endpoint" {
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_eventhub_namespace == "" ? [] : [1]
+    for_each = var.private_dns_zone_id_namespace == "" ? [] : [1]
     content {
       name = "${azurerm_eventhub_namespace.eventhub_namespace.name}-arecord"
       private_dns_zone_ids = [
-        var.private_dns_zone_id_eventhub_namespace
+        var.private_dns_zone_id_namespace
       ]
     }
   }
