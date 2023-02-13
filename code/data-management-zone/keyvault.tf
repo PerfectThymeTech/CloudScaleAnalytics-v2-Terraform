@@ -17,7 +17,7 @@ resource "azurerm_key_vault" "key_vault" {
   }
   public_network_access_enabled = true
   purge_protection_enabled      = true
-  sku_name                      = "Standard"
+  sku_name                      = "standard"
   soft_delete_retention_days    = 7
   tenant_id                     = data.azurerm_client_config.current.tenant_id
 }
