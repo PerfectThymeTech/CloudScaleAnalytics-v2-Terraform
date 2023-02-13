@@ -97,52 +97,52 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_portal" {
   }
 }
 
-resource "azurerm_private_endpoint" "purview_private_endpoint_blob" {
-  name                = "${azurerm_purview_account.purview.name}-blob-pe"
-  location            = var.location
-  resource_group_name = azurerm_purview_account.purview.resource_group_name
-  tags                = var.tags
+# resource "azurerm_private_endpoint" "purview_private_endpoint_blob" {
+#   name                = "${azurerm_purview_account.purview.name}-blob-pe"
+#   location            = var.location
+#   resource_group_name = azurerm_purview_account.purview.resource_group_name
+#   tags                = var.tags
 
-  custom_network_interface_name = "${azurerm_purview_account.purview.name}-blob-nic"
-  private_service_connection {
-    name                           = "${azurerm_purview_account.purview.name}-blob-pe"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_purview_account.purview.managed_resources.storage_account_id
-    subresource_names              = ["blob"]
-  }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
-  dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
-    content {
-      name = "${azurerm_purview_account.purview.name}-blob-arecord"
-      private_dns_zone_ids = [
-        var.private_dns_zone_id_blob
-      ]
-    }
-  }
-}
+#   custom_network_interface_name = "${azurerm_purview_account.purview.name}-blob-nic"
+#   private_service_connection {
+#     name                           = "${azurerm_purview_account.purview.name}-blob-pe"
+#     is_manual_connection           = false
+#     private_connection_resource_id = azurerm_purview_account.purview.managed_resources.storage_account_id
+#     subresource_names              = ["blob"]
+#   }
+#   subnet_id = azurerm_subnet.private_endpoint_subnet.id
+#   dynamic "private_dns_zone_group" {
+#     for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
+#     content {
+#       name = "${azurerm_purview_account.purview.name}-blob-arecord"
+#       private_dns_zone_ids = [
+#         var.private_dns_zone_id_blob
+#       ]
+#     }
+#   }
+# }
 
-resource "azurerm_private_endpoint" "purview_private_endpoint_queue" {
-  name                = "${azurerm_purview_account.purview.name}-queue-pe"
-  location            = var.location
-  resource_group_name = azurerm_purview_account.purview.resource_group_name
-  tags                = var.tags
+# resource "azurerm_private_endpoint" "purview_private_endpoint_queue" {
+#   name                = "${azurerm_purview_account.purview.name}-queue-pe"
+#   location            = var.location
+#   resource_group_name = azurerm_purview_account.purview.resource_group_name
+#   tags                = var.tags
 
-  custom_network_interface_name = "${azurerm_purview_account.purview.name}-queue-nic"
-  private_service_connection {
-    name                           = "${azurerm_purview_account.purview.name}-queue-pe"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_purview_account.purview.managed_resources.storage_account_id
-    subresource_names              = ["queue"]
-  }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
-  dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_queue == "" ? [] : [1]
-    content {
-      name = "${azurerm_purview_account.purview.name}-queue-arecord"
-      private_dns_zone_ids = [
-        var.private_dns_zone_id_queue
-      ]
-    }
-  }
-}
+#   custom_network_interface_name = "${azurerm_purview_account.purview.name}-queue-nic"
+#   private_service_connection {
+#     name                           = "${azurerm_purview_account.purview.name}-queue-pe"
+#     is_manual_connection           = false
+#     private_connection_resource_id = azurerm_purview_account.purview.managed_resources.storage_account_id
+#     subresource_names              = ["queue"]
+#   }
+#   subnet_id = azurerm_subnet.private_endpoint_subnet.id
+#   dynamic "private_dns_zone_group" {
+#     for_each = var.private_dns_zone_id_queue == "" ? [] : [1]
+#     content {
+#       name = "${azurerm_purview_account.purview.name}-queue-arecord"
+#       private_dns_zone_ids = [
+#         var.private_dns_zone_id_queue
+#       ]
+#     }
+#   }
+# }
