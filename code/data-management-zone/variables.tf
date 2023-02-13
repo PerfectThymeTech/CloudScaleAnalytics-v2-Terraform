@@ -64,10 +64,46 @@ variable "route_table_id" {
 # }
 
 variable "private_dns_zone_id_eventhub_namespace" {
-  description = "Specifies the resource ID of the private DNS zone for EventHub namespaces."
+  description = "Specifies the resource ID of the private DNS zone for the EventHub namespace."
   type        = string
   validation {
     condition     = var.private_dns_zone_id_eventhub_namespace == "" || (length(split("/", var.private_dns_zone_id_eventhub_namespace)) == 9 && endswith(var.private_dns_zone_id_eventhub_namespace, "privatelink.servicebus.windows.net"))
-    error_message = "Please specify a valid resource ID for a private DNS Zone."
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_purview_account" {
+  description = "Specifies the resource ID of the private DNS zone for the Purview account."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_purview_account == "" || (length(split("/", var.private_dns_zone_id_purview_account)) == 9 && endswith(var.private_dns_zone_id_purview_account, "privatelink.purview.azure.com"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_purview_portal" {
+  description = "Specifies the resource ID of the private DNS zone for the Purview portal."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_purview_portal == "" || (length(split("/", var.private_dns_zone_id_purview_portal)) == 9 && endswith(var.private_dns_zone_id_purview_portal, "privatelink.purviewstudio.azure.com"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_purview_blob" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_purview_blob == "" || (length(split("/", var.private_dns_zone_id_purview_blob)) == 9 && endswith(var.private_dns_zone_id_purview_blob, "privatelink.blob.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_purview_queue" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_purview_queue == "" || (length(split("/", var.private_dns_zone_id_purview_queue)) == 9 && endswith(var.private_dns_zone_id_purview_queue, "privatelink.queue.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }

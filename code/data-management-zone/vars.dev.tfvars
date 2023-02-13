@@ -6,3 +6,7 @@ vnet_id                                = "/subscriptions/dfbd9ec6-9c65-43d6-bb61
 nsg_id                                 = "/subscriptions/dfbd9ec6-9c65-43d6-bb61-bf7c4e221d9d/resourceGroups/dmgmt-dev-network-rg/providers/Microsoft.Network/networkSecurityGroups/dmgmt-dev-nsg001"
 route_table_id                         = "/subscriptions/dfbd9ec6-9c65-43d6-bb61-bf7c4e221d9d/resourceGroups/dmgmt-dev-network-rg/providers/Microsoft.Network/routeTables/dmgmt-dev-routetable001"
 private_dns_zone_id_eventhub_namespace = ""
+private_dns_zone_id_purview_account    = ""
+private_dns_zone_id_purview_portal     = ""
+private_dns_zone_id_purview_blob       = ""
+private_dns_zone_id_purview_queue      = ""
