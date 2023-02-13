@@ -1,5 +1,5 @@
 resource "azurerm_synapse_private_link_hub" "synapse_pl_hub" {
-  name                = "${local.prefix}-synplh001"
+  name                = replace("${local.prefix}-synplh001", "-", "")
   location            = var.location
   resource_group_name = azurerm_resource_group.consumption_rg.name
   tags                = var.tags
