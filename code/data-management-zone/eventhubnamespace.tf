@@ -16,14 +16,30 @@ resource "azurerm_eventhub_namespace" "eventhub_namespace" {
     {
       default_action                 = "Deny"
       ip_rule                        = []
-      public_network_access_enabled  = true
-      trusted_service_access_enabled = true
+      public_network_access_enabled  = false
+      trusted_service_access_enabled = false
       virtual_network_rule           = []
     }
   ]
-  public_network_access_enabled = true
+  public_network_access_enabled = false
   sku                           = "Standard"
 }
+
+# resource "azapi_update_resource" "eventhub_namespace_network_rulesets" {  # Bug due to provider change: https://github.com/hashicorp/terraform-provider-azurerm/issues/18616
+#   type      = "Microsoft.EventHub/namespaces/networkRuleSets@2021-06-01-preview"
+#   name      = "default"
+#   parent_id = azurerm_eventhub_namespace.eventhub_namespace.id
+
+#   body = jsonencode({
+#     properties = {
+#       defaultAction : "Deny"
+#       ipRules : []
+#       virtualNetworkRules : []
+#       publicNetworkAccess : "Enabled"
+#       trustedServiceAccessEnabled : true
+#     }
+#   })
+# }
 
 resource "azurerm_eventhub" "eventhub_notification" {
   name                = local.eventhub_namespace.eventhub_notification.name
@@ -80,7 +96,7 @@ resource "azurerm_private_endpoint" "eventhub_namespace_private_endpoint" {
     name                           = "${azurerm_eventhub_namespace.eventhub_namespace.name}-pe"
     is_manual_connection           = false
     private_connection_resource_id = azurerm_eventhub_namespace.eventhub_namespace.id
-    request_message                = "Private Endpoint for Event Hub Namespace ${azurerm_eventhub_namespace.eventhub_namespace.name}"
+    subresource_names              = ["namespace"]
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
