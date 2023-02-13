@@ -54,6 +54,9 @@ provider "azapi" {
   use_oidc                       = true
 }
 
+data "azurerm_client_config" "current" {
+}
+
 resource "azurerm_resource_group" "governance_rg" {
   name     = "${local.prefix}-governance-rg"
   location = var.location
