@@ -63,11 +63,11 @@ variable "route_table_id" {
 #   }
 # }
 
-variable "private_dns_zone_id_eventhub_namespace" {
+variable "private_dns_zone_id_namespace" {
   description = "Specifies the resource ID of the private DNS zone for the EventHub namespace."
   type        = string
   validation {
-    condition     = var.private_dns_zone_id_eventhub_namespace == "" || (length(split("/", var.private_dns_zone_id_eventhub_namespace)) == 9 && endswith(var.private_dns_zone_id_eventhub_namespace, "privatelink.servicebus.windows.net"))
+    condition     = var.private_dns_zone_id_namespace == "" || (length(split("/", var.private_dns_zone_id_namespace)) == 9 && endswith(var.private_dns_zone_id_namespace, "privatelink.servicebus.windows.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
@@ -90,20 +90,52 @@ variable "private_dns_zone_id_purview_portal" {
   }
 }
 
-variable "private_dns_zone_id_purview_blob" {
+variable "private_dns_zone_id_blob" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
   type        = string
   validation {
-    condition     = var.private_dns_zone_id_purview_blob == "" || (length(split("/", var.private_dns_zone_id_purview_blob)) == 9 && endswith(var.private_dns_zone_id_purview_blob, "privatelink.blob.core.windows.net"))
+    condition     = var.private_dns_zone_id_blob == "" || (length(split("/", var.private_dns_zone_id_blob)) == 9 && endswith(var.private_dns_zone_id_blob, "privatelink.blob.core.windows.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
 
-variable "private_dns_zone_id_purview_queue" {
-  description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
+variable "private_dns_zone_id_queue" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage queue endpoints."
   type        = string
   validation {
-    condition     = var.private_dns_zone_id_purview_queue == "" || (length(split("/", var.private_dns_zone_id_purview_queue)) == 9 && endswith(var.private_dns_zone_id_purview_queue, "privatelink.queue.core.windows.net"))
+    condition     = var.private_dns_zone_id_queue == "" || (length(split("/", var.private_dns_zone_id_queue)) == 9 && endswith(var.private_dns_zone_id_queue, "privatelink.queue.core.windows.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
+}
+
+variable "private_dns_zone_id_container_registry" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Container Registry."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_container_registry == "" || (length(split("/", var.private_dns_zone_id_container_registry)) == 9 && endswith(var.private_dns_zone_id_container_registry, "privatelink.azurecr.io"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_synapse_portal" {
+  description = "Specifies the resource ID of the private DNS zone for Synapse PL Hub."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_synapse_portal == "" || (length(split("/", var.private_dns_zone_id_synapse_portal)) == 9 && endswith(var.private_dns_zone_id_synapse_portal, "privatelink.azuresynapse.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_key_vault" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Key Vault."
+  type        = string
+  validation {
+    condition     = var.private_dns_zone_id_key_vault == "" || (length(split("/", var.private_dns_zone_id_key_vault)) == 9 && endswith(var.private_dns_zone_id_key_vault, "privatelink.vaultcore.azure.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "purview_root_collection_admins" {
+  description = "Specifies the list of user object IDs that are assigned as collection admin to the root collection in Purview."
+  type        = list(string)
 }
