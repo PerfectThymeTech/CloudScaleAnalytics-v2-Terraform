@@ -10,16 +10,19 @@ resource "azurerm_resource_deployment_script_azure_power_shell" "purview_admin_o
     ]
   }
 
-  command_line       = "-PurviewId \"${azurerm_purview_account.purview.name}\" -PurviewRootCollectionAdmins ${var.purview_root_collection_admins}"
+  command_line       = "-PurviewId \"${azurerm_purview_account.purview.name}\" -PurviewRootCollectionAdmins ${join(",", [for admin in var.purview_root_collection_admins : format("%q", admin)])}"
   cleanup_preference = "OnSuccess"
   container {
     container_group_name = "${azurerm_purview_account.purview.name}-admin-onb"
   }
-  environment_variable {}
   force_update_tag       = timestamp()
   retention_interval     = "P1D"
   script_content         = file("./purviewAdminOnboarding/SetupPurview.ps1")
   supporting_script_uris = []
   timeout                = "PT30M"
   version                = "6.3"
+
+  depends_on = [
+    azurerm_role_assignment.user_assigned_identity_roleassignment_governance_rg
+  ]
 }
