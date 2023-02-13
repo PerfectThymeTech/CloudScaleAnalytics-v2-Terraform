@@ -36,7 +36,7 @@ resource "azurerm_container_registry" "container_registry" {
   zone_redundancy_enabled = true
 }
 
-resource "azurerm_private_endpoint" "eventhub_namespace_private_endpoint" {
+resource "azurerm_private_endpoint" "container_registry_private_endpoint" {
   name                = "${azurerm_container_registry.container_registry.name}-pe"
   location            = var.location
   resource_group_name = azurerm_container_registry.container_registry.resource_group_name
