@@ -112,11 +112,11 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_blob" {
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_purview_blob == "" ? [] : [1]
+    for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
     content {
       name = "${azurerm_purview_account.purview.name}-blob-arecord"
       private_dns_zone_ids = [
-        var.private_dns_zone_id_purview_blob
+        var.private_dns_zone_id_blob
       ]
     }
   }
@@ -137,11 +137,11 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_queue" {
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_purview_queue == "" ? [] : [1]
+    for_each = var.private_dns_zone_id_queue == "" ? [] : [1]
     content {
       name = "${azurerm_purview_account.purview.name}-queue-arecord"
       private_dns_zone_ids = [
-        var.private_dns_zone_id_purview_queue
+        var.private_dns_zone_id_queue
       ]
     }
   }
