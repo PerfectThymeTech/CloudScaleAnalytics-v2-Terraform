@@ -49,8 +49,8 @@ jobs:
           script: |
             const output = `#### Terraform Version 📎\`${{ inputs.terraform_version }}\`
             #### Working Directory 📂\`${{ inputs.working_directory }}\`
-            #### Terraform Format and Style 🖌\`${{ steps.terraform_format.outcome }}\`*`;
-            
+            #### Terraform Format and Style 🖌\`${{ steps.terraform_format.outcome }}\``;
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
