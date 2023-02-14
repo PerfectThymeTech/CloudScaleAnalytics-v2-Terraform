@@ -1,4 +1,4 @@
-name: Infra Deployment Template
+name: Terraform Apply Template
 
 on:
   workflow_call:
@@ -8,6 +8,14 @@ on:
         type: string
         default: "dev"
         description: "Specifies the environment of the deployment."
+      terraform_version:
+        required: true
+        type: string
+        description: "Specifies the terraform version."
+      working_directory:
+        required: true
+        type: string
+        description: "Specifies the working directory."
     secrets:
       TENANT_ID:
         required: true
@@ -15,7 +23,7 @@ on:
       CLIENT_ID:
         required: true
         description: "Specifies the client id."
-      AZURE_SUBSCRIPTION_ID:
+      SUBSCRIPTION_ID:
         required: true
         description: "Specifies the client id."
 
@@ -25,10 +33,9 @@ permissions:
 
 jobs:
   deployment:
-    name: Sample Azure Template - ${{ inputs.environment }}
+    name: Terraform Apply
     runs-on: ubuntu-latest
     continue-on-error: false
-    # if: github.event_name == 'push' || github.event_name == 'release'
     environment: ${{ inputs.environment }}
 
     env:
@@ -37,32 +44,27 @@ jobs:
       ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
 
     steps:
+      # Setup Terraform
+      - name: Setup Terraform
+        id: terraform_setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+          terraform_wrapper: true
+
       # Check Out Repository
       - name: Check Out Repository
         id: checkout_repository
         uses: actions/checkout@v3
 
-      # Login to Azure
-      - name: Azure Login
-        id: azure_login
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.CLIENT_ID }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # Hello Azure
-      - name: Hello Azure
-        id: hello_azue
+      # Terraform Init
+      - name: Terraform Init
+        working-directory: ${{ inputs.working_directory }}
         run: |
-          echo "Hello Azure!"
-          az account show
+          terraform init
 
-      # Log out from Azure
-      - name: Log out from Azure
-        id: azure_logout
-        uses: azure/cli@v1
-        with:
-          azcliversion: "agentazcliversion"
-          inlineScript: |
-            az logout
+      # Terraform Plan
+      - name: Terraform Plan
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform apply -var-file vars.${{ inputs.environment }}.tfvars -auto-approve -input=false -no-color

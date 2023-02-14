@@ -1,0 +1,111 @@
+name: Terraform Plan Template
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        default: "dev"
+        description: "Specifies the environment of the deployment."
+      terraform_version:
+        required: true
+        type: string
+        description: "Specifies the terraform version."
+      working_directory:
+        required: true
+        type: string
+        description: "Specifies the working directory."
+    secrets:
+      TENANT_ID:
+        required: true
+        description: "Specifies the tenant id of the deployment."
+      CLIENT_ID:
+        required: true
+        description: "Specifies the client id."
+      SUBSCRIPTION_ID:
+        required: true
+        description: "Specifies the client id."
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  deployment:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    environment: ${{ inputs.environment }}
+
+    env:
+      ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+
+    steps:
+      # Setup Terraform
+      - name: Setup Terraform
+        id: terraform_setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+          terraform_wrapper: true
+
+      # Check Out Repository
+      - name: Check Out Repository
+        id: checkout_repository
+        uses: actions/checkout@v3
+
+      # Terraform Init
+      - name: Terraform Init
+        id: terraform_init
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform init
+
+      # Terraform Validate
+      - name: Terraform Validate
+        id: terraform_validate
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform validate -no-color
+
+      # Terraform Plan
+      - name: Terraform Plan
+        id: terraform_plan
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform plan -var-file vars.${{ inputs.environment }}.tfvars -input=false -no-color
+
+      # Add Pull Request Comment
+      - name: Add Pull Request Comment
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.terraform_plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Validation & Plan Results
+            * Terraform Version 📎\`${{ inputs.terraform_version }}\`
+            * Working Directory 📂\`${{ inputs.working_directory }}\`
+            * Terraform Initialization ⚙️\`${{ steps.terraform_init.outcome }}\`
+            * Terraform Validation 🤖\`${{ steps.terraform_validate.outcome }}\`
+            * Terraform Plan 📖\`${{ steps.terraform_plan.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
