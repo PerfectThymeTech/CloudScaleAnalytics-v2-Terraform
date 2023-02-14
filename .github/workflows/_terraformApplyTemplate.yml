@@ -63,8 +63,8 @@ jobs:
         run: |
           terraform init
 
-      # Terraform Plan
-      - name: Terraform Plan
+      # Terraform Apply
+      - name: Terraform Apply
         working-directory: ${{ inputs.working_directory }}
         run: |
           terraform apply -var-file vars.${{ inputs.environment }}.tfvars -auto-approve -input=false -no-color
