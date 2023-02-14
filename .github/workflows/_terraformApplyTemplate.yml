@@ -1,4 +1,4 @@
-name: Terraform Plan Template
+name: Terraform Apply Template
 
 on:
   workflow_call:
@@ -33,7 +33,7 @@ permissions:
 
 jobs:
   deployment:
-    name: Terraform Plan
+    name: Terraform Apply
     runs-on: ubuntu-latest
     continue-on-error: false
     environment: ${{ inputs.environment }}

@@ -64,6 +64,13 @@ jobs:
         run: |
           terraform init
 
+      # Terraform Validate
+      - name: Terraform Validate
+        id: terraform_validate
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform validate -no-color
+
       # Terraform Plan
       - name: Terraform Plan
         id: terraform_plan
@@ -83,6 +90,7 @@ jobs:
             const output = `#### Terraform Version 📎\`${{ inputs.terraform_version }}\`
             #### Working Directory 📂\`${{ inputs.working_directory }}\`
             #### Terraform Initialization ⚙️\`${{ steps.terraform_init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.terraform_validate.outcome }}\`
             #### Terraform Plan 📖\`${{ steps.terraform_plan.outcome }}\`
             <details><summary>Show Plan</summary>
             \`\`\`\n
