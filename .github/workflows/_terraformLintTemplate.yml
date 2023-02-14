@@ -1,4 +1,4 @@
-name: Terraform Lint & Validate Template
+name: Terraform Lint Template
 
 on:
   workflow_call:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   deployment:
-    name: Terraform Lint & Validate
+    name: Terraform Lint
     runs-on: ubuntu-latest
     continue-on-error: false
 
@@ -32,26 +32,12 @@ jobs:
         id: checkout_repository
         uses: actions/checkout@v3
 
-      # Terraform Init
-      - name: Terraform Init
-        id: terraform_init
-        working-directory: ${{ inputs.working_directory }}
-        run: |
-          terraform init
-
       # Terraform Format
       - name: Terraform Format
         id: terraform_format
         working-directory: ${{ inputs.working_directory }}
         run: |
           terraform fmt -check -recursive
-
-      # Terraform Validate
-      - name: Terraform Validate
-        id: terraform_validate
-        working-directory: ${{ inputs.working_directory }}
-        run: |
-          terraform validate -no-color
 
       # Add Pull Request Comment
       - name: Add Pull Request Comment
@@ -64,8 +50,6 @@ jobs:
             const output = `#### Terraform Version 📎\`${{ inputs.terraform_version }}\`
             #### Working Directory 📂\`${{ inputs.working_directory }}\`
             #### Terraform Format and Style 🖌\`${{ steps.terraform_format.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.terraform_init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.terraform_validate.outcome }}\`
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
