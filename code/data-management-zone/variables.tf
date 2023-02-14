@@ -54,15 +54,6 @@ variable "route_table_id" {
   }
 }
 
-# variable "services_subnet_address_prefix" {
-#   description = "Specifies the resource ID of the Vnet used for the Data Management Zone"
-#   type = string
-#   validation {
-#     condition = length(split("/", var.vnet_id)) == 9
-#     error_message = "Please specify a valid resource ID for a virtual network."
-#   }
-# }
-
 variable "private_dns_zone_id_namespace" {
   description = "Specifies the resource ID of the private DNS zone for the EventHub namespace."
   type        = string
