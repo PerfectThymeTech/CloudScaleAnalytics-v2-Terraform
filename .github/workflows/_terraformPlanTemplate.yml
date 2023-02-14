@@ -31,6 +31,7 @@ permissions:
   id-token: write
   issues: write
   contents: read
+  pull-requests: write
 
 jobs:
   deployment:
