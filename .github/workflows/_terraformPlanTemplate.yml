@@ -92,6 +92,7 @@ jobs:
             #### Terraform Initialization ⚙️\`${{ steps.terraform_init.outcome }}\`
             #### Terraform Validation 🤖\`${{ steps.terraform_validate.outcome }}\`
             #### Terraform Plan 📖\`${{ steps.terraform_plan.outcome }}\`*`;
+            
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
