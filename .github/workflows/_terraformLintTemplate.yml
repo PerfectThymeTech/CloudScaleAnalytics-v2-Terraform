@@ -1,0 +1,75 @@
+name: Terraform Lint & Validate Template
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        required: true
+        type: string
+        description: "Specifies the terraform version."
+      working_directory:
+        required: true
+        type: string
+        description: "Specifies the working directory."
+
+jobs:
+  deployment:
+    name: Terraform Lint & Validate
+    runs-on: ubuntu-latest
+    continue-on-error: false
+
+    steps:
+      # Setup Terraform
+      - name: Setup Terraform
+        id: terraform_setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+          terraform_wrapper: true
+
+      # Check Out Repository
+      - name: Check Out Repository
+        id: checkout_repository
+        uses: actions/checkout@v3
+
+      # Terraform Init
+      - name: Terraform Init
+        id: terraform_init
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform init
+
+      # Terraform Format
+      - name: Terraform Format
+        id: terraform_format
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform fmt -check -recursive
+
+      # Terraform Validate
+      - name: Terraform Validate
+        id: terraform_validate
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform validate -no-color
+
+      # Add Pull Request Comment
+      - name: Add Pull Request Comment
+        uses: actions/github-script@v6
+        id: pr_comment
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Version 📎\`${{ inputs.terraform_version }}\`
+            #### Working Directory 📂\`${{ inputs.working_directory }}\`
+            #### Terraform Format and Style 🖌\`${{ steps.terraform_format.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.terraform_init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.terraform_validate.outcome }}\`
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
