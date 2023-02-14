@@ -29,6 +29,7 @@ on:
 
 permissions:
   id-token: write
+  issues: write
   contents: read
 
 jobs:
@@ -96,6 +97,7 @@ jobs:
             <details><summary>Show Plan</summary>
 
             \`\`\`\n
+            ${process.env.PLAN}
             \`\`\`
 
             </details>
@@ -103,7 +105,7 @@ jobs:
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
             github.rest.issues.createComment({
-              issue_number: (context.issue.number + 1),
+              issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
