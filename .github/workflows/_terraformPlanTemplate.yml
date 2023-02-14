@@ -95,12 +95,15 @@ jobs:
 
             <details><summary>Show Plan</summary>
 
+            \`\`\`\n
+            \`\`\`
+
             </details>
 
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: (context.issue.number + 1),
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
