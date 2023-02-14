@@ -23,7 +23,7 @@ on:
       CLIENT_ID:
         required: true
         description: "Specifies the client id."
-      AZURE_SUBSCRIPTION_ID:
+      SUBSCRIPTION_ID:
         required: true
         description: "Specifies the client id."
 
