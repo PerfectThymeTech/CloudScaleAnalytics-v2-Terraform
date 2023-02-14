@@ -95,9 +95,6 @@ jobs:
 
             <details><summary>Show Plan</summary>
 
-            \`\`\`\n
-            \`\`\`
-
             </details>
 
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
