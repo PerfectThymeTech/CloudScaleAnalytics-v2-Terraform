@@ -50,9 +50,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Terraform Version 📎\`${{ inputs.terraform_version }}\`
-            #### Working Directory 📂\`${{ inputs.working_directory }}\`
-            #### Terraform Format and Style 🖌\`${{ steps.terraform_format.outcome }}\``;
+            const output = `#### Terraform Lint Results
+            * Terraform Version 📎\`${{ inputs.terraform_version }}\`
+            * Working Directory 📂\`${{ inputs.working_directory }}\`
+            * Terraform Format and Style 🖌\`${{ steps.terraform_format.outcome }}\``;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
