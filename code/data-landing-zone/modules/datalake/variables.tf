@@ -13,18 +13,28 @@ variable "environment" {
   }
 }
 
-variable "prefix" {
-  description = "Specifies the prefix for all resources created in this deployment."
+variable "datalake_name" {
+  description = "Specifies the name of the ADLS Gen2 account."
   type        = string
   validation {
-    condition     = length(var.prefix) >= 2 && length(var.prefix) <= 10
-    error_message = "Please specify a prefix with more than two and less than 10 characters."
+    condition     = length(var.datalake_name) >= 2
+    error_message = "Specifies the name of the ADLS Gen2 account."
   }
+}
+
+variable "datalake_filesystem_names" {
+  description = "Specifies the names of the ADLS Gen2 containers."
+  type        = list(string)
 }
 
 variable "tags" {
   description = "Specifies the tags that you want to apply to all resources."
   type        = map(any)
+}
+
+variable "resource_group_name" {
+  description = "Resource Group Name"
+  type        = string
 }
 
 variable "vnet_id" {
