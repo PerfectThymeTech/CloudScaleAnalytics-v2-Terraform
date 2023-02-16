@@ -1,4 +1,5 @@
 resource "azurerm_resource_deployment_script_azure_power_shell" "purview_admin_onboarding" {
+  count = length(var.purview_root_collection_admins) > 0 ? 1 : 0
   name                = "${azurerm_purview_account.purview.name}-admin-onb"
   location            = var.location
   resource_group_name = azurerm_resource_group.automation_rg.name
@@ -10,7 +11,7 @@ resource "azurerm_resource_deployment_script_azure_power_shell" "purview_admin_o
     ]
   }
 
-  command_line       = "-PurviewId \"${azurerm_purview_account.purview.name}\" -PurviewRootCollectionAdmins ${join(",", [for admin in var.purview_root_collection_admins : format("%q", admin)])}"
+  command_line       = "-PurviewId \"${azurerm_purview_account.purview.id}\" -PurviewRootCollectionAdmins ${join(",", [for admin in var.purview_root_collection_admins : format("%q", admin)])}"
   cleanup_preference = "OnSuccess"
   container {
     container_group_name = "${azurerm_purview_account.purview.name}-admin-onb"

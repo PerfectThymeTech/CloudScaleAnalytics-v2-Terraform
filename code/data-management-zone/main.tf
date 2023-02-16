@@ -51,7 +51,7 @@ provider "azapi" {
   disable_correlation_request_id = false
   environment                    = "public"
   skip_provider_registration     = false
-  use_oidc                       = true
+  # use_oidc                       = true
 }
 
 data "azurerm_client_config" "current" {
