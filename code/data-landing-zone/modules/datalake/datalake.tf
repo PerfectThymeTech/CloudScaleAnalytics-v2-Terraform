@@ -54,6 +54,33 @@ resource "azurerm_storage_account" "datalake" {
   shared_access_key_enabled = false
 }
 
+resource "azurerm_storage_management_policy" "datalake_management_policy" {
+  storage_account_id = azurerm_storage_account.datalake.id
+
+  rule {
+    name = "default"
+    enabled = true
+    actions {
+      base_blob {
+        tier_to_cool_after_days_since_modification_greater_than = 360
+        # delete_after_days_since_modification_greater_than = 720
+      }
+      snapshot {
+        change_tier_to_cool_after_days_since_creation = 180
+        delete_after_days_since_creation_greater_than = 360
+      }
+      version {
+        change_tier_to_cool_after_days_since_creation = 180
+        delete_after_days_since_creation = 360
+      }
+    }
+    filters {
+      blob_types = [ "blockBlob" ]
+      prefix_match = []
+    }
+  }
+}
+
 resource "azurerm_storage_container" "datalake_containers" {
   for_each             = var.datalake_filesystem_names
   name                 = each.key
@@ -62,4 +89,52 @@ resource "azurerm_storage_container" "datalake_containers" {
   container_access_type = "private"
 }
 
+resource "azurerm_private_endpoint" "datalake_private_endpoint_blob" {
+  name                = "${azurerm_storage_account.datalake.name}-blob-pe"
+  location            = var.location
+  resource_group_name = azurerm_storage_account.datalake.resource_group_name
+  tags                = var.tags
 
+  custom_network_interface_name = "${azurerm_storage_account.datalake.name}-blob-nic"
+  private_service_connection {
+    name                           = "${azurerm_storage_account.datalake.name}-blob-pe"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_storage_account.datalake.id
+    subresource_names              = ["blob"]
+  }
+  subnet_id = var.subnet_id
+  dynamic "private_dns_zone_group" {
+    for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
+    content {
+      name = "${azurerm_storage_account.datalake.name}-blob-arecord"
+      private_dns_zone_ids = [
+        var.private_dns_zone_id_blob
+      ]
+    }
+  }
+}
+
+resource "azurerm_private_endpoint" "datalake_private_endpoint_dfs" {
+  name                = "${azurerm_storage_account.datalake.name}-dfs-pe"
+  location            = var.location
+  resource_group_name = azurerm_storage_account.datalake.resource_group_name
+  tags                = var.tags
+
+  custom_network_interface_name = "${azurerm_storage_account.datalake.name}-dfs-nic"
+  private_service_connection {
+    name                           = "${azurerm_storage_account.datalake.name}-dfs-pe"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_storage_account.datalake.id
+    subresource_names              = ["dfs"]
+  }
+  subnet_id = var.subnet_id
+  dynamic "private_dns_zone_group" {
+    for_each = var.private_dns_zone_id_dfs == "" ? [] : [1]
+    content {
+      name = "${azurerm_storage_account.datalake.name}-dfs-arecord"
+      private_dns_zone_ids = [
+        var.private_dns_zone_id_dfs
+      ]
+    }
+  }
+}

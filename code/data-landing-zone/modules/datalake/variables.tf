@@ -3,16 +3,6 @@ variable "location" {
   type        = string
 }
 
-variable "environment" {
-  description = "Specifies the environment of the deployment."
-  type        = string
-  default     = "dev"
-  validation {
-    condition     = contains(["dev", "tst", "prd"], var.environment)
-    error_message = "Please use an allowed value: \"dev\", \"tst\" or \"prd\"."
-  }
-}
-
 variable "datalake_name" {
   description = "Specifies the name of the ADLS Gen2 account."
   type        = string
@@ -37,29 +27,11 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "vnet_id" {
-  description = "Specifies the resource ID of the Vnet used for the Data Management Zone"
+variable "subnet_id" {
+  description = "Specifies the resource ID of the subnet used for the datalake."
   type        = string
   validation {
-    condition     = length(split("/", var.vnet_id)) == 9
-    error_message = "Please specify a valid resource ID."
-  }
-}
-
-variable "nsg_id" {
-  description = "Specifies the resource ID of the default network security group for the Data Management Zone"
-  type        = string
-  validation {
-    condition     = length(split("/", var.nsg_id)) == 9
-    error_message = "Please specify a valid resource ID."
-  }
-}
-
-variable "route_table_id" {
-  description = "Specifies the resource ID of the default route table for the Data Management Zone"
-  type        = string
-  validation {
-    condition     = length(split("/", var.route_table_id)) == 9
+    condition     = length(split("/", var.vnet_id)) == 11
     error_message = "Please specify a valid resource ID."
   }
 }
@@ -78,15 +50,6 @@ variable "private_dns_zone_id_dfs" {
   type        = string
   validation {
     condition     = var.private_dns_zone_id_dfs == "" || (length(split("/", var.private_dns_zone_id_dfs)) == 9 && endswith(var.private_dns_zone_id_dfs, "privatelink.dfs.core.windows.net"))
-    error_message = "Please specify a valid resource ID for the private DNS Zone."
-  }
-}
-
-variable "private_dns_zone_id_key_vault" {
-  description = "Specifies the resource ID of the private DNS zone for Azure Key Vault."
-  type        = string
-  validation {
-    condition     = var.private_dns_zone_id_key_vault == "" || (length(split("/", var.private_dns_zone_id_key_vault)) == 9 && endswith(var.private_dns_zone_id_key_vault, "privatelink.vaultcore.azure.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
