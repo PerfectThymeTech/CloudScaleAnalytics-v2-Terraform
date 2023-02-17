@@ -28,7 +28,7 @@ variable "tags" {
 }
 
 variable "vnet_id" {
-  description = "Specifies the resource ID of the Vnet used for the Data Management Zone"
+  description = "Specifies the resource ID of the Vnet used for the Data Landing Zone"
   type        = string
   validation {
     condition     = length(split("/", var.vnet_id)) == 9
@@ -37,7 +37,7 @@ variable "vnet_id" {
 }
 
 variable "nsg_id" {
-  description = "Specifies the resource ID of the default network security group for the Data Management Zone"
+  description = "Specifies the resource ID of the default network security group for the Data Landing Zone"
   type        = string
   validation {
     condition     = length(split("/", var.nsg_id)) == 9
@@ -46,7 +46,16 @@ variable "nsg_id" {
 }
 
 variable "route_table_id" {
-  description = "Specifies the resource ID of the default route table for the Data Management Zone"
+  description = "Specifies the resource ID of the default route table for the Data Landing Zone"
+  type        = string
+  validation {
+    condition     = length(split("/", var.route_table_id)) == 9
+    error_message = "Please specify a valid resource ID."
+  }
+}
+
+variable "purview_id" {
+  description = "Specifies the resource ID of the default Purview Account for the Data Landing Zone"
   type        = string
   validation {
     condition     = length(split("/", var.route_table_id)) == 9
