@@ -22,6 +22,15 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "data_factory_id" {
+  description = "Specifies the resource ID of the Azure Data Factory."
+  type        = string
+  validation {
+    condition     = length(split("/", var.vnet_id)) == 9
+    error_message = "Please specify a valid resource ID."
+  }
+}
+
 variable "subnet_id" {
   description = "Specifies the resource ID of the subnet used for the datalake."
   type        = string
