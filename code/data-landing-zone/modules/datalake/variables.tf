@@ -8,7 +8,7 @@ variable "datalake_name" {
   type        = string
   validation {
     condition     = length(var.datalake_name) >= 2
-    error_message = "Specifies the name of the ADLS Gen2 account."
+    error_message = "Please specify a valid name."
   }
 }
 
