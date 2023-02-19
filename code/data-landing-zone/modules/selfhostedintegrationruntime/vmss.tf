@@ -25,7 +25,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     name                       = "${var.selfhostedintegrationruntime_name}-shir"
     auto_upgrade_minor_version = true
     protected_settings = {
-      commandToExecute = "powershell.exe -ExecutionPolicy Unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/installSHIRGateway.ps1; c:/azuredata/installSHIRGateway.ps1 -gatewayKey \"${datafactoryIntegrationRuntimeAuthKey}\""
+      commandToExecute = "powershell.exe -ExecutionPolicy Unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/installSHIRGateway.ps1; c:/azuredata/installSHIRGateway.ps1 -gatewayKey \"${azurerm_data_factory_integration_runtime_self_hosted.data_factory_shir.primary_authorization_key}\""
     }
   }
   extension_operations_enabled = true
