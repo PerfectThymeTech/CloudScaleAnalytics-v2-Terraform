@@ -58,7 +58,7 @@ resource "azurerm_storage_management_policy" "datalake_management_policy" {
   storage_account_id = azurerm_storage_account.datalake.id
 
   rule {
-    name = "default"
+    name    = "default"
     enabled = true
     actions {
       base_blob {
@@ -71,11 +71,11 @@ resource "azurerm_storage_management_policy" "datalake_management_policy" {
       }
       version {
         change_tier_to_cool_after_days_since_creation = 180
-        delete_after_days_since_creation = 360
+        delete_after_days_since_creation              = 360
       }
     }
     filters {
-      blob_types = [ "blockBlob" ]
+      blob_types   = ["blockBlob"]
       prefix_match = []
     }
   }
