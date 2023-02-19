@@ -1,5 +1,5 @@
 resource "azurerm_resource_deployment_script_azure_power_shell" "purview_admin_onboarding" {
-  count = length(var.purview_root_collection_admins) > 0 ? 1 : 0
+  count               = length(var.purview_root_collection_admins) > 0 ? 1 : 0
   name                = "${azurerm_purview_account.purview.name}-admin-onb"
   location            = var.location
   resource_group_name = azurerm_resource_group.automation_rg.name
