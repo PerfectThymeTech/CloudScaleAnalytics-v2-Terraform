@@ -10,6 +10,10 @@ terraform {
       source  = "azure/azapi"
       version = "1.3.0"
     }
+    databricks = {
+      source  = "databricks/databricks"
+      version = "1.10.0"
+    }
   }
 
   backend "azurerm" {
@@ -52,6 +56,24 @@ provider "azapi" {
   environment                    = "public"
   skip_provider_registration     = false
   use_oidc                       = true
+}
+
+provider "databricks" {
+  alias                       = "databricks_automation"
+  auth_type                   = "azure-msi"
+  azure_environment           = "public"
+  azure_use_msi               = true
+  azure_workspace_resource_id = module.databricks_automation.databricks_id
+  host                        = module.databricks_automation.databricks_workspace_url
+}
+
+provider "databricks" {
+  alias                       = "databricks_experimentation"
+  auth_type                   = "azure-msi"
+  azure_environment           = "public"
+  azure_use_msi               = true
+  azure_workspace_resource_id = module.databricks_experimentation.databricks_id
+  host                        = module.databricks_experimentation.databricks_workspace_url
 }
 
 data "azurerm_client_config" "current" {
