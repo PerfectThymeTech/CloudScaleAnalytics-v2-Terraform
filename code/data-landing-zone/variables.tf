@@ -66,7 +66,7 @@ variable "purview_id" {
   type        = string
   sensitive   = false
   validation {
-    condition     = length(split("/", var.route_table_id)) == 9
+    condition     = length(split("/", var.purview_id)) == 9
     error_message = "Please specify a valid resource ID."
   }
 }

@@ -31,7 +31,7 @@ variable "data_factory_id" {
   type        = string
   sensitive   = false
   validation {
-    condition     = length(split("/", var.vnet_id)) == 9
+    condition     = length(split("/", var.data_factory_id)) == 9
     error_message = "Please specify a valid resource ID."
   }
 }
@@ -41,7 +41,7 @@ variable "subnet_id" {
   type        = string
   sensitive   = false
   validation {
-    condition     = length(split("/", var.vnet_id)) == 11
+    condition     = length(split("/", var.subnet_id)) == 11
     error_message = "Please specify a valid resource ID."
   }
 }
