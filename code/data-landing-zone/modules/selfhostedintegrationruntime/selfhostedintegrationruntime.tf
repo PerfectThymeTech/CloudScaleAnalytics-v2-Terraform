@@ -1,5 +1,5 @@
 data "azurerm_data_factory" "data_factory" {
-  name = local.data_factory.name
+  name                = local.data_factory.name
   resource_group_name = local.data_factory.resource_group_name
 }
 

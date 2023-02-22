@@ -1,11 +1,11 @@
 data "azurerm_data_factory" "shared_data_factories" {
-  for_each = local.shared_data_factories
-  name = each.value.name
+  for_each            = local.shared_data_factories
+  name                = each.value.name
   resource_group_name = each.value.resource_group_name
 }
 
 resource "azurerm_data_factory_integration_runtime_self_hosted" "data_factory_shir_shared" {
-  for_each = data.azurerm_data_factory.shared_data_factories
+  for_each        = data.azurerm_data_factory.shared_data_factories
   name            = data.azurerm_data_factory.shared_data_factories[each.key].name
   data_factory_id = data.azurerm_data_factory.shared_data_factories[each.key].id
 
