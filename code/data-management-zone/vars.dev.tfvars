@@ -1,3 +1,4 @@
+company_name = "PerfectThymeTech"
 location                               = "northeurope"
 environment                            = "dev"
 prefix                                 = "mydmgmt"
