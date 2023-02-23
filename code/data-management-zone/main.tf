@@ -10,14 +10,18 @@ terraform {
       source  = "azure/azapi"
       version = "1.3.0"
     }
+    databricks = {
+      source  = "databricks/databricks"
+      version = "1.10.0"
+    }
   }
 
   backend "azurerm" {
     environment          = "public"
-    resource_group_name  = "terraform"
-    storage_account_name = "terraformptt001"
-    container_name       = "tfstate"
-    key                  = "terraform.data-management-zone.tfstate"
+    resource_group_name  = "mycrp-prd-cicd"
+    storage_account_name = "mycrpprdstg001"
+    container_name       = "data-management-zone"
+    key                  = "terraform.tfstate"
     use_oidc             = true
   }
 }
@@ -52,6 +56,14 @@ provider "azapi" {
   environment                    = "public"
   skip_provider_registration     = false
   use_oidc                       = true
+}
+
+provider "databricks" {
+  auth_type                   = "azure-msi"
+  azure_environment           = "public"
+  azure_use_msi               = true
+  azure_workspace_resource_id = module.databricks.databricks_id
+  host                        = module.databricks.databricks_workspace_url
 }
 
 data "azurerm_client_config" "current" {
