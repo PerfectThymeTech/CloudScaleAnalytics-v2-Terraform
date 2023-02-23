@@ -21,5 +21,5 @@ locals {
     name                = split("/", var.vnet_id)[8]
   }
 
-  unity_container_name = "Unity${title(var.location)}"
+  unity_container_name = "unity${var.location}"
 }

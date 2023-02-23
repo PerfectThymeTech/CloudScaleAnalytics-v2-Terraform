@@ -11,7 +11,7 @@ resource "azurerm_storage_account" "datalake" {
   allow_nested_items_to_be_public = false
   allowed_copy_scope              = "AAD"
   blob_properties {
-    change_feed_enabled           = false
+    change_feed_enabled = false
     # change_feed_retention_in_days = 7
     container_delete_retention_policy {
       days = 7
