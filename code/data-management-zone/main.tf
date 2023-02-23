@@ -62,8 +62,8 @@ provider "databricks" {
   auth_type                   = "azure-msi"
   azure_environment           = "public"
   azure_use_msi               = true
-  azure_workspace_resource_id = module.databricks.databricks_id
-  host                        = module.databricks.databricks_workspace_url
+  azure_workspace_resource_id = module.databricks_consumption.databricks_id
+  host                        = module.databricks_consumption.databricks_workspace_url
 }
 
 data "azurerm_client_config" "current" {
@@ -71,6 +71,12 @@ data "azurerm_client_config" "current" {
 
 resource "azurerm_resource_group" "governance_rg" {
   name     = "${local.prefix}-governance-rg"
+  location = var.location
+  tags     = var.tags
+}
+
+resource "azurerm_resource_group" "unity_rg" {
+  name     = "${local.prefix}-unity-rg"
   location = var.location
   tags     = var.tags
 }
