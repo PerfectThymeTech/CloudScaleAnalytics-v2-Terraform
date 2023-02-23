@@ -200,4 +200,33 @@ resource storagePrivateEndpointBlobARecord 'Microsoft.Network/privateEndpoints/p
   }
 }
 
+// Role Assignment
+module uaiRoleAssignmentStorage 'auxiliary/uaiRoleAssignmentStorage.bicep' = {
+  name: 'uaiRoleAssignmentStorage'
+  scope: resourceGroup()
+  params: {
+    userAssignedIdentityId: userAssignedIdentity.id
+    storageAccountId: storage.id
+    role: 'StorageBlobDataContributor'
+  }
+}
+
+module uaiRoleAssignmentSubscriptionContributor 'auxiliary/uaiRoleAssignmentSubscription.bicep' = {
+  name: 'uaiRoleAssignmentSubscriptionContributor'
+  scope: subscription()
+  params: {
+    userAssignedIdentityId: userAssignedIdentity.id
+    role: 'Contributor'
+  }
+}
+
+module uaiRoleAssignmentSubscriptionUserAccessAdmin 'auxiliary/uaiRoleAssignmentSubscription.bicep' = {
+  name: 'uaiRoleAssignmentSubscriptionUserAccessAdmin'
+  scope: subscription()
+  params: {
+    userAssignedIdentityId: userAssignedIdentity.id
+    role: 'UserAccessAdministrator'
+  }
+}
+
 // Outputs
