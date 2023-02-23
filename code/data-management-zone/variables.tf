@@ -101,6 +101,16 @@ variable "private_dns_zone_id_blob" {
   }
 }
 
+variable "private_dns_zone_id_dfs" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage dfs endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_dfs == "" || (length(split("/", var.private_dns_zone_id_dfs)) == 9 && endswith(var.private_dns_zone_id_dfs, "privatelink.dfs.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
 variable "private_dns_zone_id_queue" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage queue endpoints."
   type        = string
