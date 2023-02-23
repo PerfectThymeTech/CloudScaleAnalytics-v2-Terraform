@@ -1,3 +1,6 @@
+data "azurerm_client_config" "current" {
+}
+
 variable "location" {
   description = "Specifies the location for all Azure resources."
   type        = string
@@ -10,6 +13,16 @@ variable "workspace_name" {
   sensitive   = false
   validation {
     condition     = length(var.workspace_name) >= 2
+    error_message = "Please specify a valid name."
+  }
+}
+
+variable "key_vault_name" {
+  description = "Specifies the name of the Key Vault used for your Databricks workspace."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = length(var.key_vault_name) >= 2
     error_message = "Please specify a valid name."
   }
 }
@@ -92,6 +105,16 @@ variable "private_dns_zone_id_databricks" {
   sensitive   = false
   validation {
     condition     = var.private_dns_zone_id_databricks == "" || (length(split("/", var.private_dns_zone_id_databricks)) == 9 && endswith(var.private_dns_zone_id_databricks, "privatelink.azuredatabricks.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_key_vault" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Key Vault endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_key_vault == "" || (length(split("/", var.private_dns_zone_id_key_vault)) == 9 && endswith(var.private_dns_zone_id_key_vault, "privatelink.vaultcore.azure.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
