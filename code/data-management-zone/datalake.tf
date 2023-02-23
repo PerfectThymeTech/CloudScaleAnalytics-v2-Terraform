@@ -1,36 +1,36 @@
 resource "azurerm_storage_account" "datalake" {
-  name                = replace("-", "${local.prefix}-st001")
+  name                = replace("${local.prefix}-st001", "-", "")
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.unity_rg.name
   tags                = var.tags
 
   access_tier                     = "Hot"
-  account_kind                    = "Standard"
+  account_kind                    = "StorageV2"
   account_replication_type        = "ZRS"
   account_tier                    = "Standard"
   allow_nested_items_to_be_public = false
   allowed_copy_scope              = "AAD"
   blob_properties {
     change_feed_enabled           = false
-    change_feed_retention_in_days = 7
+    # change_feed_retention_in_days = 7
     container_delete_retention_policy {
       days = 7
     }
     delete_retention_policy {
       days = 7
     }
-    default_service_version  = "2022-09-01"
+    # default_service_version  = "2020-06-12"
     last_access_time_enabled = false
     versioning_enabled       = false
   }
   cross_tenant_replication_enabled = false
   default_to_oauth_authentication  = true
   enable_https_traffic_only        = true
-  immutability_policy {
-    state                         = "Disabled"
-    allow_protected_append_writes = true
-    period_since_creation_in_days = 7
-  }
+  # immutability_policy {  # Not supported for ADLS Gen2
+  #   state                         = "Disabled"
+  #   allow_protected_append_writes = true
+  #   period_since_creation_in_days = 7
+  # }
   infrastructure_encryption_enabled = true
   is_hns_enabled                    = true
   large_file_share_enabled          = false
@@ -101,7 +101,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_blob" {
     private_connection_resource_id = azurerm_storage_account.datalake.id
     subresource_names              = ["blob"]
   }
-  subnet_id = var.subnet_id
+  subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
     content {
@@ -126,7 +126,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_dfs" {
     private_connection_resource_id = azurerm_storage_account.datalake.id
     subresource_names              = ["dfs"]
   }
-  subnet_id = var.subnet_id
+  subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_dfs == "" ? [] : [1]
     content {
