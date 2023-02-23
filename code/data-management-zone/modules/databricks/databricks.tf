@@ -17,7 +17,7 @@ resource "azurerm_databricks_workspace" "databricks" {
     public_subnet_name                                   = var.public_subnet_name
     public_subnet_network_security_group_association_id  = var.public_subnet_network_security_group_association_id
     storage_account_name                                 = replace(var.workspace_name, "-", "")
-    storage_account_sku_name                             = "Standard_ZRS"
+    storage_account_sku_name                             = "Standard_LRS"
   }
 }
 
