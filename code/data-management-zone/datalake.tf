@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "datalake" {
-  name                = var.datalake_name
+  name                = replace("-", "${local.prefix}-st001")
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = var.tags
@@ -82,8 +82,7 @@ resource "azurerm_storage_management_policy" "datalake_management_policy" {
 }
 
 resource "azurerm_storage_container" "datalake_containers" {
-  for_each             = var.datalake_filesystem_names
-  name                 = each.key
+  name                 = local.unity_container_name
   storage_account_name = azurerm_storage_account.datalake.name
 
   container_access_type = "private"
