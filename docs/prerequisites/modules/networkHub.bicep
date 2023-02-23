@@ -323,6 +323,6 @@ resource virtualNetworkManager 'Microsoft.Network/networkManagers@2022-07-01' = 
 
 // Outputs
 output vnetId string = vnet.id
-output serviceSubnet string = vnet.properties.subnets[1].id
+output serviceSubnetId string = vnet.properties.subnets[1].id
 output firewallPrivateIp string = firewall.properties.ipConfigurations[0].properties.privateIPAddress
 output virtualNetworkManagerId string = virtualNetworkManager.id
