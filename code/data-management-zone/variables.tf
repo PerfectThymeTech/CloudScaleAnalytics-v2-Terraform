@@ -54,15 +54,6 @@ variable "route_table_id" {
   }
 }
 
-# variable "services_subnet_address_prefix" {
-#   description = "Specifies the resource ID of the Vnet used for the Data Management Zone"
-#   type = string
-#   validation {
-#     condition = length(split("/", var.vnet_id)) == 9
-#     error_message = "Please specify a valid resource ID for a virtual network."
-#   }
-# }
-
 variable "private_dns_zone_id_namespace" {
   description = "Specifies the resource ID of the private DNS zone for the EventHub namespace."
   type        = string
@@ -131,6 +122,16 @@ variable "private_dns_zone_id_key_vault" {
   type        = string
   validation {
     condition     = var.private_dns_zone_id_key_vault == "" || (length(split("/", var.private_dns_zone_id_key_vault)) == 9 && endswith(var.private_dns_zone_id_key_vault, "privatelink.vaultcore.azure.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_databricks" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Databricks UI endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_databricks == "" || (length(split("/", var.private_dns_zone_id_databricks)) == 9 && endswith(var.private_dns_zone_id_databricks, "privatelink.azuredatabricks.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
