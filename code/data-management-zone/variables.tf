@@ -1,3 +1,9 @@
+variable "company_name" {
+  description = "Specifies the name of the company."
+  type        = string
+  sensitive   = false
+}
+
 variable "location" {
   description = "Specifies the location for all Azure resources."
   type        = string
