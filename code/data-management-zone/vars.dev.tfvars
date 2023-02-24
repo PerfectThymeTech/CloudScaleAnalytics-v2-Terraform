@@ -17,3 +17,4 @@ private_dns_zone_id_synapse_portal     = "/subscriptions/8f171ff9-2b5b-4f0f-aed5
 private_dns_zone_id_key_vault          = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mycrp-prd-global-dns/providers/Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net"
 private_dns_zone_id_databricks         = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mycrp-prd-global-dns/providers/Microsoft.Network/privateDnsZones/privatelink.azuredatabricks.net"
 purview_root_collection_admins         = []
+data_platform_subscription_ids         = []

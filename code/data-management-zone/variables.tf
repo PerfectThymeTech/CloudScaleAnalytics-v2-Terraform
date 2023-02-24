@@ -172,3 +172,9 @@ variable "purview_root_collection_admins" {
   type        = list(string)
   sensitive   = false
 }
+
+variable "data_platform_subscription_ids" {
+  description = "Specifies the list of subscription IDs of your data platform."
+  type        = list(string)
+  sensitive   = false
+}
