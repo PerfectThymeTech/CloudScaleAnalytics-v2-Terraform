@@ -12,6 +12,7 @@ param tags object
 param vnetAddressPrefix string = '10.0.0.0/20'
 param azureFirewallSubnetAddressPrefix string = '10.0.0.0/24'
 param servicesSubnetAddressPrefix string = '10.0.1.0/24'
+param bastionSubnetAddressPrefix string = '10.0.2.0/24'
 @allowed([
   'Standard'
   'Premium'
@@ -31,6 +32,7 @@ var firewallPolicyName = '${prefix}-afwp001'
 var firewallName = '${prefix}-afw001'
 var azureFirewallSubnetName = 'AzureFirewallSubnet'
 var servicesSubnetName = 'ServicesSubnet'
+var bastionSubnetName = 'AzureBastionSubnet'
 var firewallPremiumRegions = [
   'australiacentral'
   'australiacentral2'
@@ -170,6 +172,169 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2020-11-01' = {
   }
 }
 
+resource bastionNsg 'Microsoft.Network/networkSecurityGroups@2020-11-01' = {
+  name: '${prefix}-bastion-nsg'
+  location: location
+  tags: tags
+  properties: {
+    securityRules: [
+      {
+        name: 'AllowHttpsInbound'
+        properties: {
+          description: 'Required for HTTPS inbound communication of connecting user.'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+          sourceAddressPrefix: 'Internet'
+          destinationAddressPrefix: '*'
+          access: 'Allow'
+          priority: 120
+          direction: 'Inbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowGatewayManagerInbound'
+        properties: {
+          description: 'Required for the control plane, that is, Gateway Manager to be able to talk to Azure Bastion.'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+          sourceAddressPrefix: 'GatewayManager'
+          destinationAddressPrefix: '*'
+          access: 'Allow'
+          priority: 130
+          direction: 'Inbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowAzureLoadBalancerInbound'
+        properties: {
+          description: 'Required for the control plane, that is, Gateway Manager to be able to talk to Azure Bastion.'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+          sourceAddressPrefix: 'AzureLoadBalancer'
+          destinationAddressPrefix: '*'
+          access: 'Allow'
+          priority: 140
+          direction: 'Inbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowBastionCommunicationInbound'
+        properties: {
+          description: 'Required for data plane communication between the underlying components of Azure Bastion.'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: ''
+          sourceAddressPrefix: 'VirtualNetwork'
+          destinationAddressPrefix: 'VirtualNetwork'
+          access: 'Allow'
+          priority: 150
+          direction: 'Inbound'
+          sourcePortRanges: []
+          destinationPortRanges: [
+            '5701'
+            '8080'
+          ]
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowSshRdpOutbound'
+        properties: {
+          description: 'Required for SSH and RDP outbound connectivity.'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: ''
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'VirtualNetwork'
+          access: 'Allow'
+          priority: 100
+          direction: 'Outbound'
+          sourcePortRanges: []
+          destinationPortRanges: [
+            '22'
+            '3389'
+          ]
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowAzureCloudOutbound'
+        properties: {
+          description: 'Required for Azure Cloud outbound connectivity (Logs and Metrics).'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '443'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'AzureCloud'
+          access: 'Allow'
+          priority: 110
+          direction: 'Outbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowBastionCommunicationOutbound'
+        properties: {
+          description: 'Required for data plane communication between the underlying components of Azure Bastion.'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: ''
+          sourceAddressPrefix: 'VirtualNetwork'
+          destinationAddressPrefix: 'VirtualNetwork'
+          access: 'Allow'
+          priority: 120
+          direction: 'Outbound'
+          sourcePortRanges: []
+          destinationPortRanges: [
+            '5701'
+            '8080'
+          ]
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+      {
+        name: 'AllowGetSessionInformationOutbound'
+        properties: {
+          description: 'Required for session and certificate validation..'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '80'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'Internet'
+          access: 'Allow'
+          priority: 130
+          direction: 'Outbound'
+          sourcePortRanges: []
+          destinationPortRanges: []
+          sourceAddressPrefixes: []
+          destinationAddressPrefixes: []
+        }
+      }
+    ]
+  }
+}
+
 resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   name: vnetName
   location: location
@@ -211,6 +376,24 @@ resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
           delegations: []
           privateEndpointNetworkPolicies: 'Disabled'
           privateLinkServiceNetworkPolicies: 'Disabled'
+          serviceEndpointPolicies: []
+          serviceEndpoints: []
+        }
+      }
+      {
+        name: bastionSubnetName
+        properties: {
+          addressPrefix: bastionSubnetAddressPrefix
+          addressPrefixes: []
+          networkSecurityGroup: {
+            id: bastionNsg.id
+          }
+          // routeTable: {
+          //   id: routeTable.id
+          // }
+          delegations: []
+          privateEndpointNetworkPolicies: 'Enabled'
+          privateLinkServiceNetworkPolicies: 'Enabled'
           serviceEndpointPolicies: []
           serviceEndpoints: []
         }
@@ -324,5 +507,6 @@ resource virtualNetworkManager 'Microsoft.Network/networkManagers@2022-07-01' = 
 // Outputs
 output vnetId string = vnet.id
 output serviceSubnetId string = vnet.properties.subnets[1].id
+output bastionSubnetId string = vnet.properties.subnets[2].id
 output firewallPrivateIp string = firewall.properties.ipConfigurations[0].properties.privateIPAddress
 output virtualNetworkManagerId string = virtualNetworkManager.id
