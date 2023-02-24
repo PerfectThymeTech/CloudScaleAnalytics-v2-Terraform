@@ -17,7 +17,7 @@ resource "azurerm_eventhub_namespace" "eventhub_namespace" {
       default_action                 = "Deny"
       ip_rule                        = []
       public_network_access_enabled  = false
-      trusted_service_access_enabled = false
+      trusted_service_access_enabled = true
       virtual_network_rule           = []
     }
   ]
