@@ -18,7 +18,7 @@ module "databricks_unity" {
   source = "./modules/databricksunity"
   providers = {
     databricks = databricks
-   }
+  }
 
   company_name                   = var.company_name
   location                       = var.location
