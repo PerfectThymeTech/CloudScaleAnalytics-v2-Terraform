@@ -13,3 +13,17 @@ module "databricks_consumption" {
   private_endpoints_subnet_id                          = azurerm_subnet.private_endpoint_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
 }
+
+module "databricks_unity" {
+  source = "./modules/databricksunity"
+  providers = {
+    databricks = databricks
+   }
+
+  company_name                   = var.company_name
+  location                       = var.location
+  databricks_access_connector_id = azurerm_databricks_access_connector.databricks_access_connector.id
+  databricks_id                  = module.databricks_consumption.databricks_id
+  storage_name                   = azurerm_storage_account.datalake.name
+  storage_container_name         = azapi_resource.datalake_container.name
+}
