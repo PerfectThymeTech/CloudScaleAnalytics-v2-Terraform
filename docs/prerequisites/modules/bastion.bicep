@@ -29,6 +29,13 @@ var imageReferenceWindowsServer2022 = {
   version: 'latest'
 }
 
+var imageReferenceWindows11 = {
+  publisher: 'microsoftwindowsdesktop'
+  offer: 'windows-11'
+  sku: 'win11-22h2-pro'
+  version: 'latest'
+}
+
 // Resources
 resource publicip 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
   name: publicIpName
