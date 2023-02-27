@@ -14,17 +14,17 @@ locals {
       "isOptional" : false,
       "hidden" : false
     },
-    "azure_attributes.availability": {
-      "type": "fixed",
-      "defaultValue": "ON_DEMAND_AZURE",
+    "azure_attributes.availability" : {
+      "type" : "fixed",
+      "defaultValue" : "ON_DEMAND_AZURE",
       "isOptional" : false,
       "hidden" : true
     },
-    "azure_attributes.spot_bid_max_price": {
-      "type": "fixed",
-      "value": -1,
+    "azure_attributes.spot_bid_max_price" : {
+      "type" : "fixed",
+      "value" : -1,
       "isOptional" : false,
-      "hidden": true
+      "hidden" : true
     },
     "cluster_log_conf.type" : {
       "type" : "fixed",
@@ -50,10 +50,10 @@ locals {
       "isOptional" : false,
       "hidden" : true
     },
-    "num_workers": {
-      "type": "forbidden",
+    "num_workers" : {
+      "type" : "forbidden",
       "isOptional" : true,
-      "hidden": true
+      "hidden" : true
     },
     "spark_version" : {
       "type" : "unlimited",
@@ -73,10 +73,10 @@ locals {
       "type" : "fixed",
       "value" : "job"
     },
-    "spark_conf.spark.databricks.cluster.profile": {
-      "type": "forbidden",
+    "spark_conf.spark.databricks.cluster.profile" : {
+      "type" : "forbidden",
       "isOptional" : true,
-      "hidden": true
+      "hidden" : true
     }
   }
 
@@ -85,38 +85,38 @@ locals {
       "type" : "fixed",
       "value" : "all-purpose"
     },
-    "autotermination_minutes": {
-      "type": "range",
-      "minValue": 1
-      "maxValue": 120
-      "defaultValue": 30,
-      "isOptional": false,
+    "autotermination_minutes" : {
+      "type" : "range",
+      "minValue" : 1
+      "maxValue" : 120
+      "defaultValue" : 30,
+      "isOptional" : false,
       "hidden" : false
     },
-    "dbus_per_hour": {
-      "type": "range",
-      "maxValue": 100
+    "dbus_per_hour" : {
+      "type" : "range",
+      "maxValue" : 100
     },
-    "driver_instance_pool_id": {
-      "type": "forbidden",
-      "isOptional": true,
-      "hidden": true
+    "driver_instance_pool_id" : {
+      "type" : "forbidden",
+      "isOptional" : true,
+      "hidden" : true
     },
-    "instance_pool_id": {
-      "type": "forbidden",
-      "isOptional": true,
-      "hidden": true
+    "instance_pool_id" : {
+      "type" : "forbidden",
+      "isOptional" : true,
+      "hidden" : true
     },
-    "data_security_mode": {
-      "type": "allowlist",
-      "values": [
+    "data_security_mode" : {
+      "type" : "allowlist",
+      "values" : [
         "SINGLE_USER",
         "NONE",
         # "LEGACY_SINGLE_USER",
         # "LEGACY_SINGLE_USER_STANDARD"
       ],
-      "defaultValue": "SINGLE_USER",
-      "hidden": true
+      "defaultValue" : "SINGLE_USER",
+      "hidden" : true
     }
   }
 }
