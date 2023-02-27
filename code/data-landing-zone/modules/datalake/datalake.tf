@@ -40,6 +40,20 @@ resource "azurerm_storage_account" "datalake" {
     default_action             = "Deny"
     ip_rules                   = []
     virtual_network_subnet_ids = []
+    dynamic "private_link_access" {
+      for_each = setunion(var.data_platform_subscription_ids, [data.azurerm_client_config.current.subscription_id])
+      content {
+        endpoint_resource_id = "/subscriptions/${private_link_access.value}/resourcegroups/*/providers/Microsoft.Databricks/accessConnectors/*"
+        endpoint_tenant_id   = data.azurerm_client_config.current.tenant_id
+      }
+    }
+    dynamic "private_link_access" {
+      for_each = tolist(setunion(var.data_platform_subscription_ids, [data.azurerm_client_config.current.subscription_id]))
+      content {
+        endpoint_resource_id = "/subscriptions/${private_link_access.value}/resourcegroups/*/providers/Microsoft.Synapse/workspaces/*"
+        endpoint_tenant_id   = data.azurerm_client_config.current.tenant_id
+      }
+    }
   }
   nfsv3_enabled                 = false
   public_network_access_enabled = true
@@ -81,12 +95,26 @@ resource "azurerm_storage_management_policy" "datalake_management_policy" {
   }
 }
 
-resource "azurerm_storage_container" "datalake_containers" {
-  for_each             = var.datalake_filesystem_names
-  name                 = each.key
-  storage_account_name = azurerm_storage_account.datalake.name
+# resource "azurerm_storage_container" "datalake_containers" {
+#   for_each             = var.datalake_filesystem_names
+#   name                 = each.key
+#   storage_account_name = azurerm_storage_account.datalake.name
 
-  container_access_type = "private"
+#   container_access_type = "private"
+# }
+
+resource "azapi_resource" "datalake_containers" {
+  for_each  = var.datalake_filesystem_names
+  type      = "Microsoft.Storage/storageAccounts/blobServices/containers@2021-02-01"
+  name      = each.key
+  parent_id = "${azurerm_storage_account.datalake.id}/blobServices/default"
+
+  body = jsonencode({
+    properties = {
+      publicAccess = "None"
+      metadata     = {}
+    }
+  })
 }
 
 resource "azurerm_private_endpoint" "datalake_private_endpoint_blob" {
