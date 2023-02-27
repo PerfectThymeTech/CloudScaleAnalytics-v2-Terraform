@@ -16,6 +16,9 @@ module "databricks_automation" {
 
 module "databricks_experimentation" {
   source = "./modules/databricks"
+  providers = {
+    databricks = databricks.databricks_automation
+  }
 
   location                                             = var.location
   resource_group_name                                  = azurerm_resource_group.shared_app_exp_rg.name
