@@ -98,9 +98,9 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-04-01' = {
   name: virtualMachineName
   location: location
   tags: tags
-  identity: {
-    type: 'SystemAssigned'
-  }
+  // identity: {
+  //   type: 'SystemAssigned'
+  // }
   properties: {
     hardwareProfile: {
       vmSize: 'Standard_DS2_v2'
