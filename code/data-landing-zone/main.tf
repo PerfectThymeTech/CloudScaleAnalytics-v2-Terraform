@@ -10,6 +10,10 @@ terraform {
       source  = "azure/azapi"
       version = "1.3.0"
     }
+    databricks = {
+      source  = "databricks/databricks"
+      version = "1.10.0"
+    }
   }
 
   backend "azurerm" {
@@ -17,7 +21,7 @@ terraform {
     resource_group_name  = "terraform"
     storage_account_name = "terraformptt001"
     container_name       = "tfstate"
-    key                  = "terraform.data-management-zone.tfstate"
+    key                  = "terraform.data-landing-zone.tfstate"
     use_oidc             = true
   }
 }
@@ -51,32 +55,56 @@ provider "azapi" {
   disable_correlation_request_id = false
   environment                    = "public"
   skip_provider_registration     = false
-  # use_oidc                       = true
+  use_oidc                       = true
+}
+
+provider "databricks" {
+  alias                       = "databricks_automation"
+  auth_type                   = "azure-msi"
+  azure_environment           = "public"
+  azure_use_msi               = true
+  azure_workspace_resource_id = module.databricks_automation.databricks_id
+  host                        = module.databricks_automation.databricks_workspace_url
+}
+
+provider "databricks" {
+  alias                       = "databricks_experimentation"
+  auth_type                   = "azure-msi"
+  azure_environment           = "public"
+  azure_use_msi               = true
+  azure_workspace_resource_id = module.databricks_experimentation.databricks_id
+  host                        = module.databricks_experimentation.databricks_workspace_url
 }
 
 data "azurerm_client_config" "current" {
 }
 
-resource "azurerm_resource_group" "governance_rg" {
-  name     = "${local.prefix}-governance-rg"
+resource "azurerm_resource_group" "management_rg" {
+  name     = "${local.prefix}-mgmt-rg"
   location = var.location
   tags     = var.tags
 }
 
-resource "azurerm_resource_group" "container_rg" {
-  name     = "${local.prefix}-container-rg"
+resource "azurerm_resource_group" "storage_rg" {
+  name     = "${local.prefix}-storage-rg"
   location = var.location
   tags     = var.tags
 }
 
-resource "azurerm_resource_group" "consumption_rg" {
-  name     = "${local.prefix}-consumption-rg"
+resource "azurerm_resource_group" "runtimes_rg" {
+  name     = "${local.prefix}-runtimes-rg"
   location = var.location
   tags     = var.tags
 }
 
-resource "azurerm_resource_group" "automation_rg" {
-  name     = "${local.prefix}-automation-rg"
+resource "azurerm_resource_group" "shared_app_aut_rg" {
+  name     = "${local.prefix}-shared-app-aut-rg"
+  location = var.location
+  tags     = var.tags
+}
+
+resource "azurerm_resource_group" "shared_app_exp_rg" {
+  name     = "${local.prefix}-shared-app-exp-rg"
   location = var.location
   tags     = var.tags
 }
