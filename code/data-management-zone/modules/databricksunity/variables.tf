@@ -38,7 +38,7 @@ variable "databricks_workspace_id" {
   type        = string
   sensitive   = false
   validation {
-    condition     = length(split("/", var.databricks_id)) == 9
+    condition     = length(var.databricks_workspace_id) >= 2
     error_message = "Please specify a valid resource ID."
   }
 }
