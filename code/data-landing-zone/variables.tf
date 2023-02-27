@@ -130,3 +130,9 @@ variable "private_dns_zone_id_databricks" {
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
+
+variable "data_platform_subscription_ids" {
+  description = "Specifies the list of subscription IDs of your data platform."
+  type        = list(string)
+  sensitive   = false
+}
