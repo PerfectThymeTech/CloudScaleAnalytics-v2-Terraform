@@ -110,7 +110,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-04-01' = {
   // }
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_DS2_v2'
+      vmSize: 'Standard_DS2_v3'
     }
     networkProfile: {
       networkInterfaces: [
