@@ -24,6 +24,7 @@ module "databricks_unity" {
   location                       = var.location
   databricks_access_connector_id = azurerm_databricks_access_connector.databricks_access_connector.id
   databricks_id                  = module.databricks_consumption.databricks_id
+  databricks_workspace_id        = module.databricks_consumption.databricks_workspace_id
   storage_name                   = azurerm_storage_account.datalake.name
   storage_container_name         = azapi_resource.datalake_container.name
 }

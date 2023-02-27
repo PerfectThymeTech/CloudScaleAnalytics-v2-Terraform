@@ -33,6 +33,16 @@ variable "databricks_id" {
   }
 }
 
+variable "databricks_workspace_id" {
+  description = "Specifies the workspace id of the Azure Databricks workspace."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = length(split("/", var.databricks_id)) == 9
+    error_message = "Please specify a valid resource ID."
+  }
+}
+
 variable "storage_name" {
   description = "Specifies the name of the Datalake."
   type        = string
