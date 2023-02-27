@@ -59,9 +59,9 @@ provider "azapi" {
 }
 
 provider "databricks" {
-  auth_type                   = "azure-msi"
+  auth_type                   = "azure-cli"
   azure_environment           = "public"
-  azure_use_msi               = true
+  azure_use_msi               = false
   azure_workspace_resource_id = module.databricks_consumption.databricks_id
   host                        = module.databricks_consumption.databricks_workspace_url
 }

@@ -6,11 +6,11 @@ resource "databricks_metastore" "metastore" {
   delta_sharing_scope                               = "INTERNAL"
   owner                                             = data.azurerm_client_config.current.client_id
   storage_root                                      = "abfss://${var.storage_container_name}@${var.storage_name}.dfs.core.windows.net/"
-  force_destroy = true
+  force_destroy                                     = true
 }
 
 resource "databricks_metastore_data_access" "metastore_data_access" {
-  name         = "DefaultDataAccess"
+  name         = "default-data-access"
   metastore_id = databricks_metastore.metastore.id
 
   azure_managed_identity {

@@ -14,7 +14,7 @@ resource "azurerm_eventhub_namespace" "eventhub_namespace" {
   minimum_tls_version          = "1.2"
   network_rulesets = [
     {
-      default_action                 = "Deny"
+      default_action                 = "Allow"
       ip_rule                        = []
       public_network_access_enabled  = false
       trusted_service_access_enabled = true
