@@ -1,7 +1,7 @@
 resource "databricks_metastore" "metastore" {
-  name = "${var.company_name}-${title(var.location)}"
+  name = lower("${var.company_name}-${title(var.location)}")
 
-  delta_sharing_organization_name                   = var.company_name
+  delta_sharing_organization_name                   = lower(var.company_name)
   delta_sharing_recipient_token_lifetime_in_seconds = 0
   delta_sharing_scope                               = "INTERNAL"
   owner                                             = data.azurerm_client_config.current.client_id
