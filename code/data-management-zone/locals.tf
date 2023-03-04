@@ -20,4 +20,6 @@ locals {
     resource_group_name = split("/", var.vnet_id)[4]
     name                = split("/", var.vnet_id)[8]
   }
+
+  unity_container_name = "unity${var.location}"
 }

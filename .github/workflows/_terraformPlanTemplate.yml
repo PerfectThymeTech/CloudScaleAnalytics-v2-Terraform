@@ -35,7 +35,7 @@ permissions:
 jobs:
   deployment:
     name: Terraform Plan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     continue-on-error: false
     environment: ${{ inputs.environment }}
 
@@ -45,6 +45,13 @@ jobs:
       ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
 
     steps:
+      # Setup Node
+      - name: Setup Node
+        id: node_setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       # Setup Terraform
       - name: Setup Terraform
         id: terraform_setup

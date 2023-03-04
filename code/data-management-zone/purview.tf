@@ -98,7 +98,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_portal" {
 }
 
 # resource "azurerm_private_endpoint" "purview_private_endpoint_blob" {
-#   name                = "${azurerm_purview_account.purview.name}-blob-pe"
+#   name                = "${azurerm_purview_account.purview.name}-pe-blob"
 #   location            = var.location
 #   resource_group_name = azurerm_purview_account.purview.resource_group_name
 #   tags                = var.tags
@@ -123,7 +123,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_portal" {
 # }
 
 # resource "azurerm_private_endpoint" "purview_private_endpoint_queue" {
-#   name                = "${azurerm_purview_account.purview.name}-queue-pe"
+#   name                = "${azurerm_purview_account.purview.name}-pe-queue"
 #   location            = var.location
 #   resource_group_name = azurerm_purview_account.purview.resource_group_name
 #   tags                = var.tags
@@ -142,6 +142,31 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_portal" {
 #       name = "${azurerm_purview_account.purview.name}-queue-arecord"
 #       private_dns_zone_ids = [
 #         var.private_dns_zone_id_queue
+#       ]
+#     }
+#   }
+# }
+
+# resource "azurerm_private_endpoint" "purview_private_endpoint_namespace" {
+#   name                = "${azurerm_purview_account.purview.name}-pe-namespace"
+#   location            = var.location
+#   resource_group_name = azurerm_purview_account.purview.resource_group_name
+#   tags                = var.tags
+
+#   custom_network_interface_name = "${azurerm_purview_account.purview.name}-namespace-nic"
+#   private_service_connection {
+#     name                           = "${azurerm_purview_account.purview.name}-namespace-pe"
+#     is_manual_connection           = false
+#     private_connection_resource_id = azurerm_purview_account.purview.managed_resources.event_hub_namespace
+#     subresource_names              = ["namespace"]
+#   }
+#   subnet_id = azurerm_subnet.private_endpoint_subnet.id
+#   dynamic "private_dns_zone_group" {
+#     for_each = var.private_dns_zone_id_namespace == "" ? [] : [1]
+#     content {
+#       name = "${azurerm_purview_account.purview.name}-namespace-arecord"
+#       private_dns_zone_ids = [
+#         var.private_dns_zone_id_namespace
 #       ]
 #     }
 #   }
