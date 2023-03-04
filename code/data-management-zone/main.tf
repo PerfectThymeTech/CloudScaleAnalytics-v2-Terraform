@@ -4,11 +4,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.44.1"
+      version = "3.46.0"
     }
     azapi = {
       source  = "azure/azapi"
-      version = "1.3.0"
+      version = "1.4.0"
     }
     databricks = {
       source  = "databricks/databricks"
@@ -59,9 +59,7 @@ provider "azapi" {
 }
 
 provider "databricks" {
-  auth_type                   = "azure-cli"
   azure_environment           = "public"
-  azure_use_msi               = false
   azure_workspace_resource_id = module.databricks_consumption.databricks_id
   host                        = module.databricks_consumption.databricks_workspace_url
 }
