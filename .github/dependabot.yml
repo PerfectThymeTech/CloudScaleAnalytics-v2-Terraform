@@ -13,7 +13,7 @@ updates:
       - "github-actions"
       - "dependencies"
 
-  # Maintain dependencies for Terraform
+  # Maintain dependencies for Data Management Zone
   - package-ecosystem: "terraform"
     directory: "/code/data-management-zone"
     schedule:
