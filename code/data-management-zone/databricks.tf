@@ -34,7 +34,7 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_ui" {
     private_connection_resource_id = azurerm_databricks_workspace.databricks.id
     subresource_names              = ["databricks_ui_api"]
   }
-  subnet_id = var.private_endpoints_subnet_id
+  subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_databricks == "" ? [] : [1]
     content {
@@ -59,7 +59,7 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_web" {
     private_connection_resource_id = azurerm_databricks_workspace.databricks.id
     subresource_names              = ["browser_authentication"]
   }
-  subnet_id = var.private_endpoints_subnet_id
+  subnet_id = azurerm_subnet.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_databricks == "" ? [] : [1]
     content {
