@@ -1,3 +1,9 @@
+variable "company_name" {
+  description = "Specifies the name of the company."
+  type        = string
+  sensitive   = false
+}
+
 variable "location" {
   description = "Specifies the location for all Azure resources."
   type        = string
@@ -101,6 +107,16 @@ variable "private_dns_zone_id_blob" {
   }
 }
 
+variable "private_dns_zone_id_dfs" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage dfs endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_dfs == "" || (length(split("/", var.private_dns_zone_id_dfs)) == 9 && endswith(var.private_dns_zone_id_dfs, "privatelink.dfs.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
 variable "private_dns_zone_id_queue" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage queue endpoints."
   type        = string
@@ -141,8 +157,24 @@ variable "private_dns_zone_id_key_vault" {
   }
 }
 
+variable "private_dns_zone_id_databricks" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Databricks UI endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_databricks == "" || (length(split("/", var.private_dns_zone_id_databricks)) == 9 && endswith(var.private_dns_zone_id_databricks, "privatelink.azuredatabricks.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
 variable "purview_root_collection_admins" {
   description = "Specifies the list of user object IDs that are assigned as collection admin to the root collection in Purview."
+  type        = list(string)
+  sensitive   = false
+}
+
+variable "data_platform_subscription_ids" {
+  description = "Specifies the list of subscription IDs of your data platform."
   type        = list(string)
   sensitive   = false
 }

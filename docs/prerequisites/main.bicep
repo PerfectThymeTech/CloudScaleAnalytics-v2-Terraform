@@ -18,13 +18,62 @@ param environment string = 'dev'
 param prefix string
 @description('Specifies the tags that you want to apply to all resources.')
 param tags object = {}
+@description('Specifies the administrator username of the virtual machine.')
+param administratorUsername string = 'VmMainUser'
+@secure()
+@description('Specifies the administrator password of the virtual machine.')
+param administratorPassword string
 
 // Variables
 var name = toLower('${prefix}-${environment}')
+var bastionResourceGroupName = '${name}-bastion-rg'
+var cicdResourceGroupName = '${name}-cicd'
 var networkResourceGroupName = '${name}-network'
 var globalDnsResourceGroupName = '${name}-global-dns'
 var dataManagementZoneNetworkResourceGroupName = '${name}-dmgmt-network-rg'
 var dataLandingZone01NetworkResourceGroupName = '${name}-dlz01-network-rg'
+
+// CICD resources
+resource cicdResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+  name: cicdResourceGroupName
+  location: location
+  tags: tags
+  properties: {}
+}
+
+module cicdServices 'modules/cicd.bicep' = {
+  name: 'cicdServices'
+  scope: cicdResourceGroup
+  params: {
+    prefix: name
+    location: location
+    tags: tags
+    subnetId: networkServices.outputs.serviceSubnetId
+    privateDnsZoneIdBlob: globalDnsZones.outputs.privateDnsZoneIdBlob
+  }
+}
+
+// Bastion resources
+resource bastionResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+  name: bastionResourceGroupName
+  location: location
+  tags: tags
+  properties: {}
+}
+
+module bastionServices 'modules/bastion.bicep' = {
+  name: 'bastionServices'
+  scope: bastionResourceGroup
+  params: {
+    prefix: name
+    location: location
+    tags: tags
+    bastionSubnetId: networkServices.outputs.bastionSubnetId
+    vmSubnetId: networkServices.outputs.serviceSubnetId
+    administratorUsername: administratorUsername
+    administratorPassword: administratorPassword
+  }
+}
 
 // Network resources
 resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {

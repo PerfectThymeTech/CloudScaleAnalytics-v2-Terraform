@@ -21,3 +21,9 @@ resource "azurerm_role_assignment" "user_assigned_identity_roleassignment_govern
   role_definition_name = "Owner"
   principal_id         = azurerm_user_assigned_identity.user_assigned_identity.principal_id
 }
+
+resource "azurerm_role_assignment" "databricks_access_connector_roleassignment_datalake" {
+  scope                = azurerm_storage_account.datalake.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_databricks_access_connector.databricks_access_connector.identity[0].principal_id
+}
