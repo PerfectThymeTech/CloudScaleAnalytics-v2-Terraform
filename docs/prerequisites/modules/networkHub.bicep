@@ -316,7 +316,7 @@ resource bastionNsg 'Microsoft.Network/networkSecurityGroups@2020-11-01' = {
       {
         name: 'AllowGetSessionInformationOutbound'
         properties: {
-          description: 'Required for session and certificate validation..'
+          description: 'Required for session and certificate validation.'
           protocol: '*'
           sourcePortRange: '*'
           destinationPortRange: '80'
