@@ -20,6 +20,17 @@ variable "datalake_filesystem_names" {
   sensitive   = false
 }
 
+variable "datalake_replication_type" {
+  description = "Specifies the replication type of the ADLS Gen2 account."
+  type        = string
+  sensitive   = false
+  default     = "ZRS"
+  validation {
+    condition     = contains(["ZRS", "GZRS"], var.datalake_replication_type)
+    error_message = "Please specify a valid replication type."
+  }
+}
+
 variable "tags" {
   description = "Specifies the tags that you want to apply to all resources."
   type        = map(any)
@@ -58,6 +69,26 @@ variable "private_dns_zone_id_dfs" {
   sensitive   = false
   validation {
     condition     = var.private_dns_zone_id_dfs == "" || (length(split("/", var.private_dns_zone_id_dfs)) == 9 && endswith(var.private_dns_zone_id_dfs, "privatelink.dfs.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_queue" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage queue endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_queue == "" || (length(split("/", var.private_dns_zone_id_queue)) == 9 && endswith(var.private_dns_zone_id_queue, "privatelink.queue.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_table" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage table endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_table == "" || (length(split("/", var.private_dns_zone_id_table)) == 9 && endswith(var.private_dns_zone_id_table, "privatelink.table.core.windows.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }

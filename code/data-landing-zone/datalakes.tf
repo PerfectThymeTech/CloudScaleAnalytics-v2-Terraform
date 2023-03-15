@@ -4,8 +4,9 @@ module "datalake_raw" {
   location                  = var.location
   resource_group_name       = azurerm_resource_group.storage_rg.name
   tags                      = var.tags
-  datalake_name             = replace("-", "${local.prefix}-st-raw")
+  datalake_name             = "${local.prefix}-st-raw"
   datalake_filesystem_names = ["data"]
+  datalake_replication_type = "ZRS"
   subnet_id                 = azurerm_subnet.storage_subnet.id
   private_dns_zone_id_blob  = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
@@ -17,8 +18,9 @@ module "datalake_enriched" {
   location                  = var.location
   resource_group_name       = azurerm_resource_group.storage_rg.name
   tags                      = var.tags
-  datalake_name             = replace("-", "${local.prefix}-st-enr")
+  datalake_name             = "${local.prefix}-st-enr"
   datalake_filesystem_names = ["data"]
+  datalake_replication_type = "ZRS"
   subnet_id                 = azurerm_subnet.storage_subnet.id
   private_dns_zone_id_blob  = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
@@ -30,8 +32,9 @@ module "datalake_curated" {
   location                  = var.location
   resource_group_name       = azurerm_resource_group.storage_rg.name
   tags                      = var.tags
-  datalake_name             = replace("-", "${local.prefix}-st-cur")
+  datalake_name             = "${local.prefix}-st-cur"
   datalake_filesystem_names = ["data"]
+  datalake_replication_type = "ZRS"
   subnet_id                 = azurerm_subnet.storage_subnet.id
   private_dns_zone_id_blob  = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
@@ -43,9 +46,12 @@ module "datalake_workspace" {
   location                  = var.location
   resource_group_name       = azurerm_resource_group.storage_rg.name
   tags                      = var.tags
-  datalake_name             = replace("-", "${local.prefix}-st-wsp")
+  datalake_name             = "${local.prefix}-st-wsp"
   datalake_filesystem_names = ["data"]
+  datalake_replication_type = "ZRS"
   subnet_id                 = azurerm_subnet.storage_subnet.id
   private_dns_zone_id_blob  = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
+  private_dns_zone_id_queue = var.private_dns_zone_id_queue
+  private_dns_zone_id_table = var.private_dns_zone_id_table
 }

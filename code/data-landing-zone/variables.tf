@@ -91,6 +91,26 @@ variable "private_dns_zone_id_dfs" {
   }
 }
 
+variable "private_dns_zone_id_queue" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage queue endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_queue == "" || (length(split("/", var.private_dns_zone_id_queue)) == 9 && endswith(var.private_dns_zone_id_queue, "privatelink.queue.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_table" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Storage table endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_table == "" || (length(split("/", var.private_dns_zone_id_table)) == 9 && endswith(var.private_dns_zone_id_table, "privatelink.table.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
 variable "private_dns_zone_id_key_vault" {
   description = "Specifies the resource ID of the private DNS zone for Azure Key Vault."
   type        = string
