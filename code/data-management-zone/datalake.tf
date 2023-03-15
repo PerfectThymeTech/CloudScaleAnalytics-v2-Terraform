@@ -64,8 +64,8 @@ resource "azurerm_storage_account" "datalake" {
   }
   nfsv3_enabled                 = false
   public_network_access_enabled = true
-  queue_encryption_key_type     = "Service"
-  table_encryption_key_type     = "Service"
+  queue_encryption_key_type     = "Account"
+  table_encryption_key_type     = "Account"
   routing {
     choice                      = "MicrosoftRouting"
     publish_internet_endpoints  = false
