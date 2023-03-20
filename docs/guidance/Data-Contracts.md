@@ -12,7 +12,7 @@ As the data platform as well as the number of data products within a data platfo
 
 In order to do so, we are introducing the concept of a Data Contract as a clearly defined abstraction and interface between a Data Producer and Data Consumer within a data platform. As part of the next paragraphs, the term Data Contracts will be defined, and a high-level architecture will be provided that illustrates the high-level functionality within a distributed data platform.
 
-## Data COntract Definition
+## Data Contract Definition
 
 A Data Contract is an explicit and extendible definition of the interface between a data producer and a data consumer where a data product gets shared among the two parties in accordance with the definition of the contract.
 
