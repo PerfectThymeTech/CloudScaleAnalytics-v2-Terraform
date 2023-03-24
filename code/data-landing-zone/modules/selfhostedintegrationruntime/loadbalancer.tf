@@ -60,7 +60,7 @@ resource "azurerm_lb_nat_pool" "lb_nat_pool" {
 #   name = "${var.selfhostedintegrationruntime_name}-outboundrule"
 #   loadbalancer_id = azurerm_lb.lb.id
 
-#   allocated_outbound_ports = 
+#   allocated_outbound_ports =
 #   backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_address_pool.id
 #   enable_tcp_reset = true
 #   frontend_ip_configuration {

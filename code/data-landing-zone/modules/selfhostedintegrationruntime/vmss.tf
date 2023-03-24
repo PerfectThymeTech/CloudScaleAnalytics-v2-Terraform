@@ -14,7 +14,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     disable_automatic_rollback  = false
   }
   # boot_diagnostics {
-  #   storage_account_uri = 
+  #   storage_account_uri =
   # }
   computer_name_prefix                              = substr(var.selfhostedintegrationruntime_name, 0, 9)
   custom_data                                       = filebase64("${path.module}/installShirGateway/Install-ShirGateway.ps1")
@@ -74,7 +74,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
   timezone     = "UTC"
   upgrade_mode = "Automatic"
-  # user_data = 
+  # user_data =
   vtpm_enabled = true
   zone_balance = false
   zones        = ["1", "2", "3"]
