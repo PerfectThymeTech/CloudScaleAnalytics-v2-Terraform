@@ -59,12 +59,14 @@ provider "azapi" {
 }
 
 provider "databricks" {
+  alias                       = "automation"
   azure_environment           = "public"
   azure_workspace_resource_id = module.databricks_automation.databricks_id
   host                        = module.databricks_automation.databricks_workspace_url
 }
 
 provider "databricks" {
+  alias                       = "experimentation"
   azure_environment           = "public"
   azure_workspace_resource_id = module.databricks_experimentation.databricks_id
   host                        = module.databricks_experimentation.databricks_workspace_url
