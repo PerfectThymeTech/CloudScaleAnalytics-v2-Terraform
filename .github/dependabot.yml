@@ -13,6 +13,13 @@ updates:
       - "github-actions"
       - "dependencies"
 
+  # Maintain dependencies for pip
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+
   # Maintain dependencies for Data Management Zone
   - package-ecosystem: "terraform"
     directory: "/code/data-management-zone"
