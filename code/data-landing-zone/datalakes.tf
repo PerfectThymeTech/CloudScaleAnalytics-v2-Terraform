@@ -12,6 +12,7 @@ module "datalake_raw" {
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue = var.private_dns_zone_id_queue
   private_dns_zone_id_table = var.private_dns_zone_id_table
+  data_platform_subscription_ids = []
 }
 
 module "datalake_enriched" {
@@ -28,6 +29,7 @@ module "datalake_enriched" {
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue = var.private_dns_zone_id_queue
   private_dns_zone_id_table = var.private_dns_zone_id_table
+  data_platform_subscription_ids = []
 }
 
 module "datalake_curated" {
@@ -44,6 +46,7 @@ module "datalake_curated" {
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue = var.private_dns_zone_id_queue
   private_dns_zone_id_table = var.private_dns_zone_id_table
+  data_platform_subscription_ids = []
 }
 
 module "datalake_workspace" {
@@ -60,6 +63,5 @@ module "datalake_workspace" {
   private_dns_zone_id_dfs   = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue = var.private_dns_zone_id_queue
   private_dns_zone_id_table = var.private_dns_zone_id_table
-  private_dns_zone_id_queue = var.private_dns_zone_id_queue
-  private_dns_zone_id_table = var.private_dns_zone_id_table
+  data_platform_subscription_ids = []
 }

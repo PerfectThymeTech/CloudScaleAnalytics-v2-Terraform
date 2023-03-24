@@ -1,3 +1,6 @@
+data "azurerm_client_config" "current" {
+}
+
 variable "location" {
   description = "Specifies the location for all Azure resources."
   type        = string
@@ -91,4 +94,10 @@ variable "private_dns_zone_id_table" {
     condition     = var.private_dns_zone_id_table == "" || (length(split("/", var.private_dns_zone_id_table)) == 9 && endswith(var.private_dns_zone_id_table, "privatelink.table.core.windows.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
+}
+
+variable "data_platform_subscription_ids" {
+  description = "Specifies the list of subscription IDs of your data platform."
+  type        = list(string)
+  sensitive   = false
 }

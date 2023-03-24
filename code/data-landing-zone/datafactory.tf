@@ -25,7 +25,7 @@ resource "azurerm_private_endpoint" "data_factory_private_endpoint_data_factory"
     private_connection_resource_id = azurerm_data_factory.data_factory.id
     subresource_names              = ["dataFactory"]
   }
-  subnet_id = var.subnet_id
+  subnet_id = azurerm_subnet.runtimes_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_data_factory == "" ? [] : [1]
     content {
@@ -50,7 +50,7 @@ resource "azurerm_private_endpoint" "data_factory_private_endpoint_portal" {
     private_connection_resource_id = azurerm_data_factory.data_factory.id
     subresource_names              = ["portal"]
   }
-  subnet_id = var.subnet_id
+  subnet_id = azurerm_subnet.runtimes_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_data_factory_portal == "" ? [] : [1]
     content {
