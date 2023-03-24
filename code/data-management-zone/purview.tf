@@ -13,7 +13,7 @@ resource "azurerm_purview_account" "purview" {
 # Fix for issue where the managed resource IDs are not being exported
 data "azapi_resource" "purview" {
   resource_id = azurerm_purview_account.purview.id
-  type = "Microsoft.Purview/accounts@2021-07-01"
+  type        = "Microsoft.Purview/accounts@2021-07-01"
   response_export_values = [
     "properties.managedResources.storageAccount",
     "properties.managedResources.eventHubNamespace"
@@ -117,7 +117,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_blob" {
   private_service_connection {
     name                           = "${azurerm_purview_account.purview.name}-blob-pe"
     is_manual_connection           = false
-    private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.storageAccount  # azurerm_purview_account.purview.managed_resources.storage_account_id
+    private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.storageAccount # azurerm_purview_account.purview.managed_resources.storage_account_id
     subresource_names              = ["blob"]
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
@@ -142,7 +142,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_queue" {
   private_service_connection {
     name                           = "${azurerm_purview_account.purview.name}-queue-pe"
     is_manual_connection           = false
-    private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.storageAccount  # azurerm_purview_account.purview.managed_resources.storage_account_id
+    private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.storageAccount # azurerm_purview_account.purview.managed_resources.storage_account_id
     subresource_names              = ["queue"]
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
@@ -167,7 +167,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_namespace" {
   private_service_connection {
     name                           = "${azurerm_purview_account.purview.name}-namespace-pe"
     is_manual_connection           = false
-    private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.eventHubNamespace  # azurerm_purview_account.purview.managed_resources.event_hub_namespace
+    private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.eventHubNamespace # azurerm_purview_account.purview.managed_resources.event_hub_namespace
     subresource_names              = ["namespace"]
   }
   subnet_id = azurerm_subnet.private_endpoint_subnet.id
