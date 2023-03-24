@@ -5,6 +5,7 @@ module "databricks_automation" {
   resource_group_name                                  = azurerm_resource_group.shared_app_aut_rg.name
   tags                                                 = var.tags
   workspace_name                                       = "${local.prefix}-aut-dbw001"
+  key_vault_name                                       = "${local.prefix}-aut-kv001"
   vnet_id                                              = data.azurerm_virtual_network.virtual_network.id
   private_subnet_name                                  = azurerm_subnet.databricks_private_subnet_001.name
   private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.databricks_private_subnet_001_nsg.id
@@ -12,6 +13,9 @@ module "databricks_automation" {
   public_subnet_network_security_group_association_id  = azurerm_subnet_network_security_group_association.databricks_public_subnet_001_nsg.id
   private_endpoints_subnet_id                          = azurerm_subnet.shared_services_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
+  private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
+  private_dns_zone_id_blob                             = var.private_dns_zone_id_blob
+  private_dns_zone_id_dfs                              = var.private_dns_zone_id_dfs
 }
 
 module "databricks_experimentation" {
@@ -21,6 +25,7 @@ module "databricks_experimentation" {
   resource_group_name                                  = azurerm_resource_group.shared_app_exp_rg.name
   tags                                                 = var.tags
   workspace_name                                       = "${local.prefix}-exp-dbw001"
+  key_vault_name                                       = "${local.prefix}-exp-kv001"
   vnet_id                                              = data.azurerm_virtual_network.virtual_network.id
   private_subnet_name                                  = azurerm_subnet.databricks_private_subnet_002.name
   private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.databricks_private_subnet_002_nsg.id
@@ -28,4 +33,7 @@ module "databricks_experimentation" {
   public_subnet_network_security_group_association_id  = azurerm_subnet_network_security_group_association.databricks_public_subnet_002_nsg.id
   private_endpoints_subnet_id                          = azurerm_subnet.shared_services_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
+  private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
+  private_dns_zone_id_blob                             = var.private_dns_zone_id_blob
+  private_dns_zone_id_dfs                              = var.private_dns_zone_id_dfs
 }
