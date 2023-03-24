@@ -24,10 +24,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   extension {
     name                       = "${var.selfhostedintegrationruntime_name}-shir"
     auto_upgrade_minor_version = true
-    automatic_upgrade_enabled = false
-    publisher = "Microsoft.Compute"
-    type = "CustomScriptExtension"
-    type_handler_version = "1.10"
+    automatic_upgrade_enabled  = false
+    publisher                  = "Microsoft.Compute"
+    type                       = "CustomScriptExtension"
+    type_handler_version       = "1.10"
     protected_settings = {
       commandToExecute = "powershell.exe -ExecutionPolicy Unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/installSHIRGateway.ps1; c:/azuredata/installSHIRGateway.ps1 -gatewayKey \"${azurerm_data_factory_integration_runtime_self_hosted.data_factory_shir.primary_authorization_key}\""
     }
