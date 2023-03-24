@@ -48,7 +48,7 @@ resource "azurerm_storage_account" "datalake" {
     ip_rules                   = []
     virtual_network_subnet_ids = []
     dynamic "private_link_access" {
-      for_each = setunion(var.data_platform_subscription_ids, [data.azurerm_client_config.current.subscription_id])
+      for_each = tolist(setunion(var.data_platform_subscription_ids, [data.azurerm_client_config.current.subscription_id]))
       content {
         endpoint_resource_id = "/subscriptions/${private_link_access.value}/resourcegroups/*/providers/Microsoft.Databricks/accessConnectors/*"
         endpoint_tenant_id   = data.azurerm_client_config.current.tenant_id
