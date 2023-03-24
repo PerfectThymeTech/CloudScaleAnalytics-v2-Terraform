@@ -19,6 +19,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
+      time: "10:00"
+    labels:
+      - "pip"
+      - "dependencies"
 
   # Maintain dependencies for Data Management Zone
   - package-ecosystem: "terraform"
