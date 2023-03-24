@@ -1,0 +1,44 @@
+name: Lint and Test
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "code/**"
+      - "requirements.txt"
+      - ".github/workflows/lint.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "code/**"
+      - "requirements.txt"
+      - ".github/workflows/lint.yml"
+
+jobs:
+  lint:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      # Setup Python 3.10
+      - name: Setup Python 3.10
+        id: python_setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # Checkout repository
+      - name: Check Out Repository
+        id: checkout_repository
+        uses: actions/checkout@v3
+
+      # Run Linting
+      - name: Run Linting
+        id: linting
+        run: |
+          pip install -r requirements.txt -q
+          git init
+          git add *
+          pre-commit install --install-hooks
+          pre-commit run --all-files --verbose
