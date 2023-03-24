@@ -18,10 +18,10 @@ terraform {
 
   backend "azurerm" {
     environment          = "public"
-    resource_group_name  = "terraform"
-    storage_account_name = "terraformptt001"
-    container_name       = "tfstate"
-    key                  = "terraform.data-landing-zone.tfstate"
+    resource_group_name  = "mycrp-prd-cicd"
+    storage_account_name = "mycrpprdstg001"
+    container_name       = "data-landing-zone"
+    key                  = "terraform.tfstate"
     use_oidc             = true
   }
 }
