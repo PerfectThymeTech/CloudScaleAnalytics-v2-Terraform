@@ -70,3 +70,53 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_web" {
     }
   }
 }
+
+resource "azurerm_private_endpoint" "databricks_private_endpoint_blob" {
+  name                = "${azurerm_databricks_workspace.databricks.name}-blob-pe"
+  location            = var.location
+  resource_group_name = azurerm_databricks_workspace.databricks.resource_group_name
+  tags                = var.tags
+
+  custom_network_interface_name = "${azurerm_databricks_workspace.databricks.name}-blob-nic"
+  private_service_connection {
+    name                           = "${azurerm_databricks_workspace.databricks.name}-blob-pe"
+    is_manual_connection           = false
+    private_connection_resource_id = "${azurerm_databricks_workspace.databricks.managed_resource_group_id}/providers/Microsoft.Storage/storageAccounts/${azurerm_databricks_workspace.databricks.custom_parameters.storage_account_name}"
+    subresource_names              = ["blob"]
+  }
+  subnet_id = var.private_endpoints_subnet_id
+  dynamic "private_dns_zone_group" {
+    for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
+    content {
+      name = "${azurerm_databricks_workspace.databricks.name}-blob-arecord"
+      private_dns_zone_ids = [
+        var.private_dns_zone_id_blob
+      ]
+    }
+  }
+}
+
+resource "azurerm_private_endpoint" "databricks_private_endpoint_dfs" {
+  name                = "${azurerm_databricks_workspace.databricks.name}-dfs-pe"
+  location            = var.location
+  resource_group_name = azurerm_databricks_workspace.databricks.resource_group_name
+  tags                = var.tags
+
+  custom_network_interface_name = "${azurerm_databricks_workspace.databricks.name}-dfs-nic"
+  private_service_connection {
+    name                           = "${azurerm_databricks_workspace.databricks.name}-dfs-pe"
+    is_manual_connection           = false
+    private_connection_resource_id = "${azurerm_databricks_workspace.databricks.managed_resource_group_id}/providers/Microsoft.Storage/storageAccounts/${azurerm_databricks_workspace.databricks.custom_parameters.storage_account_name}"
+    subresource_names              = ["dfs"]
+  }
+  subnet_id = var.private_endpoints_subnet_id
+  dynamic "private_dns_zone_group" {
+    for_each = var.private_dns_zone_id_dfs == "" ? [] : [1]
+    content {
+      name = "${azurerm_databricks_workspace.databricks.name}-dfs-arecord"
+      private_dns_zone_ids = [
+        var.private_dns_zone_id_dfs
+      ]
+    }
+  }
+}

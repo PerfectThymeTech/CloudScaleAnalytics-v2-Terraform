@@ -118,3 +118,23 @@ variable "private_dns_zone_id_key_vault" {
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
+
+variable "private_dns_zone_id_blob" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Blob Storage endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_blob == "" || (length(split("/", var.private_dns_zone_id_blob)) == 9 && endswith(var.private_dns_zone_id_blob, "privatelink.blob.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
+variable "private_dns_zone_id_dfs" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Data Lake Storage endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_dfs == "" || (length(split("/", var.private_dns_zone_id_dfs)) == 9 && endswith(var.private_dns_zone_id_dfs, "privatelink.dfs.core.windows.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
