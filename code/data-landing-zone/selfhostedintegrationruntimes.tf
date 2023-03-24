@@ -9,4 +9,5 @@ module "shir_001" {
   subnet_id                         = azurerm_subnet.runtimes_subnet.id
   admin_username                    = var.admin_username
   admin_password                    = var.admin_password
+  shared_data_factory_ids           = []
 }
