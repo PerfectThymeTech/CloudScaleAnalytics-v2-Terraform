@@ -52,12 +52,6 @@ variable "admin_username" {
   sensitive   = true
 }
 
-variable "admin_password" {
-  description = "Specifies the admin password of the VMMS of the Self-hosted integration runtime."
-  type        = string
-  sensitive   = true
-}
-
 variable "shared_data_factory_ids" {
   description = "Specifies the resource IDs of the Azure Data Factories with which the SHIR should be shared."
   type        = list(string)

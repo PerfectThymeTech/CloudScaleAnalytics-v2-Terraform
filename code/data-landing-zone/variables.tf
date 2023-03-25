@@ -41,16 +41,6 @@ variable "admin_username" {
   }
 }
 
-variable "admin_password" {
-  description = "Specifies the admin password of the VMs used for the Self-hosted Integration Runtimes"
-  type        = string
-  sensitive   = false
-  validation {
-    condition     = can(regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,128}$", var.admin_password))
-    error_message = "Please specify a valid password."
-  }
-}
-
 variable "vnet_id" {
   description = "Specifies the resource ID of the Vnet used for the Data Landing Zone"
   type        = string

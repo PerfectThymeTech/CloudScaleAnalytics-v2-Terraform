@@ -1,3 +1,16 @@
+resource "random_password" "password" {
+  length           = 16
+  lower            = true
+  min_lower        = 0
+  min_upper        = 0
+  min_numeric      = 0
+  min_special      = 0
+  numeric          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+  special          = true
+  upper            = true
+}
+
 resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   name                = var.selfhostedintegrationruntime_name
   location            = var.location
@@ -7,7 +20,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     type = "SystemAssigned"
   }
 
-  admin_password = var.admin_password
+  admin_password = random_password.password.result
   admin_username = var.admin_username
   automatic_os_upgrade_policy {
     enable_automatic_os_upgrade = true
