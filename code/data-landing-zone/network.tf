@@ -33,7 +33,7 @@ resource "azurerm_subnet" "storage_subnet" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 16))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 1))
   ]
   private_endpoint_network_policies_enabled     = true
   private_link_service_network_policies_enabled = true
@@ -57,7 +57,7 @@ resource "azurerm_subnet" "runtimes_subnet" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 32))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 2))
   ]
   private_endpoint_network_policies_enabled     = true
   private_link_service_network_policies_enabled = true
@@ -81,7 +81,7 @@ resource "azurerm_subnet" "powerbi_subnet" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 48))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 3))
   ]
   delegation {
     name = "PowerBIGatewaySubnetDelegation"
@@ -112,7 +112,7 @@ resource "azurerm_subnet" "shared_services_subnet" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 64))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 4))
   ]
   private_endpoint_network_policies_enabled     = true
   private_link_service_network_policies_enabled = true
@@ -136,7 +136,7 @@ resource "azurerm_subnet" "databricks_private_subnet_001" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 512))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 1))
   ]
   delegation {
     name = "DatabricksSubnetDelegation"
@@ -171,7 +171,7 @@ resource "azurerm_subnet" "databricks_public_subnet_001" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 1024))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 2))
   ]
   delegation {
     name = "DatabricksSubnetDelegation"
@@ -206,7 +206,7 @@ resource "azurerm_subnet" "databricks_private_subnet_002" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 512))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 3))
   ]
   delegation {
     name = "DatabricksSubnetDelegation"
@@ -241,7 +241,7 @@ resource "azurerm_subnet" "databricks_public_subnet_002" {
   resource_group_name  = local.virtual_network.resource_group_name
 
   address_prefixes = [
-    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 1024))
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 4))
   ]
   delegation {
     name = "DatabricksSubnetDelegation"
