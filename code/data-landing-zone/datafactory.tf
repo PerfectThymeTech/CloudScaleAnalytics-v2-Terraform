@@ -1,7 +1,7 @@
 resource "azurerm_data_factory" "data_factory" {
   name                = "${local.prefix}-adf001"
   location            = var.location
-  resource_group_name = azurerm_resource_group.runtimes_rg
+  resource_group_name = azurerm_resource_group.runtimes_rg.name
   tags                = var.tags
   identity {
     type = "SystemAssigned"
