@@ -1,5 +1,5 @@
 data "azurerm_data_factory" "shared_data_factories" {
-  for_each            = local.shared_data_factories
+  for_each            = toset(local.shared_data_factories)
   name                = each.value.name
   resource_group_name = each.value.resource_group_name
 }
