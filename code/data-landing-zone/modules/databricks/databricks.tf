@@ -16,7 +16,7 @@ resource "azurerm_databricks_workspace" "databricks" {
     private_subnet_network_security_group_association_id = var.private_subnet_network_security_group_association_id
     public_subnet_name                                   = var.public_subnet_name
     public_subnet_network_security_group_association_id  = var.public_subnet_network_security_group_association_id
-    storage_account_name                                 = replace(var.workspace_name, "-", "")
+    storage_account_name                                 = local.databricks.storage_account_name
     storage_account_sku_name                             = "Standard_ZRS"
   }
 }
@@ -81,7 +81,7 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_blob" {
   private_service_connection {
     name                           = "${azurerm_databricks_workspace.databricks.name}-blob-pe"
     is_manual_connection           = false
-    private_connection_resource_id = "${azurerm_databricks_workspace.databricks.managed_resource_group_id}/providers/Microsoft.Storage/storageAccounts/${azurerm_databricks_workspace.databricks.custom_parameters["storage_account_name"]}"
+    private_connection_resource_id = "${azurerm_databricks_workspace.databricks.managed_resource_group_id}/providers/Microsoft.Storage/storageAccounts/${local.databricks.storage_account_name}"
     subresource_names              = ["blob"]
   }
   subnet_id = var.private_endpoints_subnet_id
@@ -106,7 +106,7 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_dfs" {
   private_service_connection {
     name                           = "${azurerm_databricks_workspace.databricks.name}-dfs-pe"
     is_manual_connection           = false
-    private_connection_resource_id = "${azurerm_databricks_workspace.databricks.managed_resource_group_id}/providers/Microsoft.Storage/storageAccounts/${azurerm_databricks_workspace.databricks.custom_parameters["storage_account_name"]}"
+    private_connection_resource_id = "${azurerm_databricks_workspace.databricks.managed_resource_group_id}/providers/Microsoft.Storage/storageAccounts/${local.databricks.storage_account_name}"
     subresource_names              = ["dfs"]
   }
   subnet_id = var.private_endpoints_subnet_id
