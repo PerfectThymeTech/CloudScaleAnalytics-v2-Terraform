@@ -111,7 +111,7 @@ resource "azurerm_storage_management_policy" "datalake_management_policy" {
 # }
 
 resource "azapi_resource" "datalake_containers" {
-  for_each  = var.datalake_filesystem_names
+  for_each  = toset(var.datalake_filesystem_names)
   type      = "Microsoft.Storage/storageAccounts/blobServices/containers@2021-02-01"
   name      = each.key
   parent_id = "${azurerm_storage_account.datalake.id}/blobServices/default"

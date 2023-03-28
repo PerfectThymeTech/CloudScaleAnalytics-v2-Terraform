@@ -55,5 +55,5 @@ variable "admin_username" {
 variable "shared_data_factory_ids" {
   description = "Specifies the resource IDs of the Azure Data Factories with which the SHIR should be shared."
   type        = list(string)
-  sensitive   = true
+  sensitive   = false
 }
