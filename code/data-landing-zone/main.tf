@@ -66,6 +66,10 @@ provider "azapi" {
   use_oidc                       = true
 }
 
+provider "azuread" {
+  tenant_id = data.azurerm_client_config.current.tenant_id
+}
+
 provider "databricks" {
   alias                       = "automation"
   azure_environment           = "public"
