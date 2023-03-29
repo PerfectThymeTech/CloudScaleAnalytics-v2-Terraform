@@ -7,5 +7,5 @@ resource "azurerm_role_assignment" "client_roleassignment_key_vault" {
 resource "azurerm_role_assignment" "databricks_roleassignment_key_vault" {
   scope                = azurerm_key_vault.key_vault.id
   role_definition_name = "Key Vault Secrets User"
-  principal_id         = data.azuread_application.databricks.object_id
+  principal_id         = data.azuread_service_principal.databricks.object_id
 }
