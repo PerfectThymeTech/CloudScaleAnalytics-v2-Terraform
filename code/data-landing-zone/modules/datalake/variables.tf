@@ -56,6 +56,20 @@ variable "subnet_id" {
   }
 }
 
+variable "enable_queue_private_endpoint" {
+  description = "Specifies whether to deploy the queue private endpoint for Azure Storage."
+  type        = bool
+  sensitive   = false
+  default     = false
+}
+
+variable "enable_table_private_endpoint" {
+  description = "Specifies whether to deploy the table private endpoint for Azure Storage."
+  type        = bool
+  sensitive   = false
+  default     = false
+}
+
 variable "private_dns_zone_id_blob" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
   type        = string

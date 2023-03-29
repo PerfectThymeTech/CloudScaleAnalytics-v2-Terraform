@@ -8,6 +8,8 @@ module "datalake_raw" {
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
   subnet_id                      = azurerm_subnet.storage_subnet.id
+  enable_queue_private_endpoint  = false
+  enable_table_private_endpoint  = false
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs        = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue      = var.private_dns_zone_id_queue
@@ -25,6 +27,8 @@ module "datalake_enriched" {
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
   subnet_id                      = azurerm_subnet.storage_subnet.id
+  enable_queue_private_endpoint  = false
+  enable_table_private_endpoint  = false
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs        = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue      = var.private_dns_zone_id_queue
@@ -42,6 +46,8 @@ module "datalake_curated" {
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
   subnet_id                      = azurerm_subnet.storage_subnet.id
+  enable_queue_private_endpoint  = false
+  enable_table_private_endpoint  = false
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs        = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue      = var.private_dns_zone_id_queue
@@ -59,6 +65,8 @@ module "datalake_workspace" {
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
   subnet_id                      = azurerm_subnet.storage_subnet.id
+  enable_queue_private_endpoint  = true
+  enable_table_private_endpoint  = true
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs        = var.private_dns_zone_id_dfs
   private_dns_zone_id_queue      = var.private_dns_zone_id_queue
