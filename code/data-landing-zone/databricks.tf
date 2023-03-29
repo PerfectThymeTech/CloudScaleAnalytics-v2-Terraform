@@ -11,7 +11,7 @@ module "databricks_automation" {
   private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.databricks_private_subnet_001_nsg.id
   public_subnet_name                                   = azurerm_subnet.databricks_public_subnet_001.name
   public_subnet_network_security_group_association_id  = azurerm_subnet_network_security_group_association.databricks_public_subnet_001_nsg.id
-  private_endpoints_subnet_id                          = azurerm_subnet.shared_services_subnet.id
+  private_endpoints_subnet_id                          = azurerm_subnet.shared_app_aut_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
   private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
   private_dns_zone_id_blob                             = var.private_dns_zone_id_blob
@@ -31,7 +31,7 @@ module "databricks_experimentation" {
   private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.databricks_private_subnet_002_nsg.id
   public_subnet_name                                   = azurerm_subnet.databricks_public_subnet_002.name
   public_subnet_network_security_group_association_id  = azurerm_subnet_network_security_group_association.databricks_public_subnet_002_nsg.id
-  private_endpoints_subnet_id                          = azurerm_subnet.shared_services_subnet.id
+  private_endpoints_subnet_id                          = azurerm_subnet.shared_app_exp_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
   private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
   private_dns_zone_id_blob                             = var.private_dns_zone_id_blob

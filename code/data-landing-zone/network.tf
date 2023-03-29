@@ -106,8 +106,8 @@ resource "azurerm_subnet_route_table_association" "powerbi_subnet_routetable" {
   subnet_id      = azurerm_subnet.powerbi_subnet.id
 }
 
-resource "azurerm_subnet" "shared_services_subnet" {
-  name                 = "SharedServicesSubnet"
+resource "azurerm_subnet" "shared_app_aut_subnet" {
+  name                 = "SharedAppAutomationSubnet"
   virtual_network_name = local.virtual_network.name
   resource_group_name  = local.virtual_network.resource_group_name
 
@@ -120,14 +120,38 @@ resource "azurerm_subnet" "shared_services_subnet" {
   service_endpoints                             = []
 }
 
-resource "azurerm_subnet_network_security_group_association" "shared_services_subnet_nsg" {
+resource "azurerm_subnet_network_security_group_association" "shared_app_aut_subnet_nsg" {
   network_security_group_id = var.nsg_id
-  subnet_id                 = azurerm_subnet.shared_services_subnet.id
+  subnet_id                 = azurerm_subnet.shared_app_aut_subnet.id
 }
 
-resource "azurerm_subnet_route_table_association" "shared_services_subnet_routetable" {
+resource "azurerm_subnet_route_table_association" "shared_app_aut_subnet_routetable" {
   route_table_id = var.route_table_id
-  subnet_id      = azurerm_subnet.shared_services_subnet.id
+  subnet_id      = azurerm_subnet.shared_app_aut_subnet.id
+}
+
+resource "azurerm_subnet" "shared_app_exp_subnet" {
+  name                 = "SharedAppExperimentationSubnet"
+  virtual_network_name = local.virtual_network.name
+  resource_group_name  = local.virtual_network.resource_group_name
+
+  address_prefixes = [
+    tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 5))
+  ]
+  private_endpoint_network_policies_enabled     = true
+  private_link_service_network_policies_enabled = true
+  service_endpoint_policy_ids                   = null
+  service_endpoints                             = []
+}
+
+resource "azurerm_subnet_network_security_group_association" "shared_app_exp_subnet_nsg" {
+  network_security_group_id = var.nsg_id
+  subnet_id                 = azurerm_subnet.shared_app_exp_subnet.id
+}
+
+resource "azurerm_subnet_route_table_association" "shared_app_exp_subnet_routetable" {
+  route_table_id = var.route_table_id
+  subnet_id      = azurerm_subnet.shared_app_exp_subnet.id
 }
 
 resource "azurerm_subnet" "databricks_private_subnet_001" {
