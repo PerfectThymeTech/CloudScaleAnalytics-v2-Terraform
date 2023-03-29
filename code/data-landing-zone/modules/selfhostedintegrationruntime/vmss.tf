@@ -23,7 +23,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   admin_password = random_password.password.result
   admin_username = var.admin_username
   automatic_os_upgrade_policy {
-    enable_automatic_os_upgrade = true
+    enable_automatic_os_upgrade = false
     disable_automatic_rollback  = false
   }
   # boot_diagnostics {
@@ -31,7 +31,6 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   # }
   computer_name_prefix                              = substr(var.selfhostedintegrationruntime_name, 0, 9)
   custom_data                                       = filebase64("${path.module}/installShirGateway/Install-ShirGateway.ps1")
-  do_not_run_extensions_on_overprovisioned_machines = true
   enable_automatic_updates                          = true
   encryption_at_host_enabled                        = true
   extension {
@@ -72,7 +71,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     write_accelerator_enabled = false
   }
   overprovision               = false
-  platform_fault_domain_count = 1
+  # platform_fault_domain_count = 1
   priority                    = "Regular"
   provision_vm_agent          = true
   # rolling_upgrade_policy {
