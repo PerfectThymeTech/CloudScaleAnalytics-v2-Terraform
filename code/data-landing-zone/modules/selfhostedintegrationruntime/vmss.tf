@@ -64,10 +64,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
   os_disk {
     caching = "ReadWrite"
-    diff_disk_settings {
-      option    = "Local"
-      placement = "CacheDisk"
-    }
+    # diff_disk_settings {
+    #   option    = "Local"
+    #   placement = "CacheDisk"
+    # }
     storage_account_type      = "Premium_ZRS"
     write_accelerator_enabled = false
   }

@@ -20,11 +20,11 @@ resource "azurerm_lb_backend_address_pool" "lb_backend_address_pool" {
   loadbalancer_id = azurerm_lb.lb.id
 }
 
-resource "azurerm_lb_backend_address_pool_address" "lb_backend_address_pool_address" {
-  name                                = "${var.selfhostedintegrationruntime_name}-backendaddresspool-address"
-  backend_address_ip_configuration_id = azurerm_lb.lb.frontend_ip_configuration[0].id
-  backend_address_pool_id             = azurerm_lb_backend_address_pool.lb_backend_address_pool.id
-}
+# resource "azurerm_lb_backend_address_pool_address" "lb_backend_address_pool_address" {
+#   name                                = "${var.selfhostedintegrationruntime_name}-backendaddresspool-address"
+#   backend_address_ip_configuration_id = azurerm_lb.lb.frontend_ip_configuration[0].id
+#   backend_address_pool_id             = azurerm_lb_backend_address_pool.lb_backend_address_pool.id
+# }
 
 resource "azurerm_lb_nat_pool" "lb_nat_pool" {
   name                = "${var.selfhostedintegrationruntime_name}-natpool"
