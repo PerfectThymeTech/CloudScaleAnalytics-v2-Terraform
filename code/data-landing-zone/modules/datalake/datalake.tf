@@ -175,7 +175,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_dfs" {
 }
 
 resource "azurerm_private_endpoint" "datalake_private_endpoint_queue" {
-  for_each            = var.enable_queue_private_endpoint == "" ? [] : [1]
+  count               = var.enable_queue_private_endpoint ? 1 : 0
   name                = "${azurerm_storage_account.datalake.name}-queue-pe"
   location            = var.location
   resource_group_name = azurerm_storage_account.datalake.resource_group_name
@@ -201,7 +201,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_queue" {
 }
 
 resource "azurerm_private_endpoint" "datalake_private_endpoint_table" {
-  for_each            = var.enable_table_private_endpoint == "" ? [] : [1]
+  count               = var.enable_table_private_endpoint ? 1 : 0
   name                = "${azurerm_storage_account.datalake.name}-table-pe"
   location            = var.location
   resource_group_name = azurerm_storage_account.datalake.resource_group_name
