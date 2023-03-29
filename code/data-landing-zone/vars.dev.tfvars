@@ -1,6 +1,6 @@
 location                                = "northeurope"
 environment                             = "dev"
-prefix                                  = "dmgmt"
+prefix                                  = "mydlz01"
 tags                                    = {}
 admin_username                          = "VmMainUser"
 vnet_id                                 = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mycrp-prd-dlz01-network-rg/providers/Microsoft.Network/virtualNetworks/mycrp-prd-dlz01-vnet001"
