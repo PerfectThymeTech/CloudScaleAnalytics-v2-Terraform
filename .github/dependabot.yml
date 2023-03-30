@@ -34,3 +34,14 @@ updates:
     labels:
       - "terraform"
       - "dependencies"
+
+  # Maintain dependencies for Data Landing Zone
+  - package-ecosystem: "terraform"
+    directory: "/code/data-landing-zone"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "10:00"
+    labels:
+      - "terraform"
+      - "dependencies"
