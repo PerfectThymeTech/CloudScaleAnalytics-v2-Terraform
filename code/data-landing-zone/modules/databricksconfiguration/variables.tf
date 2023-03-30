@@ -36,7 +36,7 @@ variable "client_secret_secret_name" {
   type        = string
   sensitive   = false
   validation {
-    condition     = var.client_id_secret_name == "" || length(var.client_secret_secret_name) >= 2
+    condition     = var.client_secret_secret_name == "" || length(var.client_secret_secret_name) >= 2
     error_message = "Please specify a valid name."
   }
 }
