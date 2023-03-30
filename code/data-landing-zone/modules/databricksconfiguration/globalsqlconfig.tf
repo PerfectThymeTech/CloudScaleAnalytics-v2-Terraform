@@ -1,5 +1,5 @@
 resource "databricks_sql_global_config" "databricks_global_sql_config" {
-  count               = var.client_id_secret_name != "" && var.client_secret_secret_name != "" ? 1 : 0
+  count           = var.client_id_secret_name != "" && var.client_secret_secret_name != "" ? 1 : 0
   security_policy = "DATA_ACCESS_CONTROL"
 
   data_access_config = {
