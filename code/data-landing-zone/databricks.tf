@@ -18,6 +18,15 @@ module "databricks_automation" {
   private_dns_zone_id_dfs                              = var.private_dns_zone_id_dfs
 }
 
+module "databricks_automation_configuration" {
+  source = "./modules/databricksconfiguration"
+
+  key_vault_id = module.databricks_automation.key_vault_id
+  key_vault_uri = module.databricks_automation.key_vault_uri
+  client_id_secret_name = ""
+  client_secret_secret_name = ""
+}
+
 module "databricks_experimentation" {
   source = "./modules/databricks"
 
