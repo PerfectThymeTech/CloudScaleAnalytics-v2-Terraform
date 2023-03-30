@@ -29,10 +29,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   # boot_diagnostics {
   #   storage_account_uri =
   # }
-  computer_name_prefix                              = substr(var.selfhostedintegrationruntime_name, 0, 9)
-  custom_data                                       = filebase64("${path.module}/installShirGateway/Install-ShirGateway.ps1")
-  enable_automatic_updates                          = true
-  encryption_at_host_enabled                        = true
+  computer_name_prefix       = substr(var.selfhostedintegrationruntime_name, 0, 9)
+  custom_data                = filebase64("${path.module}/installShirGateway/Install-ShirGateway.ps1")
+  enable_automatic_updates   = true
+  encryption_at_host_enabled = true
   extension {
     name                       = "${var.selfhostedintegrationruntime_name}-shir"
     auto_upgrade_minor_version = true
@@ -70,10 +70,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     storage_account_type      = "Premium_ZRS"
     write_accelerator_enabled = false
   }
-  overprovision               = false
+  overprovision = false
   # platform_fault_domain_count = 1
-  priority                    = "Regular"
-  provision_vm_agent          = true
+  priority           = "Regular"
+  provision_vm_agent = true
   # rolling_upgrade_policy {
   #   cross_zone_upgrades_enabled = true
   #   max_unhealthy_instance_percent = 0
