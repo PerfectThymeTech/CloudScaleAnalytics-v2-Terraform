@@ -1,18 +1,6 @@
 data "azurerm_client_config" "current" {
 }
 
-variable "location" {
-  description = "Specifies the location for all Azure resources."
-  type        = string
-  sensitive   = false
-}
-
-variable "tags" {
-  description = "Specifies the tags that you want to apply to all resources."
-  type        = map(any)
-  sensitive   = false
-}
-
 variable "key_vault_id" {
   description = "Specifies the resource ID of the key vault used for the platform."
   type        = string
