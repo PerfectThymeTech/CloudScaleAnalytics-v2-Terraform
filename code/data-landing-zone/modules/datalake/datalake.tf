@@ -1,12 +1,12 @@
 resource "azurerm_storage_account" "datalake" {
-  name                = replace("${local.prefix}-st001", "-", "")
+  name                = replace(var.datalake_name, "-", "")
   location            = var.location
-  resource_group_name = azurerm_resource_group.unity_rg.name
+  resource_group_name = var.resource_group_name
   tags                = var.tags
 
   access_tier                     = "Hot"
   account_kind                    = "StorageV2"
-  account_replication_type        = "ZRS"
+  account_replication_type        = var.datalake_replication_type
   account_tier                    = "Standard"
   allow_nested_items_to_be_public = false
   allowed_copy_scope              = "AAD"
@@ -33,7 +33,7 @@ resource "azurerm_storage_account" "datalake" {
   cross_tenant_replication_enabled = false
   default_to_oauth_authentication  = true
   enable_https_traffic_only        = true
-  # immutability_policy {  # Not supported for ADLS Gen2
+  # immutability_policy {
   #   state                         = "Disabled"
   #   allow_protected_append_writes = true
   #   period_since_creation_in_days = 7
@@ -102,16 +102,18 @@ resource "azurerm_storage_management_policy" "datalake_management_policy" {
   }
 }
 
-# resource "azurerm_storage_container" "datalake_container_unity" {  # Requires private connectivity as this does not use the ARM API
-#   name                 = local.unity_container_name
+# resource "azurerm_storage_container" "datalake_containers" {
+#   for_each             = var.datalake_filesystem_names
+#   name                 = each.key
 #   storage_account_name = azurerm_storage_account.datalake.name
 
 #   container_access_type = "private"
 # }
 
-resource "azapi_resource" "datalake_container_unity" {
+resource "azapi_resource" "datalake_containers" {
+  for_each  = toset(var.datalake_filesystem_names)
   type      = "Microsoft.Storage/storageAccounts/blobServices/containers@2021-02-01"
-  name      = local.unity_container_name
+  name      = each.key
   parent_id = "${azurerm_storage_account.datalake.id}/blobServices/default"
 
   body = jsonencode({
@@ -135,7 +137,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_blob" {
     private_connection_resource_id = azurerm_storage_account.datalake.id
     subresource_names              = ["blob"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = var.subnet_id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
     content {
@@ -160,13 +162,65 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_dfs" {
     private_connection_resource_id = azurerm_storage_account.datalake.id
     subresource_names              = ["dfs"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = var.subnet_id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_dfs == "" ? [] : [1]
     content {
       name = "${azurerm_storage_account.datalake.name}-dfs-arecord"
       private_dns_zone_ids = [
         var.private_dns_zone_id_dfs
+      ]
+    }
+  }
+}
+
+resource "azurerm_private_endpoint" "datalake_private_endpoint_queue" {
+  count               = var.enable_queue_private_endpoint ? 1 : 0
+  name                = "${azurerm_storage_account.datalake.name}-queue-pe"
+  location            = var.location
+  resource_group_name = azurerm_storage_account.datalake.resource_group_name
+  tags                = var.tags
+
+  custom_network_interface_name = "${azurerm_storage_account.datalake.name}-queue-nic"
+  private_service_connection {
+    name                           = "${azurerm_storage_account.datalake.name}-queue-pe"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_storage_account.datalake.id
+    subresource_names              = ["queue"]
+  }
+  subnet_id = var.subnet_id
+  dynamic "private_dns_zone_group" {
+    for_each = var.private_dns_zone_id_queue == "" ? [] : [1]
+    content {
+      name = "${azurerm_storage_account.datalake.name}-queue-arecord"
+      private_dns_zone_ids = [
+        var.private_dns_zone_id_queue
+      ]
+    }
+  }
+}
+
+resource "azurerm_private_endpoint" "datalake_private_endpoint_table" {
+  count               = var.enable_table_private_endpoint ? 1 : 0
+  name                = "${azurerm_storage_account.datalake.name}-table-pe"
+  location            = var.location
+  resource_group_name = azurerm_storage_account.datalake.resource_group_name
+  tags                = var.tags
+
+  custom_network_interface_name = "${azurerm_storage_account.datalake.name}-table-nic"
+  private_service_connection {
+    name                           = "${azurerm_storage_account.datalake.name}-table-pe"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_storage_account.datalake.id
+    subresource_names              = ["table"]
+  }
+  subnet_id = var.subnet_id
+  dynamic "private_dns_zone_group" {
+    for_each = var.private_dns_zone_id_table == "" ? [] : [1]
+    content {
+      name = "${azurerm_storage_account.datalake.name}-table-arecord"
+      private_dns_zone_ids = [
+        var.private_dns_zone_id_table
       ]
     }
   }
