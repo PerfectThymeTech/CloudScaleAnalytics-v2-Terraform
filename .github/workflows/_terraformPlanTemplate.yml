@@ -88,8 +88,10 @@ jobs:
 
       # Add Pull Request Comment
       - name: Add Pull Request Comment
+        id: pr_comment
         uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
+        continue-on-error: true
         env:
           PLAN: "terraform\n${{ steps.terraform_plan.outputs.stdout }}"
         with:
