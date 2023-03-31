@@ -22,7 +22,7 @@ module "databricks_automation_configuration" {
   source = "./modules/databricksconfiguration"
   providers = {
     databricks = databricks.automation
-   }
+  }
 
   key_vault_id              = module.databricks_automation.key_vault_id
   key_vault_uri             = module.databricks_automation.key_vault_uri
