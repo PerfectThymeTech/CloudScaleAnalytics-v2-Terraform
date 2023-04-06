@@ -28,6 +28,9 @@ module "databricks_automation_configuration" {
   key_vault_uri             = module.databricks_automation.key_vault_uri
   client_id_secret_name     = ""
   client_secret_secret_name = ""
+  databricks_workspace_id   = module.databricks_automation.workspace_id
+  unity_metastore_name      = var.unity_metastore_name
+  unity_metastore_id        = var.unity_metastore_id
 }
 
 module "databricks_experimentation" {

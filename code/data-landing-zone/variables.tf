@@ -81,6 +81,34 @@ variable "purview_id" {
   }
 }
 
+variable "unity_metastore_name" {
+  description = "Specifies the name of the Databricks Unity metastore."
+  type        = string
+  sensitive   = false
+  default     = ""
+  validation {
+    condition     = var.unity_metastore_name == "" || length(var.unity_metastore_name) >= 2
+    error_message = "Please specify a valid name."
+  }
+}
+
+variable "unity_metastore_id" {
+  description = "Specifies the id of the Databricks Unity metastore."
+  type        = string
+  sensitive   = false
+  default     = ""
+  validation {
+    condition     = var.unity_metastore_id == "" || length(var.unity_metastore_id) >= 2
+    error_message = "Please specify a valid name."
+  }
+}
+
+variable "data_platform_subscription_ids" {
+  description = "Specifies the list of subscription IDs of your data platform."
+  type        = list(string)
+  sensitive   = false
+}
+
 variable "private_dns_zone_id_blob" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
   type        = string
@@ -159,10 +187,4 @@ variable "private_dns_zone_id_databricks" {
     condition     = var.private_dns_zone_id_databricks == "" || (length(split("/", var.private_dns_zone_id_databricks)) == 9 && endswith(var.private_dns_zone_id_databricks, "privatelink.azuredatabricks.net"))
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
-}
-
-variable "data_platform_subscription_ids" {
-  description = "Specifies the list of subscription IDs of your data platform."
-  type        = list(string)
-  sensitive   = false
 }
