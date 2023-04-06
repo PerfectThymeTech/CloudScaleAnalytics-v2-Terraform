@@ -77,14 +77,14 @@ jobs:
         id: terraform_validate
         working-directory: ${{ inputs.working_directory }}
         run: |
-          terraform validate -no-color
+          terraform validate
 
       # Terraform Plan
       - name: Terraform Plan
         id: terraform_plan
         working-directory: ${{ inputs.working_directory }}
         run: |
-          terraform plan -var-file vars.${{ inputs.environment }}.tfvars -input=false -no-color
+          terraform plan -var-file vars.${{ inputs.environment }}.tfvars -input=false
 
       # Add Pull Request Comment
       - name: Add Pull Request Comment

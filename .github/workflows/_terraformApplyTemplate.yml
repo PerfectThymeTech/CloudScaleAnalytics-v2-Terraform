@@ -74,4 +74,4 @@ jobs:
       - name: Terraform Apply
         working-directory: ${{ inputs.working_directory }}
         run: |
-          terraform apply -var-file vars.${{ inputs.environment }}.tfvars -auto-approve -input=false -no-color
+          terraform apply -var-file vars.${{ inputs.environment }}.tfvars -auto-approve -input=false
