@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.49.0"
+      version = "3.50.0"
     }
     azapi = {
       source  = "azure/azapi"
@@ -84,8 +84,7 @@ provider "databricks" {
   host                        = module.databricks_experimentation.databricks_workspace_url
 }
 
-data "azurerm_client_config" "current" {
-}
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "management_rg" {
   name     = "${local.prefix}-mgmt-rg"
