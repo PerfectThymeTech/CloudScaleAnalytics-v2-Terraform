@@ -15,4 +15,8 @@ resource "databricks_sql_global_config" "databricks_global_sql_config" {
     "READ_ONLY_EXTERNAL_METASTORE" : "FALSE",
     "TIMEZONE" : "UTC"
   }
+
+  depends_on = [
+    databricks_metastore_assignment.metastore_assignment
+  ]
 }
