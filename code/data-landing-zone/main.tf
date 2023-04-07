@@ -95,13 +95,11 @@ provider "azuread" {
 
 provider "databricks" {
   alias             = "automation"
-  azure_environment = "public"
   host              = module.databricks_automation.databricks_workspace_url
 }
 
 provider "databricks" {
   alias             = "experimentation"
-  azure_environment = "public"
   host              = module.databricks_experimentation.databricks_workspace_url
 }
 
