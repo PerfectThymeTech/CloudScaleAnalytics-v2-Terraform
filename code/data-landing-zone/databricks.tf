@@ -18,6 +18,21 @@ module "databricks_automation" {
   private_dns_zone_id_dfs                              = var.private_dns_zone_id_dfs
 }
 
+module "databricks_automation_configuration" {
+  source = "./modules/databricksconfiguration"
+  providers = {
+    databricks = databricks.automation
+  }
+
+  key_vault_id              = module.databricks_automation.key_vault_id
+  key_vault_uri             = module.databricks_automation.key_vault_uri
+  client_id_secret_name     = ""
+  client_secret_secret_name = ""
+  databricks_workspace_id   = module.databricks_automation.databricks_workspace_id
+  unity_metastore_name      = var.unity_metastore_name
+  unity_metastore_id        = var.unity_metastore_id
+}
+
 module "databricks_experimentation" {
   source = "./modules/databricks"
 
@@ -36,4 +51,19 @@ module "databricks_experimentation" {
   private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
   private_dns_zone_id_blob                             = var.private_dns_zone_id_blob
   private_dns_zone_id_dfs                              = var.private_dns_zone_id_dfs
+}
+
+module "databricks_experimentation_configuration" {
+  source = "./modules/databricksconfiguration"
+  providers = {
+    databricks = databricks.experimentation
+  }
+
+  key_vault_id              = module.databricks_experimentation.key_vault_id
+  key_vault_uri             = module.databricks_experimentation.key_vault_uri
+  client_id_secret_name     = ""
+  client_secret_secret_name = ""
+  databricks_workspace_id   = module.databricks_experimentation.databricks_workspace_id
+  unity_metastore_name      = var.unity_metastore_name
+  unity_metastore_id        = var.unity_metastore_id
 }

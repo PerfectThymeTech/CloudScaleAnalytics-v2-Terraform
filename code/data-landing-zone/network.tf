@@ -87,7 +87,9 @@ resource "azurerm_subnet" "powerbi_subnet" {
     name = "PowerBIGatewaySubnetDelegation"
     service_delegation {
       name = "Microsoft.PowerPlatform/vnetaccesslinks"
-      # actions = [ "value" ]
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action"
+      ]
     }
   }
   private_endpoint_network_policies_enabled     = true

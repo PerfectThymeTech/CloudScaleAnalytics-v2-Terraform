@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.49.0"
+      version = "3.50.0"
     }
     azapi = {
       source  = "azure/azapi"
@@ -12,7 +12,7 @@ terraform {
     }
     databricks = {
       source  = "databricks/databricks"
-      version = "1.13.0"
+      version = "1.14.1"
     }
     random = {
       source  = "hashicorp/random"
@@ -42,11 +42,24 @@ provider "azurerm" {
   use_oidc                       = true
 
   features {
+    application_insights {
+      disable_generated_rule = false
+    }
+    cognitive_account {
+      purge_soft_delete_on_destroy = true
+    }
     key_vault {
-      recover_soft_deleted_key_vaults   = true
-      recover_soft_deleted_certificates = true
-      recover_soft_deleted_keys         = true
-      recover_soft_deleted_secrets      = true
+      purge_soft_delete_on_destroy               = false
+      purge_soft_deleted_certificates_on_destroy = false
+      purge_soft_deleted_keys_on_destroy         = false
+      purge_soft_deleted_secrets_on_destroy      = false
+      recover_soft_deleted_key_vaults            = true
+      recover_soft_deleted_certificates          = true
+      recover_soft_deleted_keys                  = true
+      recover_soft_deleted_secrets               = true
+    }
+    log_analytics_workspace {
+      permanently_delete_on_destroy = true
     }
     network {
       relaxed_locking = true
@@ -84,8 +97,7 @@ provider "databricks" {
   host                        = module.databricks_experimentation.databricks_workspace_url
 }
 
-data "azurerm_client_config" "current" {
-}
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "management_rg" {
   name     = "${local.prefix}-mgmt-rg"
