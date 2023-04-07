@@ -21,31 +21,6 @@ resource "azurerm_databricks_workspace" "databricks" {
   }
 }
 
-resource "azurerm_private_endpoint" "databricks_private_endpoint_ui" {
-  name                = "${azurerm_databricks_workspace.databricks.name}-uiapi-pe"
-  location            = var.location
-  resource_group_name = azurerm_databricks_workspace.databricks.resource_group_name
-  tags                = var.tags
-
-  custom_network_interface_name = "${azurerm_databricks_workspace.databricks.name}-uiapi-nic"
-  private_service_connection {
-    name                           = "${azurerm_databricks_workspace.databricks.name}-uiapi-pe"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_databricks_workspace.databricks.id
-    subresource_names              = ["databricks_ui_api"]
-  }
-  subnet_id = var.private_endpoints_subnet_id
-  dynamic "private_dns_zone_group" {
-    for_each = var.private_dns_zone_id_databricks == "" ? [] : [1]
-    content {
-      name = "${azurerm_databricks_workspace.databricks.name}-uiapi-arecord"
-      private_dns_zone_ids = [
-        var.private_dns_zone_id_databricks
-      ]
-    }
-  }
-}
-
 resource "azurerm_private_endpoint" "databricks_private_endpoint_web" {
   name                = "${azurerm_databricks_workspace.databricks.name}-web-pe"
   location            = var.location
