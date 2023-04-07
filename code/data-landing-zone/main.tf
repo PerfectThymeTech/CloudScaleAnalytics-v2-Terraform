@@ -68,13 +68,13 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = true
     }
     virtual_machine {
-      delete_os_disk_on_deletion = true
-      graceful_shutdown = false
+      delete_os_disk_on_deletion     = true
+      graceful_shutdown              = false
       skip_shutdown_and_force_delete = false
     }
     virtual_machine_scale_set {
-      force_delete = false
-      roll_instances_when_required = true
+      force_delete                  = false
+      roll_instances_when_required  = true
       scale_to_zero_before_deletion = true
     }
   }
