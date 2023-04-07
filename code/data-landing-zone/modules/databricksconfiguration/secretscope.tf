@@ -6,8 +6,4 @@ resource "databricks_secret_scope" "platform_secret_scope" {
     dns_name    = var.key_vault_uri
     resource_id = var.key_vault_id
   }
-
-  depends_on = [
-    databricks_metastore_assignment.metastore_assignment
-  ]
 }
