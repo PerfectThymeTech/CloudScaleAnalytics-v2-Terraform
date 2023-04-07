@@ -94,13 +94,13 @@ provider "azuread" {
 }
 
 provider "databricks" {
-  alias             = "automation"
-  host              = module.databricks_automation.databricks_workspace_url
+  alias = "automation"
+  host  = module.databricks_automation.databricks_workspace_url
 }
 
 provider "databricks" {
-  alias             = "experimentation"
-  host              = module.databricks_experimentation.databricks_workspace_url
+  alias = "experimentation"
+  host  = module.databricks_experimentation.databricks_workspace_url
 }
 
 data "azurerm_client_config" "current" {}
