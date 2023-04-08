@@ -1,6 +1,3 @@
-data "azurerm_client_config" "current" {
-}
-
 variable "location" {
   description = "Specifies the location for all Azure resources."
   type        = string
