@@ -1,0 +1,25 @@
+name: "Test"
+environments:
+  - "dev"
+network:
+  enabled: true
+  subnet_cidr_range: "100.10.10.10/28"
+identity:
+  enabled: true
+  security_group_name: ""
+storage_container:
+  raw: false
+  enriched: false
+  curated: false
+  workspace: false
+databricks:
+  enabled: true
+  automation: true
+  experimentation: false
+  cluster:
+    sku: ""
+  catalog:
+    name: ""
+settings:
+  user_assigned_identity_enabled: true
+  service_principal_enabled: false
