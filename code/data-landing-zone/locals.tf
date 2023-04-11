@@ -31,9 +31,11 @@ locals {
 
   # Create item per environment
   data_product_definitions_per_env = flatten([
-    for definition_key, definition_value in local.data_product_definitions : {
-      for env in definition_value.environments :
-      "dp-${definition_value.id}-${env}" => definition_value
-    }
+    for definition_key, definition_value in local.data_product_definitions : [
+      for env in definition_value.environments : {
+        name       = "dp-${definition_value.id}-${env}"
+        properties = definition_value
+      }
+    ]
   ])
 }
