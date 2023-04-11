@@ -1,5 +1,5 @@
 module "data_products" {
-  source   = "./modules/dataproduct"
+  source = "./modules/dataproduct"
   for_each = {
     for item in local.data_product_definitions_per_env : "dp-${item.id}-${item.env}" => item.properties
   }
