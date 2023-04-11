@@ -11,7 +11,7 @@ module "data_products" {
   vnet_id           = data.azurerm_virtual_network.virtual_network.id
   nsg_id            = var.nsg_id
   route_table_id    = var.route_table_id
-  subnet_cidr_range = each.value.subnet_cidr_range
+  subnet_cidr_range = each.value.network.subnet_cidr_range
   containers_enabled = {
     raw       = each.value.storage_container.raw
     enriched  = each.value.storage_container.enriched

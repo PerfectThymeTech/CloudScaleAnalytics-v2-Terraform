@@ -9,7 +9,7 @@ variable "data_product_name" {
   type        = string
   sensitive   = false
   validation {
-    condition     = can(regex("^[a-zA-Z0-9-]{2,10}$", var.data_product_name))
+    condition     = can(regex("^[a-zA-Z0-9-]{2,30}$", var.data_product_name))
     error_message = "Please specify a valid data product name. The name '${var.data_product_name}' is invalid."
   }
 }
