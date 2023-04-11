@@ -109,6 +109,12 @@ variable "data_platform_subscription_ids" {
   sensitive   = false
 }
 
+variable "data_product_library_path" {
+  type        = string
+  description = "If specified, sets the path to a custom library folder for archetype artefacts."
+  default     = ""
+}
+
 variable "private_dns_zone_id_blob" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
   type        = string
