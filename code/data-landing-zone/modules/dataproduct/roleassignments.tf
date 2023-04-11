@@ -1,4 +1,5 @@
 resource "azurerm_role_assignment" "user_assigned_identity_roleassignment_subnet" {
+  count                = var.network_enabled && var.user_assigned_identity_enabled ? 1 : 0
   scope                = azapi_resource.subnet.id
   role_definition_name = "Network Contributor"
   principal_id         = azurerm_user_assigned_identity.user_assigned_identity[0].principal_id
