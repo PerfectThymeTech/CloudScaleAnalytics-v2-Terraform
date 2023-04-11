@@ -33,7 +33,7 @@ variable "datalake_replication_type" {
 
 variable "tags" {
   description = "Specifies the tags that you want to apply to all resources."
-  type        = map(any)
+  type        = map(string)
   sensitive   = false
 }
 
