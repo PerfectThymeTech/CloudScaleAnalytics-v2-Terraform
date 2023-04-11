@@ -11,7 +11,8 @@ resource "azurerm_role_assignment" "user_assigned_identity_roleassignment_contai
 }
 
 resource "azurerm_role_assignment" "user_assigned_identity_roleassignment_container_enriched" {
-  scope                = azapi_resource.container_enriched[0].id
+  for_each             = azapi_resource.container_enriched
+  scope                = azapi_resource.container_enriched[each.key].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_user_assigned_identity.user_assigned_identity[0].principal_id
 }

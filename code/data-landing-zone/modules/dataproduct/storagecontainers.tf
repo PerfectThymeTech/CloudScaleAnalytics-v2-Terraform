@@ -23,7 +23,7 @@ data "azurerm_storage_account" "datalake_enriched" {
 }
 
 resource "azapi_resource" "container_enriched" {
-  count     = var.containers_enabled.enriched ? 1 : 0
+  for_each  = var.containers_enabled.enriched ? [1] : []
   type      = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
   name      = local.names.container_enriched
   parent_id = "${data.azurerm_storage_account.datalake_enriched.id}/blobServices/default"
