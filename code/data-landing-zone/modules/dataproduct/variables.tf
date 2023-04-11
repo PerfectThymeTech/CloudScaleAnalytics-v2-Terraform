@@ -9,14 +9,14 @@ variable "data_product_name" {
   type        = string
   sensitive   = false
   validation {
-    condition     = length(var.workspace_name) >= 2
-    error_message = "Please specify a valid name."
+    condition     = can(regex("^[a-zA-Z0-9-]{2,10}$", var.data_product_name))
+    error_message = "Please specify a valid data product name. The name '${var.data_product_name}' is invalid."
   }
 }
 
 variable "tags" {
   description = "Specifies the tags that you want to apply to all resources."
-  type        = map(any)
+  type        = map(string)
   sensitive   = false
 }
 
