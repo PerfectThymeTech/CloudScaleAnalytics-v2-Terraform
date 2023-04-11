@@ -25,6 +25,10 @@ variable "network_enabled" {
   type        = bool
   sensitive   = false
   default     = true
+  validation {
+    condition     = var.network_enabled == true || var.network_enabled == false
+    error_message = "Please specify a valid value for 'network.enabled'. 'network.enabled' needs to be a boolean."
+  }
 }
 
 variable "vnet_id" {
@@ -59,9 +63,13 @@ variable "route_table_id" {
 
 variable "subnet_cidr_range" {
   description = "Specifies the subnet cidr range for the data product."
-  type        = bool
+  type        = string
   sensitive   = false
-  default     = true
+  default     = ""
+  validation {
+    condition     = var.subnet_cidr_range == "" || try(cidrnetmask(var.subnet_cidr_range), "invalid") != "invalid"
+    error_message = "Please specify a valid subnet CIDR range. Subnet CIDR range specified in 'network.subnet_cidr_range' must be valid and within the range of teh virtual network."
+  }
 }
 
 variable "containers_enabled" {
@@ -73,6 +81,15 @@ variable "containers_enabled" {
     workspace = optional(bool, false)
   })
   sensitive = false
+  validation {
+    condition = alltrue([
+      var.containers_enabled.raw == true || var.containers_enabled.raw == false,
+      var.containers_enabled.enriched == true || var.containers_enabled.enriched == false,
+      var.containers_enabled.curated == true || var.containers_enabled.curated == false,
+      var.containers_enabled.workspace == true || var.containers_enabled.workspace == false,
+    ])
+    error_message = "Please specify a valid value for 'network.enabled'. 'network.enabled' needs to be a boolean."
+  }
 }
 
 variable "datalake_raw_id" {
@@ -120,4 +137,19 @@ variable "user_assigned_identity_enabled" {
   type        = bool
   sensitive   = false
   default     = false
+  validation {
+    condition     = var.user_assigned_identity_enabled == true || var.user_assigned_identity_enabled == false
+    error_message = "Please specify a valid value for 'settings.user_assigned_identity_enabled'. 'settings.user_assigned_identity_enabled' needs to be a boolean."
+  }
+}
+
+variable "service_principal_enabled" {
+  description = "Specifies whether the user assigned identity should be deployed for the data product."
+  type        = bool
+  sensitive   = false
+  default     = false
+  validation {
+    condition     = var.service_principal_enabled == true || var.service_principal_enabled == false
+    error_message = "Please specify a valid value for 'settings.service_principal_enabled'. 'settings.service_principal_enabled' needs to be a boolean."
+  }
 }
