@@ -1,4 +1,6 @@
-name: "Test"
+id: "Test"
+tags:
+  costCenter: "ABCD1234"
 environments:
   - "dev"
 network:
