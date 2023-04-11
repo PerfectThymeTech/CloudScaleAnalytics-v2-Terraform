@@ -10,9 +10,9 @@ identity:
   enabled: true
   security_group_name: ""
 storage_container:
-  raw: false
-  enriched: false
-  curated: false
+  raw: true
+  enriched: true
+  curated: true
   workspace: false
 databricks:
   enabled: true
