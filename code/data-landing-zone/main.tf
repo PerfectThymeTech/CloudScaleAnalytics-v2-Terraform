@@ -8,11 +8,11 @@ terraform {
     }
     azapi = {
       source  = "azure/azapi"
-      version = "1.4.0"
+      version = "1.5.0"
     }
     databricks = {
       source  = "databricks/databricks"
-      version = "1.14.1"
+      version = "1.14.2"
     }
     random = {
       source  = "hashicorp/random"
