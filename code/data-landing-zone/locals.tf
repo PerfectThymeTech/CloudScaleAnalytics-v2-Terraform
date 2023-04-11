@@ -8,6 +8,7 @@ locals {
 }
 
 locals {
+  data_product_library_path = "${path.root}/dataproducts"
   # Load file paths
   data_product_filepaths_json = tolist(fileset(local.data_product_library_path, "**/*.{json,json.tftpl}"))
   data_product_filepaths_yaml = tolist(fileset(local.data_product_library_path, "**/*.{yml,yml.tftpl,yaml,yaml.tftpl}"))
