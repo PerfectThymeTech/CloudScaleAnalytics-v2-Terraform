@@ -10,7 +10,7 @@ identity:
   enabled: true
   security_group_display_name: "test"
   user_assigned_identity_enabled: true
-  service_principal_enabled: false
+  service_principal_enabled: true
 storage_container:
   raw: true
   enriched: true
