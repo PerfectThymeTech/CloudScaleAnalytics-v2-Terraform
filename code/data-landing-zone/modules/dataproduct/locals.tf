@@ -3,6 +3,7 @@ locals {
     resource_group         = "${var.data_product_name}-rg"
     subnet                 = "DataProductSubnet-${var.data_product_name}"
     user_assigned_identity = "${var.data_product_name}-uai001"
+    key_vault              = "${var.data_product_name}-vault001"
     container_raw          = var.data_product_name
     container_enriched     = var.data_product_name
     container_curated      = var.data_product_name

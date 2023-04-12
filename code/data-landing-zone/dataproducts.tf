@@ -12,6 +12,7 @@ module "data_products" {
   nsg_id                         = var.nsg_id
   route_table_id                 = var.route_table_id
   subnet_cidr_range              = each.value.network.subnet_cidr_range
+  private_dns_zone_id_key_vault  = var.private_dns_zone_id_key_vault
   identity_enabled               = each.value.identity.enabled
   security_group_display_name    = each.value.identity.security_group_display_name
   user_assigned_identity_enabled = each.value.identity.user_assigned_identity_enabled

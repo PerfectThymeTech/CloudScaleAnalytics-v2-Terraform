@@ -76,6 +76,16 @@ variable "subnet_cidr_range" {
   }
 }
 
+variable "private_dns_zone_id_key_vault" {
+  description = "Specifies the resource ID of the private DNS zone for Azure Key Vault endpoints."
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.private_dns_zone_id_key_vault == "" || (length(split("/", var.private_dns_zone_id_key_vault)) == 9 && endswith(var.private_dns_zone_id_key_vault, "privatelink.vaultcore.azure.net"))
+    error_message = "Please specify a valid resource ID for the private DNS Zone."
+  }
+}
+
 variable "identity_enabled" {
   description = "Specifies whether identity resources should be deployed for the data product."
   type        = bool
