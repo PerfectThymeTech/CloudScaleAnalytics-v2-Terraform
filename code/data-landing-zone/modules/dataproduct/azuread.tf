@@ -1,3 +1,5 @@
+data "azuread_client_config" "current" {}
+
 data "azuread_group" "security_group" {
   count            = var.identity_enabled && var.security_group_display_name != "" ? 1 : 0
   display_name     = var.security_group_display_name
