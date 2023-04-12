@@ -5,7 +5,7 @@ data "azuread_group" "security_group" {
 }
 
 resource "azuread_group_member" "security_group_uai_member" {
-  count            = one(data.azuread_group.security_group[*].object_id) != null && one(azurerm_user_assigned_identity.user_assigned_identity[*].principal_id) != null ? 1 : 0
+  count            = var.user_assigned_identity_enabled && (data.azuread_group.security_group[*].object_id) != null ? 1 : 0
   group_object_id  = one(data.azuread_group.security_group[*].object_id)
   member_object_id = one(azurerm_user_assigned_identity.user_assigned_identity[*].principal_id)
 }
