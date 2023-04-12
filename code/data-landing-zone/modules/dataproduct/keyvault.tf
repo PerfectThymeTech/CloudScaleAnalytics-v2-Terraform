@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_key_vault" "key_vault" {
   name                = local.names.key_vault
   location            = var.location
