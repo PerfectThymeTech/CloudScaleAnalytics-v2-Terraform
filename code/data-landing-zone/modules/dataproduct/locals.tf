@@ -7,6 +7,7 @@ locals {
     container_enriched     = var.data_product_name
     container_curated      = var.data_product_name
     container_workspace    = var.data_product_name
+    service_principal      = var.data_product_name
   }
 
   virtual_network = {
