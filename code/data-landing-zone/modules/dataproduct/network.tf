@@ -16,7 +16,7 @@ data "azurerm_route_table" "route_table" {
 resource "azapi_resource" "subnet" {
   count     = var.network_enabled ? 1 : 0
   type      = "Microsoft.Network/virtualNetworks/subnets@2022-07-01"
-  name      = "DataProductSubnet-${var.data_product_name}"
+  name      = local.names.subnet
   parent_id = data.azurerm_virtual_network.virtual_network.id
 
   body = jsonencode({
