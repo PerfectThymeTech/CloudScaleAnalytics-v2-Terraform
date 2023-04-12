@@ -8,7 +8,7 @@ network:
   subnet_cidr_range: "100.0.32.96/28"
 identity:
   enabled: true
-  security_group_display_name: ""
+  security_group_display_name: "test"
   user_assigned_identity_enabled: true
   service_principal_enabled: false
 storage_container:

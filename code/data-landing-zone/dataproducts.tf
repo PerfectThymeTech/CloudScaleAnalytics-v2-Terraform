@@ -13,8 +13,8 @@ module "data_products" {
   route_table_id                 = var.route_table_id
   subnet_cidr_range              = each.value.network.subnet_cidr_range
   identity_enabled               = each.value.identity.enabled
-  security_group_display_name    = each.value.identity.enabled
-  user_assigned_identity_enabled = each.value.identity.security_group_display_name
+  security_group_display_name    = each.value.identity.security_group_display_name
+  user_assigned_identity_enabled = each.value.identity.user_assigned_identity_enabled
   service_principal_enabled      = each.value.identity.service_principal_enabled
   containers_enabled = {
     raw       = each.value.storage_container.raw
