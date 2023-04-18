@@ -193,3 +193,14 @@ variable "datalake_workspace_id" {
     error_message = "Please specify a valid resource ID."
   }
 }
+
+variable "unity_metastore_id" {
+  description = "Specifies the id of the Databricks Unity metastore."
+  type        = string
+  sensitive   = false
+  default     = ""
+  validation {
+    condition     = var.unity_metastore_id == "" || length(var.unity_metastore_id) >= 2
+    error_message = "Please specify a valid name."
+  }
+}
