@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.51.0"
+      version = "3.52.0"
     }
     azapi = {
       source  = "azure/azapi"
@@ -12,11 +12,11 @@ terraform {
     }
     databricks = {
       source  = "databricks/databricks"
-      version = "1.14.2"
+      version = "1.14.3"
     }
     random = {
       source  = "hashicorp/random"
-      version = "3.4.3"
+      version = "3.5.1"
     }
     time = {
       source  = "hashicorp/time"
@@ -24,7 +24,7 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "2.36.0"
+      version = "2.37.1"
     }
   }
 
