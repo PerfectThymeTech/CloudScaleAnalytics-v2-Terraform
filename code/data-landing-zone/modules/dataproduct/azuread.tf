@@ -68,5 +68,5 @@ resource "azuread_service_principal_password" "service_principal_password" {
 resource "azuread_group_member" "security_group_sp_member" {
   count            = var.service_principal_enabled && one(data.azuread_group.security_group[*].object_id) != null ? 1 : 0
   group_object_id  = one(data.azuread_group.security_group[*].object_id)
-  member_object_id = one(azuread_application.application[*].object_id)
+  member_object_id = one(azuread_application.application[*].application_id)
 }
