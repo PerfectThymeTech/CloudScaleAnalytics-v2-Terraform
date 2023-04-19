@@ -1,5 +1,4 @@
 data "azurerm_storage_account" "datalake_raw" {
-  count               = var.containers_enabled.raw ? 1 : 0
   name                = local.datalake_raw.name
   resource_group_name = local.datalake_raw.resource_group_name
 }
@@ -8,7 +7,7 @@ resource "azapi_resource" "container_raw" {
   count     = var.containers_enabled.raw ? 1 : 0
   type      = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
   name      = local.names.container_raw
-  parent_id = "${one(data.azurerm_storage_account.datalake_raw[*].id)}/blobServices/default"
+  parent_id = "${data.azurerm_storage_account.datalake_raw.id}/blobServices/default"
 
   body = jsonencode({
     properties = {
