@@ -1,4 +1,4 @@
-resource "databricks_storage_credential" "storage_credential" {
+resource "databricks_storage_credential" "experimentation_storage_credential" {
   count        = var.databricks_enabled && var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
   provider     = databricks.experimentation
   metastore_id = var.unity_metastore_id
@@ -10,14 +10,14 @@ resource "databricks_storage_credential" "storage_credential" {
   comment = "Managed identity credential for ${var.data_product_name} Data Product"
 }
 
-resource "databricks_external_location" "external_location" {
+resource "databricks_external_location" "experimentation_external_location" {
   count        = var.databricks_enabled && var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
   provider     = databricks.experimentation
   metastore_id = var.unity_metastore_id
   name         = local.names.databricks_external_location
 
   comment         = "Default Storage for ${var.data_product_name} Data Product"
-  credential_name = one(databricks_storage_credential.storage_credential[*].name)
+  credential_name = one(databricks_storage_credential.experimentation_storage_credential[*].name)
   skip_validation = false
   url             = local.databricks_catalog_storage_root
 
@@ -26,7 +26,7 @@ resource "databricks_external_location" "external_location" {
   ]
 }
 
-resource "databricks_catalog" "catalog" {
+resource "databricks_catalog" "experimentation_catalog" {
   count        = var.databricks_enabled && var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
   provider     = databricks.experimentation
   metastore_id = var.unity_metastore_id
@@ -41,6 +41,6 @@ resource "databricks_catalog" "catalog" {
   storage_root = local.databricks_catalog_storage_root
 
   depends_on = [
-    databricks_external_location.external_location
+    databricks_external_location.experimentation_external_location
   ]
 }

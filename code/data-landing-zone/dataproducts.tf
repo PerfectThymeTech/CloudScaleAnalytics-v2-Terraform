@@ -2,8 +2,9 @@ module "data_products" {
   source   = "./modules/dataproduct"
   for_each = local.data_product_definitions
   providers = {
-    databricks.automation      = databricks.automation
+    databricks                 = databricks.experimentation
     databricks.experimentation = databricks.experimentation
+    databricks.automation      = databricks.automation
   }
 
   location                       = var.location
