@@ -30,7 +30,7 @@ resource "azuread_application" "application" {
     gallery               = false
     hide                  = false
   }
-  identifier_uris  = ["http://${local.names.service_principal}"]
+  identifier_uris  = []
   sign_in_audience = "AzureADMyOrg"
 }
 
