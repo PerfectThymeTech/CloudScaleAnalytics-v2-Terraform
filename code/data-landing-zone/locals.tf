@@ -28,15 +28,4 @@ locals {
     local.data_product_definitions_json,
     local.data_product_definitions_yaml
   )
-
-  # Create item per environment
-  data_product_definitions_per_env = flatten([
-    for definition_key, definition_value in local.data_product_definitions : [
-      for env in definition_value.environments : {
-        id         = definition_value.id
-        env        = env
-        properties = definition_value
-      }
-    ]
-  ])
 }
