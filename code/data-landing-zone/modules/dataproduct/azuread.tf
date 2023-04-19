@@ -13,7 +13,7 @@ resource "azuread_group_member" "security_group_uai_member" {
 }
 
 resource "azuread_group_member" "security_group_dbac_member" {
-  count            = one(data.azuread_group.security_group[*].object_id) != null ? 1 : 0
+  count            = var.databricks_enabled && var.unity_catalog_configurations.enabled && one(data.azuread_group.security_group[*].object_id) != null ? 1 : 0
   group_object_id  = one(data.azuread_group.security_group[*].object_id)
   member_object_id = one(azurerm_databricks_access_connector.databricks_access_connector[*].identity[0].principal_id)
 }

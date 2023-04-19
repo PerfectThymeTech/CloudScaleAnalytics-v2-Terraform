@@ -146,7 +146,7 @@ variable "containers_enabled" {
       var.containers_enabled.curated == true || var.containers_enabled.curated == false,
       var.containers_enabled.workspace == true || var.containers_enabled.workspace == false,
     ])
-    error_message = "Please specify a valid value for 'network.enabled'. 'network.enabled' needs to be a boolean."
+    error_message = "Please specify a valid value for 'storage_container._'. 'storage_container.raw', 'storage_container.enriched', 'storage_container.curated', 'storage_container.workspace' needs to be a boolean."
   }
 }
 
@@ -202,5 +202,34 @@ variable "unity_metastore_id" {
   validation {
     condition     = var.unity_metastore_id == "" || length(var.unity_metastore_id) >= 2
     error_message = "Please specify a valid name."
+  }
+}
+
+variable "databricks_enabled" {
+  description = "Specifies whether identity resources should be deployed for the data product."
+  type        = bool
+  sensitive   = false
+  default     = false
+  validation {
+    condition     = var.databricks_enabled == true || var.databricks_enabled == false
+    error_message = "Please specify a valid value for 'databricks.enabled'. 'databricks.enabled' needs to be a boolean."
+  }
+}
+
+variable "unity_catalog_configurations" {
+  description = "Specifies the configurations for unity catalog."
+  type = object({
+    enabled      = optional(bool, false)
+    group_name   = optional(string, "")
+    storage_root = optional(string, "")
+  })
+  sensitive = false
+  validation {
+    condition = alltrue([
+      var.unity_catalog_configurations.enabled == true || var.unity_catalog_configurations.enabled == false,
+      var.unity_catalog_configurations.group_name == "" || length(var.unity_catalog_configurations.group_name) >= 2,
+      var.unity_catalog_configurations.storage_root == "" || var.unity_catalog_configurations.storage_root == "raw" || var.unity_catalog_configurations.storage_root == "enriched" || var.unity_catalog_configurations.storage_root == "curated" || var.unity_catalog_configurations.storage_root == "workspace",
+    ])
+    error_message = "Please specify a valid value for 'databricks.unity_catalog._'."
   }
 }

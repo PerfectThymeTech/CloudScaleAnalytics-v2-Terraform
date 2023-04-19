@@ -51,6 +51,6 @@ locals {
     name                = try(split("/", var.datalake_workspace_id)[8], "")
   }
 
-  databricks_catalog_storage_root_container = ""
+  databricks_catalog_storage_root_container = var.unity_catalog_configurations.storage_root == "raw" ? one(azapi_resource.container_raw[*].name) : var.unity_catalog_configurations.storage_root == "enriched" ? one(azapi_resource.container_enriched[*].name) : var.unity_catalog_configurations.storage_root == "curated" ? one(azapi_resource.container_curated[*].name) : var.unity_catalog_configurations.storage_root == "workspace" ? one(azapi_resource.container_workspace[*].name) : ""
   databricks_catalog_storage_root           = "abfss://${data.azurerm_storage_account.datalake_workspace.name}@${local.databricks_catalog_storage_root_container}.dfs.core.windows.net/"
 }
