@@ -36,7 +36,7 @@ resource "azuread_application" "application" {
 
 resource "azuread_service_principal" "service_principal" {
   count          = var.service_principal_enabled ? 1 : 0
-  application_id = one(azuread_application.application[*].id)
+  application_id = one(azuread_application.application[*].application_id)
   owners         = [data.azuread_client_config.current.object_id]
 
   account_enabled              = true
