@@ -206,13 +206,24 @@ variable "unity_metastore_id" {
 }
 
 variable "databricks_enabled" {
-  description = "Specifies whether identity resources should be deployed for the data product."
+  description = "Specifies whether databricks resources should be deployed for the data product."
   type        = bool
   sensitive   = false
   default     = false
   validation {
     condition     = var.databricks_enabled == true || var.databricks_enabled == false
     error_message = "Please specify a valid value for 'databricks.enabled'. 'databricks.enabled' needs to be a boolean."
+  }
+}
+
+variable "databricks_experimentation" {
+  description = "Specifies whether databricks resources should be deployed in the automation or experimentation workspace."
+  type        = bool
+  sensitive   = false
+  default     = true
+  validation {
+    condition     = var.databricks_experimentation == true || var.databricks_experimentation == false
+    error_message = "Please specify a valid value for 'databricks.experimentation'. 'databricks.experimentation' needs to be a boolean."
   }
 }
 

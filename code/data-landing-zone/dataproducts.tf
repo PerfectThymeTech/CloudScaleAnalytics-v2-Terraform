@@ -2,7 +2,8 @@ module "data_products" {
   source   = "./modules/dataproduct"
   for_each = local.data_product_definitions
   providers = {
-    databricks = each.value.databricks.experimentation ? databricks.experimentation : databricks.automation
+    databricks.automation      = databricks.automation
+    databricks.experimentation = databricks.experimentation
   }
 
   location                       = var.location
@@ -24,12 +25,13 @@ module "data_products" {
     curated   = try(each.value.storage_container.curated, false)
     workspace = try(each.value.storage_container.workspace, false)
   }
-  datalake_raw_id       = module.datalake_raw.datalake_id
-  datalake_enriched_id  = module.datalake_enriched.datalake_id
-  datalake_curated_id   = module.datalake_curated.datalake_id
-  datalake_workspace_id = module.datalake_workspace.datalake_id
-  databricks_enabled    = try(each.value.databricks.enabled, false)
-  unity_metastore_id    = var.unity_metastore_id
+  datalake_raw_id            = module.datalake_raw.datalake_id
+  datalake_enriched_id       = module.datalake_enriched.datalake_id
+  datalake_curated_id        = module.datalake_curated.datalake_id
+  datalake_workspace_id      = module.datalake_workspace.datalake_id
+  databricks_enabled         = try(each.value.databricks.enabled, false)
+  databricks_experimentation = try(each.value.databricks.experimentation, true)
+  unity_metastore_id         = var.unity_metastore_id
   unity_catalog_configurations = {
     enabled      = try(each.value.databricks.unity_catalog.enabled, false)
     group_name   = try(each.value.databricks.unity_catalog.group_name, "")

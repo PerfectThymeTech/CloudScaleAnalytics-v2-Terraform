@@ -1,5 +1,6 @@
 resource "databricks_storage_credential" "storage_credential" {
-  count        = var.databricks_enabled && var.unity_catalog_configurations.enabled ? 1 : 0
+  count        = var.databricks_enabled && var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
+  provider     = databricks.experimentation
   metastore_id = var.unity_metastore_id
   name         = local.names.databricks_storage_credential
 
@@ -10,7 +11,8 @@ resource "databricks_storage_credential" "storage_credential" {
 }
 
 resource "databricks_external_location" "external_location" {
-  count        = var.databricks_enabled && var.unity_catalog_configurations.enabled ? 1 : 0
+  count        = var.databricks_enabled && var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
+  provider     = databricks.experimentation
   metastore_id = var.unity_metastore_id
   name         = local.names.databricks_external_location
 
@@ -25,7 +27,8 @@ resource "databricks_external_location" "external_location" {
 }
 
 resource "databricks_catalog" "catalog" {
-  count        = var.databricks_enabled && var.unity_catalog_configurations.enabled ? 1 : 0
+  count        = var.databricks_enabled && var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
+  provider     = databricks.experimentation
   metastore_id = var.unity_metastore_id
   name         = local.names.databricks_catalog
 
