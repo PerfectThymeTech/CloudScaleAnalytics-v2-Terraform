@@ -1,7 +1,6 @@
 resource "databricks_storage_credential" "automation_storage_credential" {
   count        = var.databricks_enabled && !var.databricks_experimentation && var.unity_catalog_configurations.enabled ? 1 : 0
   provider     = databricks.automation
-  metastore_id = var.unity_metastore_id
   name         = local.names.databricks_storage_credential
 
   azure_managed_identity {
