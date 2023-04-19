@@ -4,7 +4,7 @@ tags:
   costCenter: "ABCD1234"
 network:
   enabled: true
-  subnet_cidr_range: "100.0.32.96/28"
+  subnet_cidr_range: "10.0.32.96/28"
 identity:
   enabled: true
   security_group_display_name: "test"
