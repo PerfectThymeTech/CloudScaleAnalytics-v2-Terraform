@@ -115,6 +115,12 @@ variable "data_product_library_path" {
   default     = ""
 }
 
+variable "data_product_template_file_variables" {
+  type        = any
+  description = "If specified, provides the ability to define custom template variables used when reading in dtaa product template files from the library path."
+  default     = {}
+}
+
 variable "private_dns_zone_id_blob" {
   description = "Specifies the resource ID of the private DNS zone for Azure Storage blob endpoints."
   type        = string

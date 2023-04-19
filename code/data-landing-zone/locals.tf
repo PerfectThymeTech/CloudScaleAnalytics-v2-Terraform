@@ -16,11 +16,11 @@ locals {
   # Load file content
   data_product_definitions_json = {
     for filepath in local.data_product_filepaths_json :
-    filepath => jsondecode(templatefile("${local.data_product_library_path}/${filepath}", {}))
+    filepath => jsondecode(templatefile("${local.data_product_library_path}/${filepath}", var.data_product_template_file_variables))
   }
   data_product_definitions_yaml = {
     for filepath in local.data_product_filepaths_yaml :
-    filepath => yamldecode(templatefile("${local.data_product_library_path}/${filepath}", {}))
+    filepath => yamldecode(templatefile("${local.data_product_library_path}/${filepath}", var.data_product_template_file_variables))
   }
 
   # Merge data

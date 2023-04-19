@@ -11,6 +11,7 @@ unity_metastore_name                    = "perfectthymetech-northeurope"
 unity_metastore_id                      = "9884193e-1edc-4ddd-8e9c-ce570e9cc57a"
 data_platform_subscription_ids          = []
 data_product_library_path               = "./dataproducts"
+data_product_template_file_variables    = {}
 private_dns_zone_id_blob                = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mycrp-prd-global-dns/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"
 private_dns_zone_id_dfs                 = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mycrp-prd-global-dns/providers/Microsoft.Network/privateDnsZones/privatelink.dfs.core.windows.net"
 private_dns_zone_id_queue               = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mycrp-prd-global-dns/providers/Microsoft.Network/privateDnsZones/privatelink.queue.core.windows.net"
