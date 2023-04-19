@@ -58,10 +58,10 @@ locals {
     workspace = data.azurerm_storage_account.datalake_workspace.name
   }
   container_names = {
-    raw       = azapi_resource.container_raw.name
-    enriched  = azapi_resource.container_enriched.name
-    curated   = azapi_resource.container_curated.name
-    workspace = azapi_resource.container_workspace.name
+    raw       = one(azapi_resource.container_raw[*].name)
+    enriched  = one(azapi_resource.container_enriched[*].name)
+    curated   = one(azapi_resource.container_curated[*].name)
+    workspace = one(azapi_resource.container_workspace[*].name)
   }
   databricks_catalog_storage_root = "abfss://${lookup(local.datalake_names, var.unity_catalog_configurations.storage_root, "")}@${lookup(local.container_names, var.unity_catalog_configurations.storage_root, "")}.dfs.core.windows.net/"
 }
