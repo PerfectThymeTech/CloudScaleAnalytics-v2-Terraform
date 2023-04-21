@@ -22,6 +22,10 @@ resource "databricks_external_location" "automation_external_location" {
   depends_on = [
     azuread_group_member.security_group_dbac_member
   ]
+  timeouts {
+    create = "5m"
+    update = "5m"
+  }
 }
 
 resource "databricks_catalog" "automation_catalog" {
