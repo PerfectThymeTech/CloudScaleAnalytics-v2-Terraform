@@ -27,7 +27,7 @@ variable "prefix" {
 
 variable "tags" {
   description = "Specifies the tags that you want to apply to all resources."
-  type        = map(any)
+  type        = map(string)
   sensitive   = false
 }
 
@@ -107,6 +107,18 @@ variable "data_platform_subscription_ids" {
   description = "Specifies the list of subscription IDs of your data platform."
   type        = list(string)
   sensitive   = false
+}
+
+variable "data_product_library_path" {
+  type        = string
+  description = "If specified, sets the path to a custom library folder for archetype artefacts."
+  default     = ""
+}
+
+variable "data_product_template_file_variables" {
+  type        = any
+  description = "If specified, provides the ability to define custom template variables used when reading in dtaa product template files from the library path."
+  default     = {}
 }
 
 variable "private_dns_zone_id_blob" {
