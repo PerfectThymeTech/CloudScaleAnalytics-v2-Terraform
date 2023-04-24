@@ -35,7 +35,8 @@ resource "databricks_catalog" "experimentation_catalog" {
   properties = {
     purpose = "Data Product Catalog - ${var.data_product_name}"
   }
-  share_name   = var.unity_metastore_id
+  # provider_name = 
+  # share_name   = var.unity_metastore_id
   storage_root = local.databricks_catalog_storage_root
 
   depends_on = [
