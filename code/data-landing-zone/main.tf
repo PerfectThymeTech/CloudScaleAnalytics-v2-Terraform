@@ -93,7 +93,6 @@ provider "databricks" {
   azure_workspace_resource_id = module.databricks_automation.databricks_id
   host                        = module.databricks_automation.databricks_workspace_url
   http_timeout_seconds        = 600
-  # rate_limit                  = 10
 }
 
 provider "databricks" {
@@ -102,7 +101,6 @@ provider "databricks" {
   azure_workspace_resource_id = module.databricks_experimentation.databricks_id
   host                        = module.databricks_experimentation.databricks_workspace_url
   http_timeout_seconds        = 600
-  # rate_limit                  = 10
 }
 
 data "azurerm_client_config" "current" {}
