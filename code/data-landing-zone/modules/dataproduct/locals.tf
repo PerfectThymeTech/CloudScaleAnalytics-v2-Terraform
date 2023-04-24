@@ -63,5 +63,5 @@ locals {
     curated   = one(azapi_resource.container_curated[*].name)
     workspace = one(azapi_resource.container_workspace[*].name)
   }
-  databricks_catalog_storage_root = "abfss://${lookup(local.datalake_names, var.unity_catalog_configurations.storage_root, "")}@${lookup(local.container_names, var.unity_catalog_configurations.storage_root, "")}.dfs.core.windows.net/"
+  databricks_catalog_storage_root = "abfss://${lookup(local.container_names, var.unity_catalog_configurations.storage_root, "")}@${lookup(local.datalake_names, var.unity_catalog_configurations.storage_root, "")}.dfs.core.windows.net/"
 }

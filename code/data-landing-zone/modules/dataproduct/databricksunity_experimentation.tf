@@ -16,7 +16,7 @@ resource "databricks_external_location" "experimentation_external_location" {
 
   comment         = "Default Storage for ${var.data_product_name} Data Product"
   credential_name = one(databricks_storage_credential.experimentation_storage_credential[*].name)
-  skip_validation = true
+  skip_validation = false
   url             = local.databricks_catalog_storage_root
 
   depends_on = [
@@ -35,8 +35,6 @@ resource "databricks_catalog" "experimentation_catalog" {
   properties = {
     purpose = "Data Product Catalog - ${var.data_product_name}"
   }
-  # provider_name = 
-  # share_name   = var.unity_metastore_id
   storage_root = local.databricks_catalog_storage_root
 
   depends_on = [
