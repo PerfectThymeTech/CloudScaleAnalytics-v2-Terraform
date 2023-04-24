@@ -20,5 +20,5 @@ databricks:
   experimentation: false
   unity_catalog:
     enabled: true
-    group_name: "test"
+    group_name: "377231223141289"
     storage_root: "workspace"
