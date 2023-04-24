@@ -16,7 +16,7 @@ resource "databricks_external_location" "automation_external_location" {
 
   comment         = "Default Storage for ${var.data_product_name} Data Product"
   credential_name = one(databricks_storage_credential.automation_storage_credential[*].name)
-  skip_validation = false
+  skip_validation = true
   url             = local.databricks_catalog_storage_root
 
   depends_on = [
