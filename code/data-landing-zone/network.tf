@@ -93,7 +93,7 @@ resource "azapi_resource" "powerbi_subnet" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 28 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 3))
-      delegations   = [
+      delegations = [
         {
           name = "PowerBIGatewaySubnetDelegation"
           properties = {
@@ -172,7 +172,7 @@ resource "azapi_resource" "databricks_private_subnet_001" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 1))
-      delegations   = [
+      delegations = [
         {
           name = "DatabricksSubnetDelegation"
           properties = {
@@ -203,7 +203,7 @@ resource "azapi_resource" "databricks_public_subnet_001" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 2))
-      delegations   = [
+      delegations = [
         {
           name = "DatabricksSubnetDelegation"
           properties = {
@@ -234,7 +234,7 @@ resource "azapi_resource" "databricks_private_subnet_002" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 3))
-      delegations   = [
+      delegations = [
         {
           name = "DatabricksSubnetDelegation"
           properties = {
@@ -265,7 +265,7 @@ resource "azapi_resource" "databricks_public_subnet_002" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 23 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 4))
-      delegations   = [
+      delegations = [
         {
           name = "DatabricksSubnetDelegation"
           properties = {

@@ -5,7 +5,7 @@ locals {
     resource_group_name = split("/", var.vnet_id)[4]
     name                = split("/", var.vnet_id)[8]
   }
-  
+
   network_security_group = {
     resource_group_name = try(split("/", var.nsg_id)[4], "")
     name                = try(split("/", var.nsg_id)[8], "")
