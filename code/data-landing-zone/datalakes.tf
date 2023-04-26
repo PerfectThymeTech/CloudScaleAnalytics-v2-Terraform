@@ -7,7 +7,7 @@ module "datalake_raw" {
   datalake_name                  = "${local.prefix}-st-raw"
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
-  subnet_id                      = azurerm_subnet.storage_subnet.id
+  subnet_id                      = azapi_resource.storage_subnet.id
   enable_queue_private_endpoint  = false
   enable_table_private_endpoint  = false
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
@@ -26,7 +26,7 @@ module "datalake_enriched" {
   datalake_name                  = "${local.prefix}-st-enr"
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
-  subnet_id                      = azurerm_subnet.storage_subnet.id
+  subnet_id                      = azapi_resource.storage_subnet.id
   enable_queue_private_endpoint  = false
   enable_table_private_endpoint  = false
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
@@ -45,7 +45,7 @@ module "datalake_curated" {
   datalake_name                  = "${local.prefix}-st-cur"
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
-  subnet_id                      = azurerm_subnet.storage_subnet.id
+  subnet_id                      = azapi_resource.storage_subnet.id
   enable_queue_private_endpoint  = false
   enable_table_private_endpoint  = false
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
@@ -64,7 +64,7 @@ module "datalake_workspace" {
   datalake_name                  = "${local.prefix}-st-wsp"
   datalake_filesystem_names      = ["data"]
   datalake_replication_type      = "ZRS"
-  subnet_id                      = azurerm_subnet.storage_subnet.id
+  subnet_id                      = azapi_resource.storage_subnet.id
   enable_queue_private_endpoint  = true
   enable_table_private_endpoint  = true
   private_dns_zone_id_blob       = var.private_dns_zone_id_blob
