@@ -8,9 +8,9 @@ module "databricks_automation" {
   key_vault_name                                       = "${local.prefix}-aut-kv001"
   vnet_id                                              = data.azurerm_virtual_network.virtual_network.id
   private_subnet_name                                  = azapi_resource.databricks_private_subnet_001.name
-  private_subnet_network_security_group_association_id = azapi_resource.databricks_private_subnet_001.name
+  private_subnet_network_security_group_association_id = azapi_resource.databricks_private_subnet_001.id
   public_subnet_name                                   = azapi_resource.databricks_public_subnet_001.name
-  public_subnet_network_security_group_association_id  = azapi_resource.databricks_public_subnet_001.name
+  public_subnet_network_security_group_association_id  = azapi_resource.databricks_public_subnet_001.id
   private_endpoints_subnet_id                          = azapi_resource.shared_app_aut_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
   private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
@@ -43,9 +43,9 @@ module "databricks_experimentation" {
   key_vault_name                                       = "${local.prefix}-exp-kv001"
   vnet_id                                              = data.azurerm_virtual_network.virtual_network.id
   private_subnet_name                                  = azapi_resource.databricks_private_subnet_002.name
-  private_subnet_network_security_group_association_id = azapi_resource.databricks_private_subnet_002.name
+  private_subnet_network_security_group_association_id = azapi_resource.databricks_private_subnet_002.id
   public_subnet_name                                   = azapi_resource.databricks_public_subnet_002.name
-  public_subnet_network_security_group_association_id  = azapi_resource.databricks_public_subnet_002.name
+  public_subnet_network_security_group_association_id  = azapi_resource.databricks_public_subnet_002.id
   private_endpoints_subnet_id                          = azapi_resource.shared_app_exp_subnet.id
   private_dns_zone_id_databricks                       = var.private_dns_zone_id_databricks
   private_dns_zone_id_key_vault                        = var.private_dns_zone_id_key_vault
