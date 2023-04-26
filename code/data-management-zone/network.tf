@@ -45,7 +45,7 @@ resource "azapi_resource" "databricks_private_subnet" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 26 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 1))
-      delegations   = [
+      delegations = [
         {
           name = "DatabricksSubnetDelegation"
           properties = {
@@ -76,7 +76,7 @@ resource "azapi_resource" "databricks_public_subnet" {
   body = jsonencode({
     properties = {
       addressPrefix = tostring(cidrsubnet(data.azurerm_virtual_network.virtual_network.address_space[0], 26 - tonumber(reverse(split("/", data.azurerm_virtual_network.virtual_network.address_space[0]))[0]), 2))
-      delegations   = [
+      delegations = [
         {
           name = "DatabricksSubnetDelegation"
           properties = {
