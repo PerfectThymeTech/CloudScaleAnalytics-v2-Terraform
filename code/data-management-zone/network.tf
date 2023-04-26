@@ -66,6 +66,10 @@ resource "azapi_resource" "databricks_private_subnet" {
       serviceEndpoints        = []
     }
   })
+  
+  depends_on = [
+    azapi_resource.private_endpoint_subnet
+  ]
 }
 
 resource "azapi_resource" "databricks_public_subnet" {
@@ -97,4 +101,8 @@ resource "azapi_resource" "databricks_public_subnet" {
       serviceEndpoints        = []
     }
   })
+  
+  depends_on = [
+    azapi_resource.databricks_private_subnet
+  ]
 }
