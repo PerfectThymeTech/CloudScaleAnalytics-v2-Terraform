@@ -135,7 +135,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_blob" {
     private_connection_resource_id = azurerm_storage_account.datalake.id
     subresource_names              = ["blob"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
     content {
@@ -160,7 +160,7 @@ resource "azurerm_private_endpoint" "datalake_private_endpoint_dfs" {
     private_connection_resource_id = azurerm_storage_account.datalake.id
     subresource_names              = ["dfs"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_dfs == "" ? [] : [1]
     content {

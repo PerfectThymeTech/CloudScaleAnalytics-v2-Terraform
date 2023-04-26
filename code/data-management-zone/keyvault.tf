@@ -35,7 +35,7 @@ resource "azurerm_private_endpoint" "key_vault_private_endpoint" {
     private_connection_resource_id = azurerm_key_vault.key_vault.id
     subresource_names              = ["vault"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_key_vault == "" ? [] : [1]
     content {
