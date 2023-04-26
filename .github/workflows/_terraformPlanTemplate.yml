@@ -23,6 +23,9 @@ on:
       CLIENT_ID:
         required: true
         description: "Specifies the client id."
+      CLIENT_SECRET:
+        required: true
+        description: "Specifies the client secret."
       SUBSCRIPTION_ID:
         required: true
         description: "Specifies the client id."
@@ -43,6 +46,8 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
       ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      ARM_USE_OIDC: false
 
     steps:
       # Setup Node

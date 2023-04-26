@@ -82,7 +82,7 @@
 #     private_connection_resource_id = azurerm_eventhub_namespace.eventhub_namespace.id
 #     subresource_names              = ["namespace"]
 #   }
-#   subnet_id = azurerm_subnet.private_endpoint_subnet.id
+#   subnet_id = azapi_resource.private_endpoint_subnet.id
 #   dynamic "private_dns_zone_group" {
 #     for_each = var.private_dns_zone_id_namespace == "" ? [] : [1]
 #     content {
