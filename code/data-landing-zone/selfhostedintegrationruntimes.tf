@@ -9,4 +9,9 @@ module "shir_001" {
   subnet_id                         = azapi_resource.runtimes_subnet.id
   admin_username                    = var.admin_username
   shared_data_factory_ids           = []
+
+  depends_on = [
+    azurerm_private_endpoint.data_factory_private_endpoint_data_factory,
+    azurerm_private_endpoint.data_factory_private_endpoint_portal
+  ]
 }
