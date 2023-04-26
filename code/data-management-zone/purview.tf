@@ -70,7 +70,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_account" {
     private_connection_resource_id = azurerm_purview_account.purview.id
     subresource_names              = ["account"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_purview_account == "" ? [] : [1]
     content {
@@ -95,7 +95,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_portal" {
     private_connection_resource_id = azurerm_purview_account.purview.id
     subresource_names              = ["portal"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_purview_portal == "" ? [] : [1]
     content {
@@ -120,7 +120,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_blob" {
     private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.storageAccount # azurerm_purview_account.purview.managed_resources.storage_account_id
     subresource_names              = ["blob"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_blob == "" ? [] : [1]
     content {
@@ -145,7 +145,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_queue" {
     private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.storageAccount # azurerm_purview_account.purview.managed_resources.storage_account_id
     subresource_names              = ["queue"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_queue == "" ? [] : [1]
     content {
@@ -170,7 +170,7 @@ resource "azurerm_private_endpoint" "purview_private_endpoint_namespace" {
     private_connection_resource_id = jsondecode(data.azapi_resource.purview.output).properties.managedResources.eventHubNamespace # azurerm_purview_account.purview.managed_resources.event_hub_namespace
     subresource_names              = ["namespace"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_namespace == "" ? [] : [1]
     content {

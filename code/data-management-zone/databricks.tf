@@ -12,10 +12,10 @@ resource "azurerm_databricks_workspace" "databricks" {
   custom_parameters {
     no_public_ip                                         = true
     virtual_network_id                                   = data.azurerm_virtual_network.virtual_network.id
-    private_subnet_name                                  = azurerm_subnet.databricks_private_subnet.name
-    private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.databricks_private_subnet_nsg.id
-    public_subnet_name                                   = azurerm_subnet.databricks_public_subnet.name
-    public_subnet_network_security_group_association_id  = azurerm_subnet_network_security_group_association.databricks_public_subnet_nsg.id
+    private_subnet_name                                  = azapi_resource.databricks_private_subnet.name
+    private_subnet_network_security_group_association_id = azapi_resource.databricks_private_subnet.id
+    public_subnet_name                                   = azapi_resource.databricks_public_subnet.name
+    public_subnet_network_security_group_association_id  = azapi_resource.databricks_private_subnet.id
     storage_account_name                                 = replace("${local.prefix}-cnsmptn-dbw001", "-", "")
     storage_account_sku_name                             = "Standard_LRS"
   }
@@ -34,7 +34,7 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_ui" {
     private_connection_resource_id = azurerm_databricks_workspace.databricks.id
     subresource_names              = ["databricks_ui_api"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_databricks == "" ? [] : [1]
     content {
@@ -59,7 +59,7 @@ resource "azurerm_private_endpoint" "databricks_private_endpoint_web" {
     private_connection_resource_id = azurerm_databricks_workspace.databricks.id
     subresource_names              = ["browser_authentication"]
   }
-  subnet_id = azurerm_subnet.private_endpoint_subnet.id
+  subnet_id = azapi_resource.private_endpoint_subnet.id
   dynamic "private_dns_zone_group" {
     for_each = var.private_dns_zone_id_databricks == "" ? [] : [1]
     content {
