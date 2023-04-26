@@ -63,9 +63,10 @@ provider "azapi" {
 }
 
 provider "databricks" {
-  azure_environment = "public"
+  # azure_environment = "public"
   # azure_workspace_resource_id = azurerm_databricks_workspace.databricks.id
-  host = "https://accounts.azuredatabricks.net"
+  host       = "https://accounts.azuredatabricks.net"
+  account_id = "581824c3-9c92-47ef-8512-e2891cd9ae45"
 }
 
 data "azurerm_client_config" "current" {
