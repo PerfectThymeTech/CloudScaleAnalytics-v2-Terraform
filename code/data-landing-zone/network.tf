@@ -59,6 +59,10 @@ resource "azapi_resource" "storage_subnet" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.devops_subnet
+  ]
 }
 
 resource "azapi_resource" "runtimes_subnet" {
@@ -83,6 +87,10 @@ resource "azapi_resource" "runtimes_subnet" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.storage_subnet
+  ]
 }
 
 resource "azapi_resource" "powerbi_subnet" {
@@ -114,6 +122,10 @@ resource "azapi_resource" "powerbi_subnet" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.runtimes_subnet
+  ]
 }
 
 resource "azapi_resource" "shared_app_aut_subnet" {
@@ -138,6 +150,10 @@ resource "azapi_resource" "shared_app_aut_subnet" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.powerbi_subnet
+  ]
 }
 
 resource "azapi_resource" "shared_app_exp_subnet" {
@@ -162,6 +178,10 @@ resource "azapi_resource" "shared_app_exp_subnet" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.shared_app_aut_subnet
+  ]
 }
 
 resource "azapi_resource" "databricks_private_subnet_001" {
@@ -193,6 +213,10 @@ resource "azapi_resource" "databricks_private_subnet_001" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.shared_app_exp_subnet
+  ]
 }
 
 resource "azapi_resource" "databricks_public_subnet_001" {
@@ -224,6 +248,10 @@ resource "azapi_resource" "databricks_public_subnet_001" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.databricks_private_subnet_001
+  ]
 }
 
 resource "azapi_resource" "databricks_private_subnet_002" {
@@ -255,6 +283,10 @@ resource "azapi_resource" "databricks_private_subnet_002" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.databricks_public_subnet_001
+  ]
 }
 
 resource "azapi_resource" "databricks_public_subnet_002" {
@@ -286,4 +318,8 @@ resource "azapi_resource" "databricks_public_subnet_002" {
       serviceEndpoints        = []
     }
   })
+
+  depends_on = [
+    azapi_resource.databricks_private_subnet_002
+  ]
 }
