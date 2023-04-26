@@ -1,0 +1,24 @@
+id: "test"
+environment: "prd"
+tags:
+  costCenter: "ABCD1234"
+network:
+  enabled: true
+  subnet_cidr_range: "10.0.32.96/28"
+identity:
+  enabled: true
+  security_group_display_name: "test"
+  user_assigned_identity_enabled: true
+  service_principal_enabled: true
+storage_container:
+  raw: false
+  enriched: false
+  curated: false
+  workspace: true
+databricks:
+  enabled: true
+  experimentation: false
+  unity_catalog:
+    enabled: true
+    group_name: "test"
+    storage_root: "workspace"

@@ -1,6 +1,3 @@
-data "azurerm_client_config" "current" {
-}
-
 variable "location" {
   description = "Specifies the location for all Azure resources."
   type        = string
@@ -36,7 +33,7 @@ variable "datalake_replication_type" {
 
 variable "tags" {
   description = "Specifies the tags that you want to apply to all resources."
-  type        = map(any)
+  type        = map(string)
   sensitive   = false
 }
 
