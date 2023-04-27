@@ -38,4 +38,9 @@ module "data_products" {
     group_name   = try(each.value.databricks.unity_catalog.group_name, "")
     storage_root = try(each.value.databricks.unity_catalog.storage_root, "")
   }
+
+  depends_on = [
+    module.databricks_automation_configuration,
+    module.databricks_experimentation_configuration
+  ]
 }
