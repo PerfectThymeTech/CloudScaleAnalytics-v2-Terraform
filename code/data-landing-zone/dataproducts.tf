@@ -12,8 +12,8 @@ module "data_products" {
   tags                           = try(each.value.tags, {})
   network_enabled                = try(each.value.network.enabled, false)
   vnet_id                        = data.azurerm_virtual_network.virtual_network.id
-  nsg_id                         = var.nsg_id
-  route_table_id                 = var.route_table_id
+  nsg_id                         = data.azurerm_network_security_group.network_security_group.id
+  route_table_id                 = data.azurerm_route_table.route_table.id
   subnet_cidr_range              = try(each.value.network.subnet_cidr_range, "")
   private_dns_zone_id_key_vault  = var.private_dns_zone_id_key_vault
   identity_enabled               = try(each.value.identity.enabled, false)
@@ -38,4 +38,9 @@ module "data_products" {
     group_name   = try(each.value.databricks.unity_catalog.group_name, "")
     storage_root = try(each.value.databricks.unity_catalog.storage_root, "")
   }
+
+  depends_on = [
+    module.databricks_automation_configuration,
+    module.databricks_experimentation_configuration
+  ]
 }
