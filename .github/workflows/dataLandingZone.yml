@@ -19,7 +19,7 @@ jobs:
     uses: ./.github/workflows/_terraformLintTemplate.yml
     name: "Terraform Lint"
     with:
-      terraform_version: "1.4.2"
+      terraform_version: "1.4.6"
       working_directory: "./code/data-landing-zone"
 
   terraform_plan_dev:
@@ -28,7 +28,7 @@ jobs:
     needs: [terraform_lint]
     with:
       environment: "dev"
-      terraform_version: "1.4.2"
+      terraform_version: "1.4.6"
       working_directory: "./code/data-landing-zone"
     secrets:
       TENANT_ID: ${{ secrets.TENANT_ID }}
@@ -43,7 +43,7 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'release'
     with:
       environment: "dev"
-      terraform_version: "1.4.2"
+      terraform_version: "1.4.6"
       working_directory: "./code/data-landing-zone"
     secrets:
       TENANT_ID: ${{ secrets.TENANT_ID }}
