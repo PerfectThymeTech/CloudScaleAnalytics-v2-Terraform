@@ -7,3 +7,10 @@ resource "databricks_secret_scope" "platform_secret_scope" {
     resource_id = var.key_vault_id
   }
 }
+
+resource "databricks_secret_acl" "secret_acl" {
+  count      = var.databricks_admin_groupname != "" ? 1 : 0
+  principal  = var.databricks_admin_groupname
+  permission = "MANAGE"
+  scope      = databricks_secret_scope.platform_secret_scope.name
+}
