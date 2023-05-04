@@ -16,6 +16,10 @@ locals {
     databricks_catalog            = var.data_product_name
   }
 
+  conditions = {
+    security_group = var.identity_enabled && var.security_group_display_name != ""
+  }
+
   virtual_network = {
     resource_group_name = try(split("/", var.vnet_id)[4], "")
     name                = try(split("/", var.vnet_id)[8], "")
