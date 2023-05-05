@@ -11,6 +11,6 @@ resource "databricks_secret_scope" "platform_secret_scope" {
 resource "databricks_secret_acl" "secret_acl" {
   count      = var.databricks_admin_groupname != "" ? 1 : 0
   principal  = var.databricks_admin_groupname
-  permission = "MANAGE"
+  permission = "WRITE"
   scope      = databricks_secret_scope.platform_secret_scope.name
 }
