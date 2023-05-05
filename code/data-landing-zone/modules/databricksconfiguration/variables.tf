@@ -54,6 +54,16 @@ variable "databricks_workspace_id" {
   }
 }
 
+variable "databricks_admin_groupname" {
+  description = "Specifies the databricks admin group name that should be granted access to the Databricks workspace artifacts"
+  type        = string
+  sensitive   = false
+  validation {
+    condition     = var.databricks_admin_groupname == "" || length(var.databricks_admin_groupname) >= 2
+    error_message = "Please specify a valid group name."
+  }
+}
+
 variable "unity_metastore_name" {
   description = "Specifies the name of the Databricks Unity metastore."
   type        = string

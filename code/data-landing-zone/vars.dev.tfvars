@@ -9,6 +9,7 @@ route_table_id                          = "/subscriptions/8f171ff9-2b5b-4f0f-aed
 purview_id                              = "/subscriptions/8f171ff9-2b5b-4f0f-aed5-7fa360a1d094/resourceGroups/mydmgmt-dev-governance-rg/providers/Microsoft.Purview/accounts/mydmgmt-dev-pview001"
 unity_metastore_name                    = "perfectthymetech-northeurope"
 unity_metastore_id                      = "c5af1b13-e920-4554-aff2-f509626d7d50"
+databricks_admin_groupname              = "test"
 data_platform_subscription_ids          = []
 data_product_library_path               = "./dataproducts"
 data_product_template_file_variables    = {}

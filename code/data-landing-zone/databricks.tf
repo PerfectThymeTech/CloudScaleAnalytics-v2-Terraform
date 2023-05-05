@@ -21,16 +21,18 @@ module "databricks_automation" {
 module "databricks_automation_configuration" {
   source = "./modules/databricksconfiguration"
   providers = {
-    databricks = databricks.automation
+    databricks         = databricks.automation
+    databricks.account = databricks.account
   }
 
-  key_vault_id              = module.databricks_automation.key_vault_id
-  key_vault_uri             = module.databricks_automation.key_vault_uri
-  client_id_secret_name     = ""
-  client_secret_secret_name = ""
-  databricks_workspace_id   = module.databricks_automation.databricks_workspace_id
-  unity_metastore_name      = var.unity_metastore_name
-  unity_metastore_id        = var.unity_metastore_id
+  key_vault_id               = module.databricks_automation.key_vault_id
+  key_vault_uri              = module.databricks_automation.key_vault_uri
+  client_id_secret_name      = ""
+  client_secret_secret_name  = ""
+  databricks_workspace_id    = module.databricks_automation.databricks_workspace_id
+  databricks_admin_groupname = var.databricks_admin_groupname
+  unity_metastore_name       = var.unity_metastore_name
+  unity_metastore_id         = var.unity_metastore_id
 }
 
 module "databricks_experimentation" {
@@ -56,14 +58,16 @@ module "databricks_experimentation" {
 module "databricks_experimentation_configuration" {
   source = "./modules/databricksconfiguration"
   providers = {
-    databricks = databricks.experimentation
+    databricks         = databricks.experimentation
+    databricks.account = databricks.account
   }
 
-  key_vault_id              = module.databricks_experimentation.key_vault_id
-  key_vault_uri             = module.databricks_experimentation.key_vault_uri
-  client_id_secret_name     = ""
-  client_secret_secret_name = ""
-  databricks_workspace_id   = module.databricks_experimentation.databricks_workspace_id
-  unity_metastore_name      = var.unity_metastore_name
-  unity_metastore_id        = var.unity_metastore_id
+  key_vault_id               = module.databricks_experimentation.key_vault_id
+  key_vault_uri              = module.databricks_experimentation.key_vault_uri
+  client_id_secret_name      = ""
+  client_secret_secret_name  = ""
+  databricks_workspace_id    = module.databricks_experimentation.databricks_workspace_id
+  databricks_admin_groupname = var.databricks_admin_groupname
+  unity_metastore_name       = var.unity_metastore_name
+  unity_metastore_id         = var.unity_metastore_id
 }
