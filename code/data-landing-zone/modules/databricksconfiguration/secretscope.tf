@@ -12,7 +12,7 @@ data "databricks_group" "group" {
   count        = var.databricks_admin_groupname != "" ? 1 : 0
   display_name = var.databricks_admin_groupname
 
-  provider = databricks.automation
+  provider = databricks.account
 }
 
 resource "databricks_secret_acl" "secret_acl" {
