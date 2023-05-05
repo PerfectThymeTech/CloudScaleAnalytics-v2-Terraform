@@ -17,7 +17,7 @@ data "databricks_group" "group" {
 
 resource "databricks_secret_acl" "secret_acl" {
   count      = var.databricks_admin_groupname != "" ? 1 : 0
-  principal  = data.databricks_group.group.display_name
+  principal  = one(data.databricks_group.group[*].display_name)
   permission = "MANAGE"
   scope      = databricks_secret_scope.platform_secret_scope.name
 }
