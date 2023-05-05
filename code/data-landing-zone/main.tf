@@ -88,6 +88,12 @@ provider "azuread" {
 }
 
 provider "databricks" {
+  alias      = "account"
+  host       = "https://accounts.azuredatabricks.net"
+  account_id = "581824c3-9c92-47ef-8512-e2891cd9ae45"
+}
+
+provider "databricks" {
   alias                       = "automation"
   azure_environment           = "public"
   azure_workspace_resource_id = module.databricks_automation.databricks_id

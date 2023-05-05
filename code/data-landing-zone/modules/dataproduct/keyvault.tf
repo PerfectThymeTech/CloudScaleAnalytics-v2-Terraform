@@ -93,7 +93,7 @@ resource "azapi_resource" "key_vault_secret_service_principal_client_secret" {
 }
 
 resource "azapi_resource" "key_vault_secret_security_group_display_name" {
-  count     = one(data.azuread_group.security_group[*].object_id) != null ? 1 : 0
+  count     = local.conditions.security_group ? 1 : 0
   type      = "Microsoft.KeyVault/vaults/secrets@2023-02-01"
   name      = "securityGroupDisplayName"
   parent_id = azurerm_key_vault.key_vault.id
@@ -110,7 +110,7 @@ resource "azapi_resource" "key_vault_secret_security_group_display_name" {
 }
 
 resource "azapi_resource" "key_vault_secret_security_group_object_id" {
-  count     = one(data.azuread_group.security_group[*].object_id) != null ? 1 : 0
+  count     = local.conditions.security_group ? 1 : 0
   type      = "Microsoft.KeyVault/vaults/secrets@2023-02-01"
   name      = "securityGroupObjectId"
   parent_id = azurerm_key_vault.key_vault.id
