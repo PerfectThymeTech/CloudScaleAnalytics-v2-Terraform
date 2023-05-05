@@ -31,7 +31,7 @@ resource "time_sleep" "sleep" {
   create_duration = "30s"
 
   depends_on = [
-    databricks_mws_permission_assignment.permission_assignment   
+    databricks_mws_permission_assignment.permission_assignment
   ]
 }
 
