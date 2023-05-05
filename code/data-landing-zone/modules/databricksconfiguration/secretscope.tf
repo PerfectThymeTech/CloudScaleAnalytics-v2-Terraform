@@ -27,6 +27,14 @@ resource "databricks_mws_permission_assignment" "permission_assignment" {
   provider = databricks.account
 }
 
+resource "time_sleep" "sleep" {
+  create_duration = "30s"
+
+  depends_on = [
+    databricks_mws_permission_assignment.permission_assignment   
+  ]
+}
+
 resource "databricks_secret_acl" "secret_acl" {
   count      = var.databricks_admin_groupname != "" ? 1 : 0
   principal  = one(data.databricks_group.group[*].display_name)
@@ -34,6 +42,6 @@ resource "databricks_secret_acl" "secret_acl" {
   scope      = databricks_secret_scope.platform_secret_scope.name
 
   depends_on = [
-    databricks_mws_permission_assignment.permission_assignment
+    time_sleep.sleep
   ]
 }
