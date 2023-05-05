@@ -21,7 +21,8 @@ module "databricks_automation" {
 module "databricks_automation_configuration" {
   source = "./modules/databricksconfiguration"
   providers = {
-    databricks = databricks.automation
+    databricks         = databricks.automation
+    databricks.account = databricks.account
   }
 
   key_vault_id               = module.databricks_automation.key_vault_id
@@ -57,7 +58,8 @@ module "databricks_experimentation" {
 module "databricks_experimentation_configuration" {
   source = "./modules/databricksconfiguration"
   providers = {
-    databricks = databricks.experimentation
+    databricks         = databricks.experimentation
+    databricks.account = databricks.account
   }
 
   key_vault_id               = module.databricks_experimentation.key_vault_id

@@ -8,9 +8,16 @@ resource "databricks_secret_scope" "platform_secret_scope" {
   }
 }
 
+data "databricks_group" "group" {
+  count        = var.databricks_admin_groupname != "" ? 1 : 0
+  display_name = var.databricks_admin_groupname
+
+  provider = databricks.automation
+}
+
 resource "databricks_secret_acl" "secret_acl" {
   count      = var.databricks_admin_groupname != "" ? 1 : 0
-  principal  = var.databricks_admin_groupname
-  permission = "WRITE"
+  principal  = data.databricks_group.group.display_name
+  permission = "MANAGE"
   scope      = databricks_secret_scope.platform_secret_scope.name
 }
