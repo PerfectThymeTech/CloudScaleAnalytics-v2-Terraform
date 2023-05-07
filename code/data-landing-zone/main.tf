@@ -12,7 +12,7 @@ terraform {
     }
     databricks = {
       source  = "databricks/databricks"
-      version = "1.14.3"
+      version = "1.15.0"
     }
     random = {
       source  = "hashicorp/random"
