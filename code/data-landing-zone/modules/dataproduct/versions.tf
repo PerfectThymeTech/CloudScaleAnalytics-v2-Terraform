@@ -6,7 +6,7 @@ terraform {
     }
     databricks = {
       source  = "databricks/databricks"
-      version = "1.15.0"
+      version = "1.16.0"
       configuration_aliases = [
         databricks.automation,
         databricks.experimentation,
