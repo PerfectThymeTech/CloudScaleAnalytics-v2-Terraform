@@ -18,6 +18,7 @@ jobs:
   terraform_docs:
     uses: ./.github/workflows/_terraformDocsTemplate.yml
     name: "Terraform Docs"
+    if: github.event_name == 'pull_request'
     with:
       working_directory: "./code/data-management-zone"
 

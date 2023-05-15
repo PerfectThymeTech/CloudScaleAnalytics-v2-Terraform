@@ -22,6 +22,8 @@ jobs:
       - name: Check Out Repository
         id: checkout_repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       # Generate Terraform Docs
       - name: Render Terraform Docs
