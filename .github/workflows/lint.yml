@@ -44,6 +44,9 @@ jobs:
       # Run Linting
       - name: Run Linting
         id: linting
-        uses: pre-commit/action@v3.0.0
-        with:
-          extra_args: --all-files --verbose
+        run: |
+          pip install -r requirements.txt -q
+          git init
+          git add *
+          pre-commit install --install-hooks
+          pre-commit run --all-files --verbose
