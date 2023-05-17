@@ -28,6 +28,14 @@ jobs:
         with:
           python-version: "3.10"
 
+      # Setup Terraform
+      - name: Setup Terraform
+        id: terraform_setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.4.6"
+          terraform_wrapper: true
+
       # Checkout repository
       - name: Check Out Repository
         id: checkout_repository
