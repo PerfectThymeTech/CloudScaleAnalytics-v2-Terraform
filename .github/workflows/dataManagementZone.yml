@@ -15,13 +15,6 @@ on:
       - "code/data-management-zone/**"
 
 jobs:
-  terraform_docs:
-    uses: ./.github/workflows/_terraformDocsTemplate.yml
-    name: "Terraform Docs"
-    if: github.event_name == 'pull_request'
-    with:
-      working_directory: "./code/data-management-zone"
-
   terraform_lint:
     uses: ./.github/workflows/_terraformLintTemplate.yml
     name: "Terraform Lint"
