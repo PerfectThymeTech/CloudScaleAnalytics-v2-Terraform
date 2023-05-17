@@ -244,33 +244,6 @@ Type: `string`
 
 Default: `""`
 
-## Resources
-
-The following resources are used by this module:
-
-- [azapi_resource.databricks_private_subnet_001](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.databricks_private_subnet_002](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.databricks_public_subnet_001](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.databricks_public_subnet_002](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.devops_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.powerbi_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.runtimes_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.shared_app_aut_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.shared_app_exp_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.storage_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azurerm_data_factory.data_factory](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/data_factory) (resource)
-- [azurerm_private_endpoint.data_factory_private_endpoint_data_factory](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.data_factory_private_endpoint_portal](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_resource_group.management_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.runtimes_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.shared_app_aut_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.shared_app_exp_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.storage_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/client_config) (data source)
-- [azurerm_network_security_group.network_security_group](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/network_security_group) (data source)
-- [azurerm_route_table.route_table](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/route_table) (data source)
-- [azurerm_virtual_network.virtual_network](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/virtual_network) (data source)
-
 ## Outputs
 
 No outputs.

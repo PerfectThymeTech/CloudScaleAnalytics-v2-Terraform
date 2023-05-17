@@ -152,53 +152,6 @@ Type: `string`
 
 Default: `"dev"`
 
-## Resources
-
-The following resources are used by this module:
-
-- [azapi_resource.databricks_private_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.databricks_public_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.datalake_container_unity](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azapi_resource.private_endpoint_subnet](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/resources/resource) (resource)
-- [azurerm_container_registry.container_registry](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/container_registry) (resource)
-- [azurerm_databricks_access_connector.databricks_access_connector](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/databricks_access_connector) (resource)
-- [azurerm_databricks_workspace.databricks](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/databricks_workspace) (resource)
-- [azurerm_key_vault.key_vault](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/key_vault) (resource)
-- [azurerm_private_endpoint.container_registry_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.databricks_private_endpoint_ui](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.databricks_private_endpoint_web](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.datalake_private_endpoint_blob](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.datalake_private_endpoint_dfs](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.key_vault_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.purview_private_endpoint_account](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.purview_private_endpoint_blob](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.purview_private_endpoint_namespace](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.purview_private_endpoint_portal](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.purview_private_endpoint_queue](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.synapse_pl_hub_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/private_endpoint) (resource)
-- [azurerm_purview_account.purview](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/purview_account) (resource)
-- [azurerm_resource_deployment_script_azure_power_shell.purview_admin_onboarding](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_deployment_script_azure_power_shell) (resource)
-- [azurerm_resource_group.automation_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.consumption_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.container_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.governance_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_resource_group.unity_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/resource_group) (resource)
-- [azurerm_role_assignment.databricks_access_connector_roleassignment_datalake](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/role_assignment) (resource)
-- [azurerm_role_assignment.purview_roleassignment_key_vault](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/role_assignment) (resource)
-- [azurerm_role_assignment.user_assigned_identity_roleassignment_governance_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/role_assignment) (resource)
-- [azurerm_storage_account.datalake](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/storage_account) (resource)
-- [azurerm_storage_management_policy.datalake_management_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/storage_management_policy) (resource)
-- [azurerm_synapse_private_link_hub.synapse_pl_hub](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/synapse_private_link_hub) (resource)
-- [azurerm_user_assigned_identity.user_assigned_identity](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/resources/user_assigned_identity) (resource)
-- [databricks_metastore.metastore](https://registry.terraform.io/providers/databricks/databricks/1.16.0/docs/resources/metastore) (resource)
-- [databricks_metastore_assignment.metastore_assignment](https://registry.terraform.io/providers/databricks/databricks/1.16.0/docs/resources/metastore_assignment) (resource)
-- [databricks_metastore_data_access.metastore_data_access](https://registry.terraform.io/providers/databricks/databricks/1.16.0/docs/resources/metastore_data_access) (resource)
-- [azapi_resource.purview](https://registry.terraform.io/providers/azure/azapi/1.6.0/docs/data-sources/resource) (data source)
-- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/client_config) (data source)
-- [azurerm_network_security_group.network_security_group](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/network_security_group) (data source)
-- [azurerm_route_table.route_table](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/route_table) (data source)
-- [azurerm_virtual_network.virtual_network](https://registry.terraform.io/providers/hashicorp/azurerm/3.56.0/docs/data-sources/virtual_network) (data source)
-
 ## Outputs
 
 No outputs.

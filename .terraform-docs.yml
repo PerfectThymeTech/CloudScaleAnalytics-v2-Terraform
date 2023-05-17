@@ -27,8 +27,6 @@ content: |
   <!-- markdownlint-disable MD034 -->
   {{ .Inputs }}
 
-  {{ .Resources }}
-
   {{ .Outputs }}
 
   <!-- markdownlint-enable -->
