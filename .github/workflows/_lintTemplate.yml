@@ -1,0 +1,53 @@
+name: Terraform Lint Template
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        required: true
+        type: string
+        description: "Specifies the terraform version."
+      python_version:
+        required: true
+        type: string
+        description: "Specifies the python version."
+
+permissions:
+  pull-requests: write
+
+jobs:
+  deployment:
+    name: Terraform Lint
+    runs-on: ubuntu-latest
+    continue-on-error: false
+
+    steps:
+      # Setup Python 3.10
+      - name: Setup Python 3.10
+        id: python_setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.python_version }}
+  
+      # Setup Terraform
+      - name: Setup Terraform
+        id: terraform_setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+          terraform_wrapper: true
+
+      # Check Out Repository
+      - name: Check Out Repository
+        id: checkout_repository
+        uses: actions/checkout@v3
+
+      # Run Linting
+      - name: Run Linting
+        id: linting
+        run: |
+          pip install -r requirements.txt -q
+          git init
+          git add *
+          pre-commit install --install-hooks
+          pre-commit run --all-files --verbose
