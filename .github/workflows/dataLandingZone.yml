@@ -50,3 +50,18 @@ jobs:
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+
+  terraform_destroy_dev:
+    uses: ./.github/workflows/_terraformDestroyTemplate.yml
+    name: "Terraform Destroy"
+    needs: [terraform_plan_dev]
+    # if: github.event_name == 'push' || github.event_name == 'release'
+    with:
+      environment: "dev"
+      terraform_version: "1.4.6"
+      working_directory: "./code/data-landing-zone"
+    secrets:
+      TENANT_ID: ${{ secrets.TENANT_ID }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
