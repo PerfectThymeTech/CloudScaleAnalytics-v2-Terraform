@@ -14,6 +14,20 @@ The Cloud Scale Analytics reference architecture consists of the following core 
 
 ![Cloud-scale Analytics v2](/docs/media/CloudScaleAnalyticsv2.gif)
 
+## Terraform Modules
+
+The Terraform Modules can be found by following these links:
+
+**Data Management Zone**
+
+- [Terraform registry](https://registry.terraform.io/modules/PerfectThymeTech/data-management-zone/azurerm/latest)
+- [GitHub repository](https://github.com/PerfectThymeTech/terraform-azurerm-data-management-zone)
+
+**Data Landing Zone**
+
+- [Terraform registry](https://registry.terraform.io/modules/PerfectThymeTech/data-landing-zone/azurerm/latest)
+- [GitHub repository](https://github.com/PerfectThymeTech/terraform-azurerm-data-landing-zone)
+
 ## Project Dashboard & Backlog
 
 We have a [public GitHub project](https://github.com/orgs/PerfectThymeTech/projects/1), which gives you visibility into the backlog and the status of issues of this project.
