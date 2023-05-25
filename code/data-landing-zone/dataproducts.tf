@@ -40,6 +40,10 @@ module "data_products" {
   }
 
   depends_on = [
+    module.datalake_raw,
+    module.datalake_enriched,
+    module.datalake_curated,
+    module.datalake_workspace,
     module.databricks_automation_configuration,
     module.databricks_experimentation_configuration
   ]

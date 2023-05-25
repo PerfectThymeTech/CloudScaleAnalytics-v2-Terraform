@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   deployment:
-    name: Terraform Lint
+    name: Terraform Docs
     runs-on: ubuntu-latest
     continue-on-error: false
 

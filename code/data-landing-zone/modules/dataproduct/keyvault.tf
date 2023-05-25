@@ -39,6 +39,10 @@ resource "azapi_resource" "key_vault_secret_service_principal_tenant_id" {
       value       = one(azuread_service_principal.service_principal[*].application_tenant_id)
     }
   })
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault_private_endpoint
+  ]
 }
 
 resource "azapi_resource" "key_vault_secret_service_principal_object_id" {
@@ -56,6 +60,10 @@ resource "azapi_resource" "key_vault_secret_service_principal_object_id" {
       value       = one(azuread_application.application[*].object_id)
     }
   })
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault_private_endpoint
+  ]
 }
 
 resource "azapi_resource" "key_vault_secret_service_principal_client_id" {
@@ -73,6 +81,10 @@ resource "azapi_resource" "key_vault_secret_service_principal_client_id" {
       value       = one(azuread_service_principal.service_principal[*].application_id)
     }
   })
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault_private_endpoint
+  ]
 }
 
 resource "azapi_resource" "key_vault_secret_service_principal_client_secret" {
@@ -90,6 +102,10 @@ resource "azapi_resource" "key_vault_secret_service_principal_client_secret" {
       value       = one(azuread_service_principal_password.service_principal_password[*].value)
     }
   })
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault_private_endpoint
+  ]
 }
 
 resource "azapi_resource" "key_vault_secret_security_group_display_name" {
@@ -107,6 +123,10 @@ resource "azapi_resource" "key_vault_secret_security_group_display_name" {
       value       = one(data.azuread_group.security_group[*].display_name)
     }
   })
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault_private_endpoint
+  ]
 }
 
 resource "azapi_resource" "key_vault_secret_security_group_object_id" {
@@ -124,6 +144,10 @@ resource "azapi_resource" "key_vault_secret_security_group_object_id" {
       value       = one(data.azuread_group.security_group[*].object_id)
     }
   })
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault_private_endpoint
+  ]
 }
 
 resource "azurerm_private_endpoint" "key_vault_private_endpoint" {

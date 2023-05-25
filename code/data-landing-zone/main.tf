@@ -65,9 +65,6 @@ provider "azurerm" {
     log_analytics_workspace {
       permanently_delete_on_destroy = true
     }
-    network {
-      relaxed_locking = true
-    }
     resource_group {
       prevent_deletion_if_contains_resources = true
     }

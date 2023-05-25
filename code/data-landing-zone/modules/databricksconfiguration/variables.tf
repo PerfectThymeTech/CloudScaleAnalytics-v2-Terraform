@@ -1,5 +1,4 @@
-data "azurerm_client_config" "current" {
-}
+data "azurerm_client_config" "current" {}
 
 variable "key_vault_id" {
   description = "Specifies the resource ID of the key vault used for the platform."
