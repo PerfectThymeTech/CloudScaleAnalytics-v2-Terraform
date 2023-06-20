@@ -27,9 +27,9 @@ param administratorPassword string
 // Variables
 var name = toLower('${prefix}-${environment}')
 var bastionResourceGroupName = '${name}-bastion-rg'
-var cicdResourceGroupName = '${name}-cicd'
-var networkResourceGroupName = '${name}-network'
-var globalDnsResourceGroupName = '${name}-global-dns'
+var cicdResourceGroupName = '${name}-cicd-rg'
+var networkResourceGroupName = '${name}-network-rg'
+var globalDnsResourceGroupName = '${name}-global-dns-rg'
 var dataManagementZoneNetworkResourceGroupName = '${name}-dmgmt-network-rg'
 var dataLandingZone01NetworkResourceGroupName = '${name}-dlz01-network-rg'
 
