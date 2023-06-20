@@ -1,0 +1,3 @@
+[submodule "code/data-management-zone/terraform-azurerm-data-management-zone"]
+	path = code/data-management-zone/terraform-azurerm-data-management-zone
+	url = https://github.com/PerfectThymeTech/terraform-azurerm-data-management-zone
