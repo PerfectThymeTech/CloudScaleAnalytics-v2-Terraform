@@ -1,0 +1,8 @@
+[submodule "code/terraform-azurerm-data-landing-zone"]
+	path = code/terraform-azurerm-data-landing-zone
+	url = https://github.com/PerfectThymeTech/terraform-azurerm-data-landing-zone.git
+	branch = main
+[submodule "code/terraform-azurerm-data-management-zone"]
+	path = code/terraform-azurerm-data-management-zone
+	url = https://github.com/PerfectThymeTech/terraform-azurerm-data-management-zone.git
+	branch = main

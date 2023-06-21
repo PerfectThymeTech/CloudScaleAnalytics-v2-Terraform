@@ -14,18 +14,3 @@ repos:
     - id: check-yaml
     - id: pretty-format-json
       args: ["--indent", "2", "--autofix", "--no-sort-keys"]
-- repo: local
-  hooks:
-    - id: terraform-fmt
-      name: terraform fmt
-      description: runs terraform fmt
-      entry: terraform fmt -recursive
-      language: system
-      pass_filenames: false
-- repo: https://github.com/terraform-docs/terraform-docs
-  rev: v0.16.0
-  hooks:
-    - id: terraform-docs-go
-      args: ["-c", "./.terraform-docs.yml", "./code/data-management-zone"]
-    - id: terraform-docs-go
-      args: ["-c", "./.terraform-docs.yml", "./code/data-landing-zone"]
