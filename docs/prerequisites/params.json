@@ -19,6 +19,12 @@
     },
     "administratorPassword": {
       "value": "<your-secret-passsword>"
+    },
+    "dataManagementZoneSubscription": {
+      "value": "<your-dmz-subscription-id>"
+    },
+    "dataLandingZone01Subscription": {
+      "value": "<your-dlz01-subscription-id>"
     }
   }
 }

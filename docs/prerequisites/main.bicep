@@ -23,6 +23,10 @@ param administratorUsername string = 'VmMainUser'
 @secure()
 @description('Specifies the administrator password of the virtual machine.')
 param administratorPassword string
+@description('Specifies the subscription ID of the data management zone.')
+param dataManagementZoneSubscription string
+@description('Specifies the subscription ID of the data landing zone.')
+param dataLandingZone01Subscription string
 
 // Variables
 var name = toLower('${prefix}-${environment}')
@@ -30,8 +34,6 @@ var bastionResourceGroupName = '${name}-bastion-rg'
 var cicdResourceGroupName = '${name}-cicd-rg'
 var networkResourceGroupName = '${name}-network-rg'
 var globalDnsResourceGroupName = '${name}-global-dns-rg'
-var dataManagementZoneNetworkResourceGroupName = '${name}-dmgmt-network-rg'
-var dataLandingZone01NetworkResourceGroupName = '${name}-dlz01-network-rg'
 
 // CICD resources
 resource cicdResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
@@ -108,8 +110,8 @@ module networkConfiguration 'modules/networkConfiguration.bicep' = {
     hubVirtualNetworkId: networkServices.outputs.vnetId
     virtualNetworkManagerId: networkServices.outputs.virtualNetworkManagerId
     spokeVirtualNetworkIds: [
-      dataManagementZoneNetworkResources.outputs.vnetId
-      dataLandingZone01NetworkResources.outputs.vnetId
+      dataManagementZoneSpokeNetwork.outputs.vnetId
+      dataLandingZone01SpokeNetwork.outputs.vnetId
     ]
   }
 }
@@ -131,17 +133,10 @@ module globalDnsZones 'modules/privatednszones.bicep' = {
   }
 }
 
-// Data Management Zone Virtual Network
-resource dataManagementZoneNetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: dataManagementZoneNetworkResourceGroupName
-  location: location
-  tags: tags
-  properties: {}
-}
-
-module dataManagementZoneNetworkResources 'modules/networkSpoke.bicep' = {
-  name: 'dataManagementZoneNetworkResources'
-  scope: dataManagementZoneNetworkResourceGroup
+// Data Management Zone Spoke Network
+module dataManagementZoneSpokeNetwork 'modules/spokeRoot.bicep' = {
+  name: 'dataManagementZoneSpokeNetwork'
+  scope: subscription(dataManagementZoneSubscription)
   params: {
     location: location
     prefix: '${name}-dmgmt'
@@ -151,17 +146,10 @@ module dataManagementZoneNetworkResources 'modules/networkSpoke.bicep' = {
   }
 }
 
-// Data Landing Zone Virtual Network
-resource dataLandingZone01NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: dataLandingZone01NetworkResourceGroupName
-  location: location
-  tags: tags
-  properties: {}
-}
-
-module dataLandingZone01NetworkResources 'modules/networkSpoke.bicep' = {
-  name: 'dataLandingZone01NetworkResources'
-  scope: dataLandingZone01NetworkResourceGroup
+// Data Landing Zone 01 Spoke Network
+module dataLandingZone01SpokeNetwork 'modules/spokeRoot.bicep' = {
+  name: 'dataLandingZone01SpokeNetwork'
+  scope: subscription(dataLandingZone01Subscription)
   params: {
     location: location
     prefix: '${name}-dlz01'
