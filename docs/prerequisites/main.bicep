@@ -139,10 +139,10 @@ module dataManagementZoneSpokeNetwork 'modules/spokeRoot.bicep' = {
   scope: subscription(dataManagementZoneSubscription)
   params: {
     location: location
-    prefix: '${name}-dmz01'
+    prefix: '${name}-dmgmt'
     tags: tags
     firewallPrivateIp: networkServices.outputs.firewallPrivateIp
-    vnetAddressPrefix: '10.0.32.0/20'
+    vnetAddressPrefix: '10.0.16.0/24'
   }
 }
 
