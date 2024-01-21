@@ -24,7 +24,7 @@ jobs:
       # Setup Python 3.10
       - name: Setup Python 3.10
         id: python_setup
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
